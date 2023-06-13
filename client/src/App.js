@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, useLocation, Routes } from "react-router-dom";
+import { Route, useLocation } from "react-router-dom";
 import NavBar from "./Components/NavBar/navBar";
 import Home from "./Views/Home";
 import axios from "axios";
@@ -10,10 +10,8 @@ function App() {
 
     return (
         <div className="App">
-            {location.pathname !== "/" && <NavBar />}
-            <Routes>
-                <Route path="/home" render={() => <Home />} />
-            </Routes>
+            {location.pathname !== "/" && <NavBar />}            
+                <Route path="/home" render={() => <Home />} />            
         </div>
     );
 }
