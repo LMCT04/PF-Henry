@@ -1,6 +1,6 @@
 import Home from './Home/Home'
 import Landing from './Landing/landing'
-import Menu from './menu/menu'
+import Menu from './Menu/menu'
 
 export {
     Home,
