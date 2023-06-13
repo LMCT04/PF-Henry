@@ -1,8 +1,7 @@
 import "./App.css";
 import { Route, useLocation } from "react-router-dom";
 import NavBar from "./Components/NavBar/navBar";
-import { Home, Landing } from "./Views";
-import Menu from './components/views/menu/menu';
+import { Home, Landing, Menu } from "./Views";
 //import axios from "axios";
 //axios.defaults.baseURL = "http://localhost:3001/";
 
@@ -14,9 +13,9 @@ function App() {
 
             {location.pathname !== "/" && <NavBar />}   
 
-            <Route path = '/home' component = { Home } />
             <Route exact path = '/' component = { Landing } />
-            <Route path= "/menu" element={<Menu/>} />
+            <Route path = '/home' component = { Home } />
+            <Route path= "/menu" component = { Menu } />
 
         </div>
     );
