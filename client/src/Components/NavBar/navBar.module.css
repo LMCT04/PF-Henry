@@ -1,0 +1,35 @@
+.navBar {
+	top: 0;
+	left: 0;
+	position: fixed;
+	width: 100%;
+	z-index: 100;
+	background-color: #ffe6d2b5;
+	height: 5em;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	border-bottom: solid 2px #8e13004d;
+}
+
+.links{
+	display: flex;
+	justify-content: space-around;
+	align-items: baseline;
+	width: 50%;
+}
+
+.active{
+	font-size: large;
+	color: #d13017;
+}
+
+.disable{
+	font-size: x-large;
+	color: #8e1300;
+	text-decoration: underline;
+}
+
+
+
