@@ -3,8 +3,16 @@ const userRoute = Router();
 const { User } = require("../database");
 userRoute.get("/",async(req,res)=>{
   try {
+    const {id} =req.body;
+    //console.log(id,"aaaaaaaaaaaaaaaaaa");
     let users = await User.findAll();
-    res.status(200).send(users);
+    const userEncontrado = users.filter((e) => e.id == id);
+    if (userEncontrado.length) {
+      res.status(200).send(users);
+    }
+    else{
+      res.status(400).send("User no encontrado");
+    }
   } catch (error) {
     console.log(error);
   }
