@@ -5,6 +5,49 @@ const { User, Product } = require("../../../database.js"),
 
 //definir funciones
 
+const getAllProductFromDatabase = async () => {
+  try {
+    const products = await Product.findAll();
+    const formateProducts = products.map((product) => {
+      return {
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        description: product.description,
+        price: product.price,
+        type: product.type,
+        category: product.category,
+      };
+    });
+    return formateProducts;
+  } catch (error) {}
+};
+
+const getProductFromDatabaseByName = async (name) => {
+  try {
+    const products = await Product.findAll({
+      where: {
+        name: { [Op.iLike]: `%${name}%` },
+      },
+    });
+    const formateProducts = products.map((product) => {
+      return {
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        description: product.description,
+        price: product.price,
+        type: product.type,
+        category: product.category,
+      };
+    });
+    return formateProducts;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
-  //exportar cada funcion
+  getProductFromDatabaseByName,
+  getAllProductFromDatabase,
 };

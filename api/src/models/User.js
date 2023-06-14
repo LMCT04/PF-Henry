@@ -33,10 +33,13 @@ module.exports = (sequelize) => {
         allowNull: false,
         unique: true,
         validate: {
-          isEmail: true,
-          msg: "El email es incorrecto",
+          isEmail: {
+            args: true,
+            msg: "El email es incorrecto",
+          },
         },
       },
+      
       password: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -47,7 +50,7 @@ module.exports = (sequelize) => {
         },
       },
       age: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       address: {
@@ -55,10 +58,10 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       favorite: {
-        type: DataTypes.ARRAY(DataTypes.NUMBER),
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
       },
       shoppingHistory: {
-        type: DataTypes.ARRAY(DataTypes.NUMBER),
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
       },
     },
     {
