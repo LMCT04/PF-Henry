@@ -1,8 +1,20 @@
 //destructurar todas las funciones de los modelos aca
-const { getAllProductFromDataBase } = require("./models");
+const {
+  getProductFromDatabaseByName,
+  getAllProductFromDatabase,
+} = require("./models/CRUDProduct");
 
+const getAllProducts = async (name) => {
+  try {
+    const dataBaseProducts = await (name
+      ? getProductFromDatabaseByName(name)
+      : getAllProductFromDatabase);
+    return dataBaseProducts;
+  } catch (error) {
+    console.error("Error al obtener los productos:", error);
+  }
+};
 //ejemplo de middleare
-
 // const getAllProduct = async (name) => {
 //   //ejemplo de condicional
 //   if (name) {
@@ -16,5 +28,6 @@ const { getAllProductFromDataBase } = require("./models");
 //definir funciones
 
 module.exports = {
+  getAllProducts,
   //exportar cada funcion
 };

@@ -47,7 +47,7 @@ module.exports = (sequelize) => {
         },
       },
       age: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       address: {
@@ -55,10 +55,10 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       favorite: {
-        type: DataTypes.ARRAY(DataTypes.NUMBER),
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
       },
       shoppingHistory: {
-        type: DataTypes.ARRAY(DataTypes.NUMBER),
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
       },
     },
     {
