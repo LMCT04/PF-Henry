@@ -1,9 +1,11 @@
 const { Router } = require("express");
 const userRoute = Router();
 const { User } = require("../database");
-userRoute.get("/",async(req,res)=>{
+
+userRoute.get("/", async (req, res) => {
   try {
-    const {id} =req.body;
+    const { id } = req.body;
+
     //console.log(id,"aaaaaaaaaaaaaaaaaa");
     let users = await User.findAll();
     const userEncontrado = users.filter((e) => e.id == id);
@@ -17,7 +19,6 @@ userRoute.get("/",async(req,res)=>{
     console.log(error);
   }
 });
-
 userRoute.post("/", async (req, res) => {
     try {  
       // Insertar un nuevo registro
@@ -36,7 +37,7 @@ userRoute.post("/", async (req, res) => {
     } catch (error) {
       console.error("Error al insertar usuario:", error);
     }
-  
+
 });
 
 module.exports = userRoute;
