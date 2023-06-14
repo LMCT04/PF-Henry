@@ -70,6 +70,7 @@ const NavBar = () => {
                     About
                 </NavLink>
             </div>
+            {/* Esto se mueve, hay que arreglarlo para que no pase */}
             <button onClick={logout} className={style.logout}>
                 Logout
             </button>
