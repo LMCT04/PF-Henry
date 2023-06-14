@@ -2,6 +2,7 @@
 const {
   getProductFromDatabaseByName,
   getAllProductFromDatabase,
+  GetProductId
 } = require("./models/CRUDProduct");
 
 const getAllProducts = async (name) => {
@@ -26,8 +27,21 @@ const getAllProducts = async (name) => {
 // }
 
 //definir funciones
+const getProductById= async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await getProductById(id);
+    if (!product) {
+      return res.status(404).json({ message: "Producto no encontrado" });
+    }
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener el producto por ID" });
+  }
+}
 
 module.exports = {
   getAllProducts,
+  getProductById
   //exportar cada funcion
 };

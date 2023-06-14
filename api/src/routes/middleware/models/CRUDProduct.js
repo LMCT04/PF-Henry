@@ -47,7 +47,17 @@ const getProductFromDatabaseByName = async (name) => {
   }
 };
 
+const GetProductId=async(productId)=>{
+  try {
+    const product = await Product.findByPk(productId);
+    return product;
+  } catch (error) {
+    throw new Error("Error al obtener el producto por ID");
+  }
+}
+
 module.exports = {
   getProductFromDatabaseByName,
   getAllProductFromDatabase,
+  GetProductId
 };

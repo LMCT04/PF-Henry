@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { postCreateProduct,  getAllProducts } = require("./middleware/productFunct");
+const { postCreateProduct,  getAllProducts, getProductById } = require("./middleware/productFunct");
 const productRoute = Router();
 
 // productRoute.get("/", async (req, res) => {
@@ -26,7 +26,8 @@ productRoute.post("/createProduct", async (req, res) => {
   } catch (error) {
     res.status(400).send("Error al crear receta");
 
-
+  }
+})
 
 productRoute.get("/", async (req, res) => {
   let { name } = req.query;
@@ -42,5 +43,7 @@ productRoute.get("/", async (req, res) => {
 
   }
 });
+
+productRoute.get("/:id", getProductById )
 
 module.exports = productRoute;
