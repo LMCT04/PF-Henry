@@ -1,0 +1,72 @@
+.landing{
+    background-color: blue;
+    height: 100vh;
+    display: flex;
+}
+
+.contentContainer{
+    background-color: red;
+    height: 80%;
+    width: 40%;
+    margin: 5%;
+    margin-top: 5%;
+}
+
+.formContainer{
+    background-color: yellow;
+    height: 80%;
+    width: 40%;
+    margin: 5%;
+    margin-top: 5%;
+}
+
+.form{
+    background-color: green;
+    height: 90%;
+    margin: 5%;
+    margin-left: 15%;
+    margin-right: 15%;
+
+}
+
+.content{
+    background-color: orange;
+    text-align: center;
+    width: 90%;
+    height: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+    border: 1px solid black;
+}
+
+.input{
+    height: 65%;
+    width: 90%;
+    margin: 2%;
+}
+
+.buttonContainer{
+    background-color:aqua;
+    width: 90%;
+    height: 20%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+    font-weight: bold;
+}
+
+.button{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    height: 30%;
+    width: 40%;
+    border-radius: 1.5rem;
+}
+
+.p1{
+    font-weight: bold;
+    font-size: 2rem;
+    margin-top: 15%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
