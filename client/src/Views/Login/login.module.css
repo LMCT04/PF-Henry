@@ -1,0 +1,19 @@
+.form{
+    min-width: 600px;
+    margin-top: 50px;
+    background-color: beige;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: rgba(0,0,0,0.16) 0px 1px 4px;
+}
+
+.div{
+    margin-bottom: 20px;
+}
+
+.label{
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 5px;
+}

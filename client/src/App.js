@@ -17,7 +17,7 @@ function App() {
             <Route path = '/home' component = { Home } />
             <Route path= "/menu" component = { Menu } />
             <Route path= "/login" component = { Login } />
-            <Route path= "/form" component = { Form } />
+            <Route path= "/create" component = { Form } />
 
         </div>
     );

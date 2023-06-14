@@ -1,19 +1,19 @@
 .landing{
-    background-color: blue;
+    background-color: rgb(218, 218, 218);
     height: 100vh;
     display: flex;
 }
 
 .contentContainer{
-    background-color: red;
+    background-color: rgb(234, 234, 234);
     height: 80%;
     width: 40%;
     margin: 5%;
     margin-top: 5%;
+    border-radius: 2.5rem;
 }
 
 .formContainer{
-    background-color: yellow;
     height: 80%;
     width: 40%;
     margin: 5%;
@@ -21,32 +21,35 @@
 }
 
 .form{
-    background-color: green;
+    background-color: rgb(234, 234, 234);
     height: 90%;
-    margin: 5%;
     margin-left: 15%;
     margin-right: 15%;
-
+    padding-top: 20px;
 }
 
 .content{
-    background-color: orange;
     text-align: center;
     width: 90%;
     height: 10%;
     margin-left: 5%;
     margin-right: 5%;
-    border: 1px solid black;
+    margin-bottom: 25px;
+    border-radius: 1rem;
 }
 
 .input{
-    height: 65%;
-    width: 90%;
-    margin: 2%;
+    height: 90%;
+    width: 95%;
+    background-color: rgb(218, 218, 218);
+    border-radius: 1.5rem;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    padding-left: 30px;
 }
 
 .buttonContainer{
-    background-color:aqua;
     width: 90%;
     height: 20%;
     margin-left: 5%;
@@ -59,12 +62,13 @@
     margin-top: 2%;
     margin-bottom: 2%;
     height: 30%;
-    width: 40%;
+    width: 30%;
     border-radius: 1.5rem;
+    background-color: rgb(218, 218, 218);
+    border: none;
 }
 
 .p1{
-    font-weight: bold;
     font-size: 2rem;
     margin-top: 15%;
     margin-left: 5%;
