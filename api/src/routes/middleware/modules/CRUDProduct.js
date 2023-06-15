@@ -5,6 +5,7 @@ const { User, Product } = require("../../../database.js"),
 
 //definir funciones
 
+
 const modulePostProduct = async (newProduct) => {
   try {
     const product = await Product.create(newProduct);
@@ -14,6 +15,7 @@ const modulePostProduct = async (newProduct) => {
     throw new Error("Error al crear producto");
   }
 };
+
 
 const getAllProductFromDatabase = async () => {
   try {
@@ -30,7 +32,10 @@ const getAllProductFromDatabase = async () => {
       };
     });
     return formateProducts;
-  } catch (error) {}
+
+  } catch (error) {
+    console.error()
+  }
 };
 
 const getProductFromDatabaseByName = async (name) => {
