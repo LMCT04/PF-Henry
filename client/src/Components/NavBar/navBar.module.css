@@ -50,7 +50,7 @@
 }
 
 .logo{
-    background-color: #0D2015;
+    background-color: #153422;
     border: 1px solid rgb(218, 218, 218);
     color: rgb(218, 218, 218);
     height: 80%;
@@ -67,6 +67,23 @@
     display: flex;
 }
 
+
+.navLink{
+    width: 25%;
+    display: flex;
+    height: 80%;
+    margin-top: 1.4%;
+    align-items: center;
+    justify-content: center;
+    color: #1D472F;
+    transition: font .2s ease;
+    transition: all 0.3s ease;
+}
+
+.navLink:hover{
+    transform: scale(1.1);
+}
+
 .logoutContainer{
     height: 90%;
     width: 20%;
@@ -76,22 +93,26 @@
 }
 
 .logout{
-	width: 35%;
-	height: 40%;
-	border-radius: 50px;
-	cursor: pointer;
-    background-color: #0D2015;
-    color: rgb(218, 218, 218);
+    width: 35%;
+    height: 40%;
+    border-radius: 50px;
+    cursor: pointer;
+    background-color: #FFC9B9;
+    color: #153422;
+    font-weight: bold;
+    border: none;
+    transition: color 0.5s ease;
+    transition: transform 0.3s ease;
+}
+
+.logout:hover{
+    transform: scale(1.1);
+    background-color: #153422;
+    color: #FFC9B9;
+    box-shadow: 4px 4px 10px  black;
     font-weight: bold;
 }
 
-.navLink{
-    width: 20%;
-    margin-left: 3.8%;
-    display: flex;
-    height: 80%;
-    margin-top: 1.4%;
-    align-items: center;
-    justify-content: center;
-    color: #0D2015;
+.logout:active{
+    background-color: #1D472F;
 }
