@@ -56,15 +56,10 @@ const modelpostUserInDatabase = async (
   return newUser;
 };
 
-=======
-
-
-
 //definir funciones
 
 module.exports = {
   //exportar cada funcion
   modelgetUserFromDatabase,
   modelpostUserInDatabase,
- 
 };

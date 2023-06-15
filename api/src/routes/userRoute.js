@@ -2,19 +2,6 @@ const { Router } = require("express");
 const userRoute = Router();
 const { getUser, postUser } = require("./middleware/userFunct");
 
-userRoute.get("/:id", async (req, res) => {
-  let { id } = req.params;
-  try {
-    const user = await getUser(id);
-    if (user) {
-      res.status(200).send(user);
-    } else {
-      res.status(400).send({ message: "Usuario no encontrado" });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 userRoute.post("/", async (req, res) => {
   const {
     name,
