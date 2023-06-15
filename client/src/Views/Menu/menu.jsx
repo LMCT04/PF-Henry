@@ -8,7 +8,7 @@ import Loading from "../Loading/Loading";
 import Card from "../../Components/cards/Card";
 import style from "./menu.module.css";
 import Pagination from "@mui/material/Pagination";
-import Footer from "../../Components/Footer/Footer";
+//import Footer from "../../Components/Footer/Footer";
 import { getAllProducts } from '../../redux/actions/actionsProducts'
 
 
@@ -26,7 +26,7 @@ const Menu = () => {
   const [pageProducts, setPageProducts] = useState([]);
   const [page, setPage] = useState(1);
   const handleChange = (event, value) => {
-    let productsPag=[...allProducts];
+    let productsPag=[...allP];
     setPage(value);
     const startIndex = (value - 1) * 10;
     const endIndex = startIndex + 10;
@@ -34,11 +34,11 @@ const Menu = () => {
   };
 
   React.useEffect(() => {
-    let productsPag = [...allProducts];
+    let productsPag = [...allP];
     const startIndex = (page - 1) * 10;
     const endIndex = startIndex + 10;
     setPageProducts(productsPag.slice(startIndex, endIndex));
-  }, [allProducts, page]);
+  }, [allP, page]);
 
   const handleAlphabeticOrder = (e) => {
     const value = e.target.value;
@@ -69,7 +69,7 @@ const Menu = () => {
         <Loading />
       )}
       <Pagination
-        count={Math.ceil(allProducts.length / 10)}
+        count={Math.ceil(allP.length / 10)}
         variant="outlined"
         color="primary"
         onChange={handleChange}
