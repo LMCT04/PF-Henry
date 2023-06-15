@@ -1,14 +1,22 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { orderAlphabetic, orderPrice } from "../../redux/actions/actionsProducts";
 import Loading from "../Loading/Loading";
 import Card from "../../Components/cards/Card";
 import style from "./menu.module.css";
 import Footer from "../../Components/Footer/Footer";
+import { getAllProducts } from '../../redux/actions/actionsProducts'
 
 const Menu = () => {
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.products || []);
+
+  useEffect(() => {
+    dispatch(getAllProducts())
+  }, [dispatch])
+
+  const allP = useSelector((state ) => state.product)
+
+  //const allProducts = useSelector((state) => state.products || []);
 
   const handleAlphabeticOrder = (e) => {
     const value = e.target.value;
@@ -34,8 +42,8 @@ const Menu = () => {
           <option value="desc">DESC</option>
         </select>
 
-        {allProducts.length > 0 ? (
-          allProducts.map((e) => <Card key={e.id} element={e} />)
+        {allP.length > 0 ? (
+          allP.map((e) => <Card key={e.id} element={e} />)
         ) : (
           <Loading />
         )}

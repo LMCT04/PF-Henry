@@ -1,4 +1,4 @@
-import { ORDER_AlPHABETIC,ORDER_PRICE } from "./actionsType/productsAT";
+import { ORDER_AlPHABETIC,ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT } from "./actionsType/productsAT";
 
 const initialState={
     products: [
@@ -193,35 +193,47 @@ const initialState={
           category: "liquido",
         },],
     allProducts: [],
-
+    product: [],
+    newProduct: {},
 }
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
-        
-case ORDER_AlPHABETIC:
-        let copyThree = [...state.products];
-        let sortedName = action.payload === "asc"
-          ? copyThree.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
-          : copyThree.sort((a, b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase()));
-  
-        return {
-          ...state,
-          products: sortedName
-        };
-        case ORDER_PRICE:
-        let  priceOrder= [...state.products];
-        let  price= action.payload === "asc"
-          ? priceOrder.sort((a, b) => a.price.toLowerCase().localeCompare(b.price.toLowerCase()))
-          : priceOrder.sort((a, b) => b.price.toLowerCase().localeCompare(a.price.toLowerCase()));
-          
 
+      case GET_ALL_PRODUCTS:
+            return {
+                ...state,
+                product: action.payload,
+            }
+
+      case CREATE_PRODUCT:
         return {
           ...state,
-          products: price
-        };
+          newProduct: action.payload,
+        }
+        
+        case ORDER_AlPHABETIC:
+          let copyThree = [...state.products];
+          let sortedName = action.payload === "asc"
+            ? copyThree.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+            : copyThree.sort((a, b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase()));
+          return {
+            ...state,
+            products: sortedName
+          };
+
+        case ORDER_PRICE:
+          let  priceOrder= [...state.products];
+          let  price= action.payload === "asc"
+            ? priceOrder.sort((a, b) => a.price.toLowerCase().localeCompare(b.price.toLowerCase()))
+            : priceOrder.sort((a, b) => b.price.toLowerCase().localeCompare(a.price.toLowerCase()));
+          return {
+            ...state,
+            products: price
+          };
+
         default:
-      return state;
+          return state;
   }
   }
   export default  rootReducer
