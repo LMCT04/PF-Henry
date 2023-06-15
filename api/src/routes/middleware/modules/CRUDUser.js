@@ -33,7 +33,7 @@ const modelpostUserInDatabase = async (
   favorite,
   shoppingHistory
 ) => {
-  let [newUser, created] = await findOrCreate({
+  let [newUser, created] = await User.findOrCreate({
     where: {
       name: {
         [Op.iLike]: `%${name}%`,
