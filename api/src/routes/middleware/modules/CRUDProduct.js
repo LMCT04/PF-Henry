@@ -5,6 +5,7 @@ const { User, Product } = require("../../../database.js"),
 
 //definir funciones
 
+
 const modulePostProduct = async (newProduct) => {
   try {
     const product = await Product.create(newProduct);
@@ -15,21 +16,10 @@ const modulePostProduct = async (newProduct) => {
   }
 };
 
+
 const moduleGetAllProductFromDatabase = async () => {
   try {
     const products = await Product.findAll();
-
-    // const formateProducts = products.map((product) => {
-    //   return {
-    //     id: product.id,
-    //     name: product.name,
-    //     image: product.image,
-    //     description: product.description,
-    //     price: product.price,
-    //     type: product.type,
-    //     category: product.category,
-    //   };
-    // });
 
     return products;
   } catch (error) {
