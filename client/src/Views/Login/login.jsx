@@ -33,7 +33,7 @@ const Login = () => {
     ]
 
     return (
-        <>
+        <div className={style.loginContainer} >
             <Formik
                 initialValues={{
                     username: '',
@@ -75,7 +75,6 @@ const Login = () => {
                 {( {handleSubmit, values, handleChange, handleBlur, errors, touched} ) => (
                     <form className={style.form} onSubmit={handleSubmit} >
                         <div className={style.div} >
-                            <label className={style.label} htmlFor='username' >Username</label>
                             <input 
                                 type='text' 
                                 id='username' 
@@ -84,28 +83,34 @@ const Login = () => {
                                 value={values.username}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                className={style.input}
                             />
                             {touched.username &&  errors.username && <div>{errors.username}</div>}
                         </div>
                         <div className={style.div} >
-                            <label className={style.label} htmlFor='password' >Password</label>
                             <input 
-                                type='text' 
+                                type='password' 
                                 id='password' 
                                 name='password' 
                                 placeholder='Password...' 
                                 value={values.password}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                className={style.input}
                             />
                             {touched.password &&  errors.password && <div>{errors.password}</div>}
                         </div>
-                        <button type='submit' >Join</button>
+                        <div className={style.img} >
+                            
+                        </div>
+                        <div className={style.buttonContainer} >
+                            <button className={style.button} type='submit' >Join</button>
+                        </div>
                     </form>
                 )}
             </Formik>
             {error && <p>{error}</p>}
-        </>
+        </div>
     )
 }
 
