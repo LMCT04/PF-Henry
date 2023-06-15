@@ -6,12 +6,10 @@ userRoute.get("/:id", async (req, res) => {
   let { id } = req.params;
   try {
     const user = await getUser(id);
-    if (user) {
-      res.status(200).send(user);
-    } else {
-      res.status(400).send({ message: "Usuario no encontrado" });
+    res.status(200).send(user);
   } catch (error) {
     console.log(error);
+    res.status(500).send("Error al obtener el usuario");
   }
 });
 
