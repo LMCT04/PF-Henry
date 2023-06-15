@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 import style from "./form.module.css";
+import Footer from "../../Components/Footer/Footer";
 
 const CreateForm = () => {
     const lettersOrSpacesREGEX = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
@@ -10,7 +11,7 @@ const CreateForm = () => {
     const numberREGEX = /^([0-9]+(?:\.[0-9]*)?)$/;
 
     return (
-        <div>
+        <div className={style.formBack}>
             <h1>Create New Product</h1>
             <Formik
                 initialValues={{
@@ -187,6 +188,7 @@ const CreateForm = () => {
                     </form>
                 )}
             </Formik>
+            <Footer/>
         </div>
     );
 };

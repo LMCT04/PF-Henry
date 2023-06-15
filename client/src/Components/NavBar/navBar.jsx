@@ -19,7 +19,8 @@ const NavBar = () => {
                     to='/create' 
                     className={style.navLink}
                     style={(isActive) => ({
-                        "font-size": isActive ? "30px" : "25px",
+                        "font-size": isActive ? "28px" : "22px",
+                        "font-weight": isActive ? 'bold' : 'normal',
                         "text-decoration": isActive ? "underline" : "none",
                     })}
                 >
@@ -30,7 +31,8 @@ const NavBar = () => {
                     to='/home' 
                     className={style.navLink}
                     style={(isActive) => ({
-                        "font-size": isActive ? "40px" : "25px",
+                        "font-size": isActive ? "28px" : "22px",
+                        "font-weight": isActive ? 'bold' : 'normal',
                         "text-decoration": isActive ? "underline" : "none",
                     })}
                 >
@@ -41,7 +43,8 @@ const NavBar = () => {
                     to='/menu' 
                     className={style.navLink}
                     style={(isActive) => ({
-                        "font-size": isActive ? "40px" : "25px",
+                        "font-size": isActive ? "28px" : "22px",
+                        "font-weight": isActive ? 'bold' : 'normal',
                         "text-decoration": isActive ? "underline" : "none",
                     })}
                 >
@@ -52,7 +55,8 @@ const NavBar = () => {
                     to='/about' 
                     className={style.navLink}
                     style={(isActive) => ({
-                        "font-size": isActive ? "40px" : "25px",
+                        "font-size": isActive ? "28px" : "22px",
+                        "font-weight": isActive ? 'bold' : 'normal',
                         "text-decoration": isActive ? "underline" : "none",
                     })}
                 >

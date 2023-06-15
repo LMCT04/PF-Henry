@@ -4,6 +4,7 @@ import { orderAlphabetic, orderPrice } from "../../redux/actions/actionsProducts
 import Loading from "../Loading/Loading";
 import Card from "../../Components/cards/Card";
 import style from "./menu.module.css";
+import Footer from "../../Components/Footer/Footer";
 
 const Menu = () => {
   const dispatch = useDispatch();
@@ -20,23 +21,26 @@ const Menu = () => {
   };
 
   return (
-    <div className={style.cardContainer}>
-      <label>Alphabetic order</label>
-      <select onChange={handleAlphabeticOrder}>
-        <option value="asc">ASC</option>
-        <option value="desc">DESC</option>
-      </select>
-      <label>PRICE ORDER</label>
-      <select onChange={handlePriceOrder}>
-        <option value="asc">ASC</option>
-        <option value="desc">DESC</option>
-      </select>
+    <div className={style.menuContainer} >
+      <div className={style.cardContainer}>
+        <label>Alphabetic order</label>
+        <select onChange={handleAlphabeticOrder}>
+          <option value="asc">ASC</option>
+          <option value="desc">DESC</option>
+        </select>
+        <label>PRICE ORDER</label>
+        <select onChange={handlePriceOrder}>
+          <option value="asc">ASC</option>
+          <option value="desc">DESC</option>
+        </select>
 
-      {allProducts.length > 0 ? (
-        allProducts.map((e) => <Card key={e.id} element={e} />)
-      ) : (
-        <Loading />
-      )}
+        {allProducts.length > 0 ? (
+          allProducts.map((e) => <Card key={e.id} element={e} />)
+        ) : (
+          <Loading />
+        )}
+      </div>
+      <Footer/>
     </div>
   );
 };
