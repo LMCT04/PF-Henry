@@ -17,28 +17,17 @@ const modulePostProduct = async (newProduct) => {
 };
 
 
-const getAllProductFromDatabase = async () => {
+const moduleGetAllProductFromDatabase = async () => {
   try {
     const products = await Product.findAll();
-    const formateProducts = products.map((product) => {
-      return {
-        id: product.id,
-        name: product.name,
-        image: product.image,
-        description: product.description,
-        price: product.price,
-        type: product.type,
-        category: product.category,
-      };
-    });
-    return formateProducts;
 
+    return products;
   } catch (error) {
-    console.error()
+    console.log(error);
   }
 };
 
-const getProductFromDatabaseByName = async (name) => {
+const moduleGetProductFromDatabaseByName = async (name) => {
   try {
     const products = await Product.findAll({
       where: {
@@ -61,10 +50,57 @@ const getProductFromDatabaseByName = async (name) => {
     console.error(error);
   }
 };
+const moduleGetProductById = async (id) => {
+  try {
+    const productById = await Product.findOne({
+      where: { id: id },
+    });
+
+    return productById;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const modulePutStatusProduct = async (id, status) => {
+  try {
+    const product = await Product.findByPk(id);
+    product.isActive = status;
+    await product.save();
+    return product;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const modulePutUpdateProduct = async (id, upProduct) => {
+  try {
+    const product = await Product.findByPk(id);
+    if (!product) {
+      throw new Error("Producto no encontrado");
+    }
+
+    product.name = upProduct.name;
+    product.image = upProduct.image;
+    product.description = upProduct.description;
+    product.price = upProduct.price;
+    product.type = upProduct.type;
+    product.category = upProduct.category;
+
+    await product.save();
+
+    return product;
+  } catch (error) {
+    throw error;
+  }
+};
 
 module.exports = {
   //exportar cada funcion
   modulePostProduct,
-  getProductFromDatabaseByName,
-  getAllProductFromDatabase,
+  moduleGetProductFromDatabaseByName,
+  moduleGetAllProductFromDatabase,
+  moduleGetProductById,
+  modulePutStatusProduct,
+  modulePutUpdateProduct,
 };

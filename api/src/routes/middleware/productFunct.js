@@ -1,33 +1,55 @@
 //destructurar todas las funciones de los modelos aca
 const {
-  getProductFromDatabaseByName,
-  getAllProductFromDatabase,
+  moduleGetProductFromDatabaseByName,
+  moduleGetAllProductFromDatabase,
+  modulePostProduct,
+  moduleGetProductById,
+  modulePutStatusProduct,
+  modulePutUpdateProduct,
 } = require("./modules/CRUDProduct");
 
-const getAllProducts = async (name) => {
+//definir funciones
+
+const getProducts = async (name) => {
   try {
     const dataBaseProducts = await (name
-      ? getProductFromDatabaseByName(name)
-      : getAllProductFromDatabase);
+      ? moduleGetProductFromDatabaseByName(name)
+      : moduleGetAllProductFromDatabase());
     return dataBaseProducts;
   } catch (error) {
     console.error("Error al obtener los productos:", error);
   }
 };
-//ejemplo de middleare
-// const getAllProduct = async (name) => {
-//   //ejemplo de condicional
-//   if (name) {
-//     await getProductFromDataBaseByName ---> esta funcion se tiene que definir en models y es la que hace la logica pura, se tiene que destructurar y requerir..
-//   } else {
-//     await getAllProductFromDataBase  ---> esta funcion se tiene que definir en models y es la que hace la logica pura, se tiene que destructurar y requerir..
-//   }
-//  resto del codigo...
-// }
 
-//definir funciones
+const postCreateProduct = async (newProduct) => {
+  try {
+    return await modulePostProduct(newProduct);
+  } catch (error) {
+    console.error("Error al crear usuario", error);
+  }
+};
 
+const getProductById = async (id) => {
+  try {
+    return await moduleGetProductById(id);
+  } catch (error) {
+    console.error(`Error al encontrar el usuario con id: ${id}`, error);
+  }
+};
+const putProduct = async (id, status, upProduct) => {
+  try {
+    const updatedProduct = upProduct
+      ? await modulePutUpdateProduct(id, upProduct)
+      : await modulePutStatusProduct(id, status);
+    return updatedProduct;
+  } catch (error) {
+    console.error(error);
+  }
+};
 module.exports = {
-  getAllProducts,
   //exportar cada funcion
+  getProducts,
+  postCreateProduct,
+  getProductById,
+  putProduct,
 };
