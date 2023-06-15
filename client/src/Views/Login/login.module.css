@@ -1,0 +1,86 @@
+.loginContainer{
+    background-color: rgb(218, 218, 218);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.form{
+    width: 40%;
+    height: 60%;
+    margin-bottom: 15%;
+    margin-left: 30%;
+    margin-right: 30%;
+    background-color: #A5CAA8;
+    border-radius: 1.5rem;
+    box-shadow: rgba(0,0,0,0.16) 0px 1px 4px;
+    padding-top: 20px;
+    margin-top: 10px;
+}
+
+.div{
+    margin-bottom: 20px;
+    height: 12%;
+    width: 80%;
+    margin-left: 10%;
+}
+
+.input{
+    height: 80%;
+    width: 60%;
+    background-color: #FEFEE3;
+    color: #0D2015;
+    border-radius: 1.5rem;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    padding-left: 30px;
+    box-shadow: rgba(0,0,0,0.16) 0px 1px 4px;
+    margin-top: .5%;
+}
+
+.buttonContainer{
+    width: 40%;
+    height: 20%;
+    margin-left: 30%;
+    margin-top: 1%;
+    font-weight: bold;
+    border-radius: 1.5rem;
+}
+
+.button{
+    margin-top: 10%;
+    height: 35%;
+    width: 30%;
+    border-radius: 1.5rem;
+    background-color: #FFC9B9;
+    color: #0D2015;
+    border: none;
+    cursor: pointer;
+    transition: color 0.5s ease;
+    transition: transform 0.3s ease;
+    font-size: 1rem;
+    box-shadow: rgba(0,0,0,0.16) 0px 1px 4px;
+}
+
+.button:hover{
+    transform: scale(1.1);
+    background-color: #0D2015;
+    color: #FFC9B9;
+    box-shadow: 4px 4px 10px  black;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.img{
+    background-image: url('../../imgAssets/timbre.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 42%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+    border-radius: 1.5rem;
+    box-shadow: rgba(0,0,0,0.16) 0px 1px 4px;
+}

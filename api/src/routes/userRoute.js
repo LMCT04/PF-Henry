@@ -10,12 +10,6 @@ userRoute.get("/:id", async (req, res) => {
       res.status(200).send(user);
     } else {
       res.status(400).send({ message: "Usuario no encontrado" });
-    }
-  } catch {
-    console.error(error);
-    res.status(400).send({ message: "Error al obtener el usuario" });
-  }
-});
 
 userRoute.post("/", async (req, res) => {
   const {

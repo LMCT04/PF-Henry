@@ -5,6 +5,18 @@ const { User, Product } = require("../../../database.js"),
 
 //definir funciones
 
+
+const modulePostProduct = async (newProduct) => {
+  try {
+    const product = await Product.create(newProduct);
+    return product;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error al crear producto");
+  }
+};
+
+
 const getAllProductFromDatabase = async () => {
   try {
     const products = await Product.findAll();
@@ -20,6 +32,7 @@ const getAllProductFromDatabase = async () => {
       };
     });
     return formateProducts;
+
   } catch (error) {
     console.error()
   }
@@ -50,6 +63,8 @@ const getProductFromDatabaseByName = async (name) => {
 };
 
 module.exports = {
+  //exportar cada funcion
+  modulePostProduct,
   getProductFromDatabaseByName,
   getAllProductFromDatabase,
 };

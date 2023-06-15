@@ -1,0 +1,18 @@
+.footerContainer{
+    bottom: 0;
+    /* position: fixed; */
+    background-color: rgb(132, 132, 132);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-direction: row;
+    height: 300px;
+    padding-top: 20px;
+}
+
+.infoFooter{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+}
