@@ -2,11 +2,10 @@ const { Router } = require("express");
 const userRoute = Router();
 const { getUser, postUser } = require("./middleware/userFunct");
 
-
-userRoute.get("/:id", async (req, res) => {
-  let { id } = req.params;
+userRoute.get("/", async (req, res) => {
+  let { mail } = req.body;
   try {
-    const user = await getUser(id);
+    const user = await getUser(mail);
     res.status(200).send(user);
   } catch (error) {
     console.log(error);
