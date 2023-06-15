@@ -69,6 +69,8 @@ const Landing = () => {
                         //Validaciones Email
                         if(!valores.email){
                             errores.email = 'Por favor ingrese un correo'
+                        } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(valores.email)){
+                            valores.email = 'Ingrese un correo valido'
                         }
 
                         //Validaciones Address
