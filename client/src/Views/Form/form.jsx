@@ -1,6 +1,9 @@
 import React from "react";
 import { Formik } from "formik";
 import style from "./form.module.css";
+import Footer from "../../Components/Footer/Footer";
+import { useDispatch } from "react-redux";
+import { createProduct } from '../../redux/actions/actionsProducts'
 
 const CreateForm = () => {
     const lettersOrSpacesREGEX = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
@@ -9,8 +12,10 @@ const CreateForm = () => {
 
     const numberREGEX = /^([0-9]+(?:\.[0-9]*)?)$/;
 
+    const dispatch = useDispatch()
+
     return (
-        <div>
+        <div className={style.formBack}>
             <h1>Create New Product</h1>
             <Formik
                 initialValues={{
@@ -40,9 +45,9 @@ const CreateForm = () => {
                     if (!values.image) {
                         errors.image = "Image URL can't be empty.";
                     }
-                    if (values.image && !imageURLREGEX.test(values.image)) {
+                    /*if (values.image && !imageURLREGEX.test(values.image)) {
                         errors.image = "URL not valid.";
-                    }
+                    }*/
 
                     // DESCRIPTION //
                     if (!values.description) {
@@ -75,6 +80,11 @@ const CreateForm = () => {
                     return errors;
                 }}
                 onSubmit={(values, { resetForm }) => {
+                    let { name, image, description, price, type, category } = values
+                    dispatch(
+                        createProduct({ name, image, description, price, type, category })
+                    )
+
                     resetForm();
                     console.log(values);
                 }}
@@ -187,6 +197,7 @@ const CreateForm = () => {
                     </form>
                 )}
             </Formik>
+            <Footer/>
         </div>
     );
 };

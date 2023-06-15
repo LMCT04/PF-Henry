@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   orderAlphabetic,
@@ -8,9 +8,20 @@ import Loading from "../Loading/Loading";
 import Card from "../../Components/cards/Card";
 import style from "./menu.module.css";
 import Pagination from "@mui/material/Pagination";
+import Footer from "../../Components/Footer/Footer";
+import { getAllProducts } from '../../redux/actions/actionsProducts'
+
+
 const Menu = () => {
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.products || []);
+
+  useEffect(() => {
+    dispatch(getAllProducts())
+  }, [dispatch])
+
+  const allP = useSelector((state ) => state.product)
+
+  //const allProducts = useSelector((state) => state.products || []);
 
   const [pageProducts, setPageProducts] = useState([]);
   const [page, setPage] = useState(1);
