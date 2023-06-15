@@ -9,6 +9,64 @@ const NavBar = () => {
         history.push("/login");
     };
 
+    return(
+        <div className={style.navBar} >
+            <div className={style.logoContainer} >
+                <div className={style.logo} >LOGO</div>
+            </div>
+            <div className={style.linksContainer} >
+                <NavLink 
+                    to='/create' 
+                    className={style.navLink}
+                    style={(isActive) => ({
+                        "font-size": isActive ? "30px" : "25px",
+                        "text-decoration": isActive ? "underline" : "none",
+                    })}
+                >
+                    New Product
+                </NavLink>
+
+                <NavLink 
+                    to='/home' 
+                    className={style.navLink}
+                    style={(isActive) => ({
+                        "font-size": isActive ? "40px" : "25px",
+                        "text-decoration": isActive ? "underline" : "none",
+                    })}
+                >
+                    Home
+                </NavLink>
+
+                <NavLink 
+                    to='/menu' 
+                    className={style.navLink}
+                    style={(isActive) => ({
+                        "font-size": isActive ? "40px" : "25px",
+                        "text-decoration": isActive ? "underline" : "none",
+                    })}
+                >
+                    Menu
+                </NavLink>
+
+                <NavLink 
+                    to='/about' 
+                    className={style.navLink}
+                    style={(isActive) => ({
+                        "font-size": isActive ? "40px" : "25px",
+                        "text-decoration": isActive ? "underline" : "none",
+                    })}
+                >
+                    About
+                </NavLink>
+            </div>
+            <div className={style.logoutContainer} >
+                <button onClick={logout} className={style.logout}>
+                    LOGOUT
+                </button>             
+            </div>
+        </div>
+    )
+/*
     return (
         <div id="NavBar" className={style.navBar}>
             <div className={style.links}>
@@ -70,12 +128,12 @@ const NavBar = () => {
                     About
                 </NavLink>
             </div>
-            {/* Esto se mueve, hay que arreglarlo para que no pase */}
             <button onClick={logout} className={style.logout}>
                 Logout
             </button>
         </div>
     );
+*/
 };
 
 export default NavBar;
