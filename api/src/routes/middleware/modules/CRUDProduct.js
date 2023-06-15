@@ -20,7 +20,9 @@ const getAllProductFromDatabase = async () => {
       };
     });
     return formateProducts;
-  } catch (error) {}
+  } catch (error) {
+    console.error()
+  }
 };
 
 const getProductFromDatabaseByName = async (name) => {

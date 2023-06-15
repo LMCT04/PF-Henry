@@ -2,7 +2,7 @@
 const {
   getProductFromDatabaseByName,
   getAllProductFromDatabase,
-} = require("./models/CRUDProduct");
+} = require("./modules/CRUDProduct");
 
 const getAllProducts = async (name) => {
   try {
