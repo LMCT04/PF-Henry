@@ -1,7 +1,8 @@
-////En CRUDUser se definen todas las peticiones Create (Crear), Read (Leer), Update (Actualizar) y Delete (Borrar)
 const { User, Product } = require("../../../database.js"),
   { Op } = require("sequelize");
+////En CRUDUser se definen todas las peticiones Create (Crear), Read (Leer), Update (Actualizar) y Delete (Borrar)
 
+//definir funciones
 const modelgetUserFromDatabase = async (id) => {
   try {
     const user = await User.findByPk(id);
@@ -56,15 +57,8 @@ const modelpostUserInDatabase = async (
   return newUser;
 };
 
-
-
-
-
-//definir funciones
-
 module.exports = {
   //exportar cada funcion
   modelgetUserFromDatabase,
   modelpostUserInDatabase,
- 
 };

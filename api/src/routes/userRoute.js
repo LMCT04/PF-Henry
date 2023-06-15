@@ -2,6 +2,7 @@ const { Router } = require("express");
 const userRoute = Router();
 const { getUser, postUser } = require("./middleware/userFunct");
 
+
 userRoute.get("/:id", async (req, res) => {
   let { id } = req.params;
   try {
