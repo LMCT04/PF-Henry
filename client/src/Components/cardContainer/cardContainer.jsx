@@ -11,34 +11,39 @@ const CardsContainer = () => {
 
     const dispatch = useDispatch();
 
-    const allProducts = useSelector((state ) => state.product)
+    const allProducts = useSelector((state) => state.product)
 
     const types = allProducts.map(product => product.type);
     const typesSet = new Set(types);
 
     const [pageProducts, setPageProducts] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState({
+        current: 1,
+        total: Math.ceil(allProducts.length / 12)
+    });
 
     const handleChange = (event, value) => {
-        let productsPag=[...allProducts];
-        setPage(value);
+        let productsPag = [...allProducts];
+        setPage(prevPage => ({ ...prevPage, current: value }));
         const startIndex = (value - 1) * 12;
         const endIndex = startIndex + 12;
+
         setPageProducts(productsPag.slice(startIndex, endIndex));
     };
 
     React.useEffect(() => {
         let productsPag = [...allProducts];
-        const startIndex = (page - 1) * 12;
+        const startIndex = (page.current - 1) * 12;
         const endIndex = startIndex + 12;
         setPageProducts(productsPag.slice(startIndex, endIndex));
-    }, [allProducts, page]);
+        setPage(prevPage => ({ ...prevPage, total: Math.ceil(allProducts.length / 12) }));
+    }, [allProducts, page.current]);
 
     const handleAlphabeticOrder = (e) => {
         const value = e.target.value;
         dispatch(orderAlphabetic(value));
     };
-    
+
     const handlePriceOrder = (e) => {
         const value = e.target.value;
         dispatch(orderPrice(value));
@@ -47,14 +52,16 @@ const CardsContainer = () => {
     const handleFilterCategory = (e) => {
         const value = e.target.value;
         dispatch(filterCategory(value));
+        setPage(prevPage => ({ ...prevPage, current: 1 }));
     };
-    
+
     const handleFilterType = (e) => {
         const value = e.target.value;
         dispatch(filterType(value));
+        setPage(prevPage => ({ ...prevPage, current: 1 }));
     };
 
-    return(
+    return (
         <>
             <label>Alphabetic order</label>
             <select onChange={handleAlphabeticOrder}>
@@ -73,7 +80,7 @@ const CardsContainer = () => {
             <label>FILTER CATEGORY</label>
             <select onChange={handleFilterCategory}>
                 <option value="ALL">ALL</option>
-                <option value="sólido">Solido</option>
+                <option value="solido">Solido</option>
                 <option value="liquido">Liquido</option>
             </select>
 
@@ -82,7 +89,7 @@ const CardsContainer = () => {
                 <option value="ALL">ALL</option>
                 {Array.from(typesSet).map((type) => (
                     <option value={type} key={type}>
-                    {type}
+                        {type}
                     </option>
                 ))}
             </select>
@@ -90,16 +97,17 @@ const CardsContainer = () => {
             <div className={style.container}>
                 {pageProducts.length > 0 ? (
                     pageProducts.map((e) =>
-                    <Card
-                        key={e.id} 
-                        element={e}
-                    />
+                        <Card
+                            key={e.id}
+                            element={e}
+                        />
                     )
-                ) : ( <Loading/> )}
+                ) : (<Loading />)}
             </div>
 
             <Pagination
-                count={Math.ceil(allProducts.length / 12)}
+                count={page.total}
+                page={page.current}
                 variant="outlined"
                 color="primary"
                 onChange={handleChange}
@@ -109,4 +117,4 @@ const CardsContainer = () => {
     )
 }
 
-export default CardsContainer
+export default CardsContainer;
