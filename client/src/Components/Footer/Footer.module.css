@@ -1,18 +1,62 @@
-.footerContainer{
+.Container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #0d2015;
+}
+
+.footerContainer {
     bottom: 0;
     /* position: fixed; */
-    background-color: rgb(132, 132, 132);
     display: flex;
-    justify-content: space-evenly;
     align-items: flex-start;
-    flex-direction: row;
-    height: 300px;
+    flex-direction: column;
+    height: 250px;
     padding-top: 20px;
 }
 
-.infoFooter{
+.logoBtn {
+    border-radius: 100px;
+    background-color: transparent;
+    border: none;
+}
+
+.logo {
+    width: 50px;
+    background-color: transparent;
+}
+.cafeLogo {
+    width: 150px;
+}
+
+.info {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 90vw;
+}
+.infoFooter {
     display: flex;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
     flex-direction: column;
+    color: #fefee3;
+    width: 100%;
+}
+.infoFooterRedes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fefee3;
+}
+
+.copyRight {
+    color: #fefee3;
+    /* padding-left: 6.5%; */
+    display: flex;
+    align-items: flex-start;
+    width: 90vw;
 }

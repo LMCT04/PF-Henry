@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import style from "./navBar.module.css";
+import logo from "../../imgAssets/logo_sin_texto.png";
 
 const NavBar = () => {
     const history = useHistory();
@@ -9,17 +10,19 @@ const NavBar = () => {
         history.push("/login");
     };
 
-    return(
-        <div className={style.navBar} >
-            <NavLink to='/' >
-                <div className={style.logoContainer} >
-                    <button className={style.logo} ></button>
+    return (
+        <div className={style.navBar}>
+            <NavLink to="/">
+                <div className={style.logoContainer}>
+                    <button className={style.logoBtn}>
+                        <img src={logo} alt="logos" className={style.logo} />
+                    </button>
                 </div>
             </NavLink>
 
-            <div className={style.linksContainer} >
-                <NavLink 
-                    to='/create' 
+            <div className={style.linksContainer}>
+                <NavLink
+                    to="/create"
                     className={style.navLink}
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
@@ -27,10 +30,10 @@ const NavBar = () => {
                     })}
                 >
                     New Product
-                </NavLink>  
+                </NavLink>
 
-                <NavLink 
-                    to='/home' 
+                <NavLink
+                    to="/home"
                     className={style.navLink}
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
@@ -40,8 +43,8 @@ const NavBar = () => {
                     Home
                 </NavLink>
 
-                <NavLink 
-                    to='/menu' 
+                <NavLink
+                    to="/menu"
                     className={style.navLink}
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
@@ -51,8 +54,8 @@ const NavBar = () => {
                     Menu
                 </NavLink>
 
-                <NavLink 
-                    to='/about' 
+                <NavLink
+                    to="/about"
                     className={style.navLink}
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
@@ -62,13 +65,13 @@ const NavBar = () => {
                     About
                 </NavLink>
             </div>
-            <div className={style.logoutContainer} >
+            <div className={style.logoutContainer}>
                 <button onClick={logout} className={style.logout}>
                     LOGOUT
-                </button>             
+                </button>
             </div>
         </div>
-    )
+    );
 };
 
 export default NavBar;
