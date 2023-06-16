@@ -1,14 +1,18 @@
 .container{
-    border: 1px solid black;
-    display: flex;
-    width: 70%;
+    /*border: 1px solid black;*/
+    display: grid;
+    width: 65%;
+    margin-top: 30px;
+    /*
     height: 1650px;
     margin-left: 15%;
-    margin-top: 30px;
     flex-direction: row;
-    flex-wrap: wrap;
-    gap: 2em;
-    justify-content:center;
+    flex-wrap: wrap;*/
+    grid-gap: 10px;
+    grid-row: 10px;
+    grid-template-columns: repeat(3,2fr);
+    margin-left: 17.5%;
+    margin-right: 17.5%;
 }
 
 .pag{

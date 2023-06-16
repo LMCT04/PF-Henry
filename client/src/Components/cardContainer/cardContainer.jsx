@@ -22,15 +22,15 @@ const CardsContainer = () => {
     const handleChange = (event, value) => {
         let productsPag=[...allProducts];
         setPage(value);
-        const startIndex = (value - 1) * 10;
-        const endIndex = startIndex + 10;
+        const startIndex = (value - 1) * 12;
+        const endIndex = startIndex + 12;
         setPageProducts(productsPag.slice(startIndex, endIndex));
     };
 
     React.useEffect(() => {
         let productsPag = [...allProducts];
-        const startIndex = (page - 1) * 10;
-        const endIndex = startIndex + 10;
+        const startIndex = (page - 1) * 12;
+        const endIndex = startIndex + 12;
         setPageProducts(productsPag.slice(startIndex, endIndex));
     }, [allProducts, page]);
 
@@ -73,7 +73,7 @@ const CardsContainer = () => {
             <label>FILTER CATEGORY</label>
             <select onChange={handleFilterCategory}>
                 <option value="ALL">ALL</option>
-                <option value="solido">Solido</option>
+                <option value="sólido">Solido</option>
                 <option value="liquido">Liquido</option>
             </select>
 
@@ -99,7 +99,7 @@ const CardsContainer = () => {
             </div>
 
             <Pagination
-                count={Math.ceil(allProducts.length / 10)}
+                count={Math.ceil(allProducts.length / 12)}
                 variant="outlined"
                 color="primary"
                 onChange={handleChange}
