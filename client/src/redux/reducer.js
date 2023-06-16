@@ -1,5 +1,5 @@
 
-import { ORDER_AlPHABETIC,ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT, FILTER_CATEGORY, FILTER_TYPE } from "./actionsType/productsAT";
+import { ORDER_ALPHABETIC,ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT, FILTER_CATEGORY, FILTER_TYPE } from "./actionsType/productsAT";
 
 const initialState={
     allProducts: [],
@@ -23,7 +23,7 @@ const rootReducer = (state = initialState, action) => {
           newProduct: action.payload,
         }
         
-        case ORDER_AlPHABETIC:
+        case ORDER_ALPHABETIC:
           let copyThree = [...state.product];
           let sortedName = action.payload === "asc"
             ? copyThree.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
