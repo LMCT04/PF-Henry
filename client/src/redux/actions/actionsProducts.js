@@ -1,6 +1,6 @@
 
 import axios from 'axios'
-import { ORDER_AlPHABETIC,ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT, FILTER_CATEGORY, FILTER_TYPE } from "../actionsType/productsAT";
+import { ORDER_ALPHABETIC,ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT, FILTER_CATEGORY, FILTER_TYPE } from "../actionsType/productsAT";
 
 
 export const orderAlphabetic = (payload) => {

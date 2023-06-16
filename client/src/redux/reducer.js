@@ -57,7 +57,7 @@ const rootReducer = (state = initialState, action) => {
           : newproduct3= productFind3
           return {
               ...state,
-              products: newproduct3
+              product: newproduct3
           }
         
           case FILTER_TYPE: 
@@ -74,7 +74,7 @@ const rootReducer = (state = initialState, action) => {
           : newproduct= productFind
           return {
               ...state,
-              products: newproduct
+              product: newproduct
           };
         
         default:
