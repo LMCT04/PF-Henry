@@ -1,4 +1,5 @@
-import { ORDER_AlPHABETIC,ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT } from "./actionsType/productsAT";
+
+import { ORDER_AlPHABETIC,ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT, FILTER_CATEGORY, FILTER_TYPE } from "./actionsType/productsAT";
 
 const initialState={
     allProducts: [],
@@ -41,7 +42,41 @@ const rootReducer = (state = initialState, action) => {
               ...state,
               product: price
             };
+          
+          case FILTER_CATEGORY: 
+          const products3= state.allProducts;
+          const productFind3= [];
+          let newproduct3=[];
+          products3.forEach(product=>{
+              if(product.category===action.payload) productFind3.push(product)
+          }                
+          );
 
+          action.payload==="ALL" 
+          ? newproduct3= products3
+          : newproduct3= productFind3
+          return {
+              ...state,
+              products: newproduct3
+          }
+        
+          case FILTER_TYPE: 
+          const products2= state.allProducts;
+          const productFind= [];
+          let newproduct=[];
+          products2.forEach(product=>{
+              if(product.type.includes(action.payload)) productFind.push(product)
+          }                
+          );
+
+          action.payload==="ALL" 
+          ? newproduct= products2
+          : newproduct= productFind
+          return {
+              ...state,
+              products: newproduct
+          };
+        
         default:
           return state;
   }

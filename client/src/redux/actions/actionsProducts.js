@@ -1,21 +1,36 @@
+
 import axios from 'axios'
-import { ORDER_AlPHABETIC,ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT } from "../actionsType/productsAT";
+import { ORDER_AlPHABETIC,ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT, FILTER_CATEGORY, FILTER_TYPE } from "../actionsType/productsAT";
 
 
 export const orderAlphabetic = (payload) => {
     return {
-      type: ORDER_AlPHABETIC,
+      type: ORDER_ALPHABETIC,
       payload,
     };
   };
 
-
-  export const orderPrice = (payload) => {
+export const orderPrice = (payload) => {
     return {
         type: ORDER_PRICE,
         payload,
       };
-    };
+};
+
+export const filterType = (payload) => {
+      return {
+          type: FILTER_TYPE,
+          payload,
+        };
+};
+
+export const filterCategory = (payload) => {
+        return {
+            type: FILTER_CATEGORY,
+            payload,
+          };
+};
+      
 
   export const getAllProducts = () => {
     return async function (dispatch) {
