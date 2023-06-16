@@ -11,29 +11,30 @@ const NavBar = () => {
 
     return(
         <div className={style.navBar} >
-            <div className={style.logoContainer} >
-                <div className={style.logo} >LOGO</div>
-            </div>
+            <NavLink to='/' >
+                <div className={style.logoContainer} >
+                    <button className={style.logo} ></button>
+                </div>
+            </NavLink>
+
             <div className={style.linksContainer} >
                 <NavLink 
                     to='/create' 
                     className={style.navLink}
                     style={(isActive) => ({
-                        "font-size": isActive ? "28px" : "22px",
-                        "font-weight": isActive ? 'bold' : 'normal',
-                        "text-decoration": isActive ? "underline" : "none",
+                        fontSize: isActive ? "28px" : "22px",
+                        textDecoration: isActive ? "underline" : "none",
                     })}
                 >
                     New Product
-                </NavLink>
+                </NavLink>  
 
                 <NavLink 
                     to='/home' 
                     className={style.navLink}
                     style={(isActive) => ({
-                        "font-size": isActive ? "28px" : "22px",
-                        "font-weight": isActive ? 'bold' : 'normal',
-                        "text-decoration": isActive ? "underline" : "none",
+                        fontSize: isActive ? "28px" : "22px",
+                        textDecoration: isActive ? "underline" : "none",
                     })}
                 >
                     Home
@@ -43,9 +44,8 @@ const NavBar = () => {
                     to='/menu' 
                     className={style.navLink}
                     style={(isActive) => ({
-                        "font-size": isActive ? "28px" : "22px",
-                        "font-weight": isActive ? 'bold' : 'normal',
-                        "text-decoration": isActive ? "underline" : "none",
+                        fontSize: isActive ? "28px" : "22px",
+                        textDecoration: isActive ? "underline" : "none",
                     })}
                 >
                     Menu
@@ -55,9 +55,8 @@ const NavBar = () => {
                     to='/about' 
                     className={style.navLink}
                     style={(isActive) => ({
-                        "font-size": isActive ? "28px" : "22px",
-                        "font-weight": isActive ? 'bold' : 'normal',
-                        "text-decoration": isActive ? "underline" : "none",
+                        fontSize: isActive ? "28px" : "22px",
+                        textDecoration: isActive ? "underline" : "none",
                     })}
                 >
                     About
@@ -70,74 +69,6 @@ const NavBar = () => {
             </div>
         </div>
     )
-/*
-    return (
-        <div id="NavBar" className={style.navBar}>
-            <div className={style.links}>
-                <NavLink
-                    to="/home"
-                    style={(isActive) => ({
-                        color: "rgb(20, 20, 20)",
-                        "text-decoration": "none",
-                    })}
-                >
-                    <h1>Logo</h1>
-                </NavLink>
-
-                <NavLink
-                    to="/create"
-                    style={(isActive) => ({
-                        color: isActive ? "rgb(20, 20, 20)" : "rgb(71, 71, 71)",
-
-                        "font-size": isActive ? "x-large" : "large",
-                        "text-decoration": isActive ? "underline" : "none",
-                    })}
-                >
-                    New Product
-                </NavLink>
-
-                <NavLink
-                    to="/home"
-                    style={(isActive) => ({
-                        color: isActive ? "rgb(20, 20, 20)" : "rgb(71, 71, 71)",
-
-                        "font-size": isActive ? "x-large" : "large",
-                        "text-decoration": isActive ? "underline" : "none",
-                    })}
-                >
-                    Home
-                </NavLink>
-
-                <NavLink
-                    to="/menu"
-                    style={(isActive) => ({
-                        color: isActive ? "rgb(20, 20, 20)" : "rgb(71, 71, 71)",
-
-                        "font-size": isActive ? "x-large" : "large",
-                        "text-decoration": isActive ? "underline" : "none",
-                    })}
-                >
-                    Menu
-                </NavLink>
-
-                <NavLink
-                    to="/about"
-                    style={(isActive) => ({
-                        color: isActive ? "rgb(20, 20, 20)" : "rgb(71, 71, 71)",
-
-                        "font-size": isActive ? "x-large" : "large",
-                        "text-decoration": isActive ? "underline" : "none",
-                    })}
-                >
-                    About
-                </NavLink>
-            </div>
-            <button onClick={logout} className={style.logout}>
-                Logout
-            </button>
-        </div>
-    );
-*/
 };
 
 export default NavBar;

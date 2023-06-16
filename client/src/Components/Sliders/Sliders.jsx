@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+//import React, { useRef, useState } from "react";
+import React from "react";
 import { Autoplay, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import style from "./Sliders.module.css";
@@ -25,9 +26,9 @@ const Sliders = () => {
                 onSlideChange={() => console.log("slide change")}
                 className={style.container}
             >
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 2</SwiperSlide>
-                <SwiperSlide>Slide 3</SwiperSlide>
+                <SwiperSlide className={style.slide1} ></SwiperSlide>
+                <SwiperSlide className={style.slide2} ></SwiperSlide>
+                <SwiperSlide className={style.slide3} ></SwiperSlide>
             </Swiper>
         </div>
     );

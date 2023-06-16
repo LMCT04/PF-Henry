@@ -8,7 +8,7 @@ import { createProduct } from '../../redux/actions/actionsProducts'
 const CreateForm = () => {
     const lettersOrSpacesREGEX = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     // const imageURLREGEX = /\.(jpeg|jpg|gif|png)$/i;
-    const imageURLREGEX = /^data:image\/jpeg;base64,[a-zA-Z0-9+/=]+$/;
+    //const imageURLREGEX = /^data:image\/jpeg;base64,[a-zA-Z0-9+/=]+$/;
 
     const numberREGEX = /^([0-9]+(?:\.[0-9]*)?)$/;
 
