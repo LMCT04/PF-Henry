@@ -1,13 +1,22 @@
-import React from "react";
+
+/*import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { orderAlphabetic, orderPrice, filterCategory, filterType } from "../../redux/actions/actionsProducts";
 import Loading from "../Loading/Loading";
-import Card from "../../Components/cards/Card";
+import Card from "../../Components/cards/Card";*/
+
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
 import style from "./menu.module.css";
-import Footer from "../../Components/Footer/Footer";
+import { getAllProducts } from '../../redux/actions/actionsProducts'
+import CardsContainer from "../../Components/cardContainer/cardContainer";
+import Footer from '../../Components/Footer/Footer'
+
 
 const Menu = () => {
   const dispatch = useDispatch();
+  /*
   const allProducts = useSelector((state) => state.products || []);
 
   const types = allProducts.map(product => product.type);
@@ -17,11 +26,11 @@ const Menu = () => {
     const value = e.target.value;
     dispatch(orderAlphabetic(value));
   };
+  */
 
-  const handlePriceOrder = (e) => {
-    const value = e.target.value;
-    dispatch(orderPrice(value));
-  };
+  useEffect(() => {
+    dispatch(getAllProducts())
+  }, [dispatch])
 
   const handleFilterCategory = (e) => {
     const value = e.target.value;
@@ -34,7 +43,17 @@ const Menu = () => {
   };
 
   return (
-    <div className={style.menuContainer}>
+    <div className={style.container} >
+      <CardsContainer/>
+      <Footer/>
+    </div>
+  );
+};
+
+export default Menu;
+
+/*
+<div className={style.menuContainer}>
       <div className={style.cardContainer}>
         <label>ALPHABETIC ORDER</label>
         <select onChange={handleAlphabeticOrder}>
@@ -73,8 +92,6 @@ const Menu = () => {
         )}
       </div>
       <Footer />
-    </div>
-  );
-};
+*/
 
-export default Menu;
+

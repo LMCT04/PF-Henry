@@ -5,7 +5,7 @@
     flex-direction: column;
     gap: 10px;
     width: 90vw;
-    height: 50vh;
+    height: 60vh;
 }
 
 .slidesContainer {
@@ -17,8 +17,7 @@
     width: 90%;
 }
 
-.slideBtn {
-}
+
 
 .slides {
     display: flex;
@@ -51,5 +50,30 @@
     border-radius: 50%;
     border: solid 1px black;
     background-color: white;
+}
+
+.slide1{
+    background-image: url('../../imgAssets/banner-01.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+}
+
+.slide2{
+    background-image: url('../../imgAssets/banner-02.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+}
+
+.slide3{
+    background-image: url('../../imgAssets/banner-03.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+
 }
 
