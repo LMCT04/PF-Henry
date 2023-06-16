@@ -1,5 +1,5 @@
 
-import { ORDER_AlPHABETIC,ORDER_PRICE } from "../actionsType/productsAT";
+import { ORDER_AlPHABETIC,ORDER_PRICE,FILTER_TYPE,FILTER_CATEGORY } from "../actionsType/productsAT";
 
 
 export const orderAlphabetic = (payload) => {
@@ -16,3 +16,21 @@ export const orderAlphabetic = (payload) => {
         payload,
       };
     };
+
+    export const filterType = (payload) => {
+        return {
+            type: FILTER_TYPE,
+            payload,
+          };
+        };
+
+    export const filterCategory = (payload) => {
+            return {
+                type: FILTER_CATEGORY,
+                payload,
+              };
+            };
+
+           
+        
+    
