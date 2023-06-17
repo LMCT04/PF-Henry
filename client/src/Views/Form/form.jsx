@@ -5,7 +5,7 @@ import Footer from "../../Components/Footer/Footer";
 import { useDispatch } from "react-redux";
 import { createProduct } from '../../redux/actions/actionsProducts'
 
-const CreateForm = () => {
+const Form = () => {
     const lettersOrSpacesREGEX = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     // const imageURLREGEX = /\.(jpeg|jpg|gif|png)$/i;
     //const imageURLREGEX = /^data:image\/jpeg;base64,[a-zA-Z0-9+/=]+$/;
@@ -202,4 +202,4 @@ const CreateForm = () => {
     );
 };
 
-export default CreateForm;
+export default Form;

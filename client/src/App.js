@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, useLocation } from "react-router-dom";
 import NavBar from "./Components/NavBar/navBar";
-import { Home, Landing, Menu, Login, Form } from "./Views";
+import { Landing, Register, Menu, Login, Form } from "./Views";
 //import axios from "axios";
 //axios.defaults.baseURL = "http://localhost:3001/";
 
@@ -11,13 +11,13 @@ function App() {
     return (
         <div className="App">
 
-{location.pathname !== "/" && location.pathname !== "/login" && <NavBar />}
+{location.pathname !== "/" && location.pathname !== "/login" && location.pathname !== "/register" && <NavBar />}
 
-            <Route exact path = '/' component = { Landing } />
-            <Route path = '/home' component = { Home } />
-            <Route path= "/menu" component = { Menu } />
-            <Route path= "/login" component = { Login } />
-            <Route path= "/create" component = { Form } />
+            <Route exact path= "/" component = { Landing } />
+            <Route exact path= "/register" component = { Register } />
+            <Route exact path= "/menu" component = { Menu } />
+            <Route exact path= "/login" component = { Login } />
+            <Route exact path= "/create" component = { Form } />
 
         </div>
     );

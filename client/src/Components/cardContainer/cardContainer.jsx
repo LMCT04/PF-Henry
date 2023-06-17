@@ -39,7 +39,7 @@ const CardsContainer = () => {
         const [pageProducts, setPageProducts] = useState([]);
         const [page, setPage] = useState({
             current: 1,
-            total: Math.ceil(allProducts.length / 12),
+            total: Math.ceil(allProducts.length / 15),
         });
 
     
@@ -58,12 +58,12 @@ const CardsContainer = () => {
                 (product) => product.type === typeFilter
             );
         }
-        const startIndex = (page.current - 1) * 12;
-        const endIndex = startIndex + 12;
+        const startIndex = (page.current - 1) * 15;
+        const endIndex = startIndex + 15;
         setPageProducts(filteredProducts.slice(startIndex, endIndex));
         setPage((prevPage) => ({
             ...prevPage,
-            total: Math.ceil(filteredProducts.length / 12),
+            total: Math.ceil(filteredProducts.length / 15),
         }));
     
     }, [allProducts, page.current, categoryFilter, typeFilter]);
@@ -74,8 +74,8 @@ const CardsContainer = () => {
     const handleChange = (event, value) => {
         let productsPag = [...allProducts];
         setPage((prevPage) => ({ ...prevPage, current: value }));
-        const startIndex = (value - 1) * 12;
-        const endIndex = startIndex + 12;
+        const startIndex = (value - 1) * 15;
+        const endIndex = startIndex + 15;
         setPageProducts(productsPag.slice(startIndex, endIndex));
     };
 
@@ -113,7 +113,7 @@ const CardsContainer = () => {
             <div className={style.filtersAndCards}>
                 <div className={style.filtersContainer}>
                     <div className={style.alfContainer}>
-                        {/* <label>Alphabetic order</label> */}
+                        <label>ALPHABETIC ORDER</label> 
                         {/* <InputLabel id="demo-simple-select-label">
                         Age
                     </InputLabel> */}
@@ -132,7 +132,7 @@ const CardsContainer = () => {
                     </div>
 
                     <div className={style.alfContainer}>
-                        {/* <label>PRICE ORDER</label> */}
+                        <label>PRICE ORDER</label>
 
                         <Select
                             onChange={handlePriceOrder}
@@ -147,7 +147,7 @@ const CardsContainer = () => {
                     </div>
 
                     <div className={style.alfContainer}>
-                        {/* <label>FILTER CATEGORY</label> */}
+                        <label>FILTER CATEGORY</label>
 
                         <Select
                             onChange={handleFilterCategory}
@@ -160,7 +160,7 @@ const CardsContainer = () => {
                     </div>
 
                     <div className={style.alfContainer}>
-                        {/* <label>FILTER TYPE</label> */}
+                        <label>FILTER TYPE</label>
 
                         <Select
                             onChange={handleFilterType}
