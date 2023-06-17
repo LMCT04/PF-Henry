@@ -6,6 +6,7 @@ import {
     FILTER_CATEGORY,
     FILTER_TYPE,
     RESET_FILTERS,
+    FILTER_CATEGORY_AND_TYPE,
 } from "./actionsType/productsAT";
 
 const initialState = {
@@ -33,8 +34,16 @@ const rootReducer = (state = initialState, action) => {
             let copyThree = [...state.product];
             let sortedName =
                 action.payload === "asc"
-                    ? copyThree.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
-                    : copyThree.sort((a, b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase()));
+                    ? copyThree.sort((a, b) =>
+                          a.name
+                              .toLowerCase()
+                              .localeCompare(b.name.toLowerCase())
+                      )
+                    : copyThree.sort((a, b) =>
+                          b.name
+                              .toLowerCase()
+                              .localeCompare(a.name.toLowerCase())
+                      );
             return {
                 ...state,
                 product: sortedName,
@@ -85,11 +94,27 @@ const rootReducer = (state = initialState, action) => {
                 product: newproduct,
             };
 
-            case RESET_FILTERS:
-                return {
-                    ...state,
-                    product: state.allProducts,
-                };
+        case RESET_FILTERS:
+            return {
+                ...state,
+                product: state.allProducts,
+            };
+
+        case FILTER_CATEGORY_AND_TYPE:
+            const { category, type } = action;
+            let filteredProducts = state.allProducts;
+
+            if (category !== "ALL") {
+                filteredProducts = filteredProducts.filter(
+                    (product) => product.category === category
+                );
+            }
+
+            if (type !== "ALL") {
+                filteredProducts = filteredProducts.filter(
+                    (product) => product.type === type
+                );
+            }
 
         default:
             return state;
