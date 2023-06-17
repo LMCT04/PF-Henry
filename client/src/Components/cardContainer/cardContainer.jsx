@@ -25,6 +25,23 @@ const CardsContainer = () => {
 
     const dispatch = useDispatch();
     const allProducts = useSelector((state) => state.product);
+
+    //-------------------------FILTROS--------------------------
+    
+        const [categoryFilter, setCategoryFilter] = useState("ALL");
+        const [typeFilter, setTypeFilter] = useState("ALL");
+    
+        const types = allProducts.map((product) => product.type);
+        const typesSet = new Set(types);
+    
+    //-------------------------PAGINADO--------------------------
+        
+        const [pageProducts, setPageProducts] = useState([]);
+        const [page, setPage] = useState({
+            current: 1,
+            total: Math.ceil(allProducts.length / 12),
+        });
+
     
     useEffect(() => {
     
@@ -51,21 +68,6 @@ const CardsContainer = () => {
     
     }, [allProducts, page.current, categoryFilter, typeFilter]);
 
-//-------------------------FILTROS--------------------------
-
-    const [categoryFilter, setCategoryFilter] = useState("ALL");
-    const [typeFilter, setTypeFilter] = useState("ALL");
-
-    const types = allProducts.map((product) => product.type);
-    const typesSet = new Set(types);
-
-//-------------------------PAGINADO--------------------------
-    
-    const [pageProducts, setPageProducts] = useState([]);
-    const [page, setPage] = useState({
-        current: 1,
-        total: Math.ceil(allProducts.length / 12),
-    });
 
 //-------------------------HANDLES--------------------------
 
