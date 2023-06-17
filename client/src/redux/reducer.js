@@ -6,6 +6,7 @@ import {
     FILTER_CATEGORY,
     FILTER_TYPE,
     RESET_FILTERS,
+    GET_BY_NAME,
 } from "./actionsType/productsAT";
 
 const initialState = {
@@ -23,6 +24,12 @@ const rootReducer = (state = initialState, action) => {
                 allProducts: action.payload,
             };
 
+        case GET_BY_NAME:
+            return {
+                ...state,
+                product: action.payload,
+            };
+
         case CREATE_PRODUCT:
             return {
                 ...state,
@@ -33,8 +40,16 @@ const rootReducer = (state = initialState, action) => {
             let copyThree = [...state.product];
             let sortedName =
                 action.payload === "asc"
-                    ? copyThree.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
-                    : copyThree.sort((a, b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase()));
+                    ? copyThree.sort((a, b) =>
+                          a.name
+                              .toLowerCase()
+                              .localeCompare(b.name.toLowerCase())
+                      )
+                    : copyThree.sort((a, b) =>
+                          b.name
+                              .toLowerCase()
+                              .localeCompare(a.name.toLowerCase())
+                      );
             return {
                 ...state,
                 product: sortedName,
@@ -85,11 +100,11 @@ const rootReducer = (state = initialState, action) => {
                 product: newproduct,
             };
 
-            case RESET_FILTERS:
-                return {
-                    ...state,
-                    product: state.allProducts,
-                };
+        case RESET_FILTERS:
+            return {
+                ...state,
+                product: state.allProducts,
+            };
 
         default:
             return state;
