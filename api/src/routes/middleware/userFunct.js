@@ -7,9 +7,9 @@ const {
 
 //definir funciones
 
-const getUser = async (id) => {
+const getUser = async (mail) => {
   try {
-    const databaseUser = await modelgetUserFromDatabase(id);
+    const databaseUser = await modelgetUserFromDatabase(mail);
     return databaseUser;
   } catch (error) {
     console.error("Error al obtener el usuario:", error);

@@ -1,3 +1,5 @@
+
+/*
 import axios from "axios";
 import {
     ORDER_ALPHABETIC,
@@ -9,6 +11,13 @@ import {
     RESET_FILTERS,
     GET_BY_NAME,
 } from "../actionsType/productsAT";
+*/
+
+
+import axios from 'axios'
+import { ORDER_ALPHABETIC,ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT, FILTER_CATEGORY, FILTER_TYPE, RESET_FILTERS, FILTER_CATEGORY_AND_TYPE } from "../actionsType/productsAT";
+
+
 
 export const orderAlphabetic = (payload) => {
     return {
@@ -85,6 +94,8 @@ export const createProduct = (payload) => {
         data: payload,
     };
     return async (dispatch) => {
+
+/*
         console.log(request);
         return axios(request).then((response) => {
             dispatch({
@@ -94,3 +105,23 @@ export const createProduct = (payload) => {
         });
     };
 };
+*/
+
+      console.log(request)
+      return axios(request).then((response) => {
+        dispatch({
+          type: CREATE_PRODUCT,
+          payload: response.data
+        })
+      })
+    }
+  }
+
+  export const filterCategoryAndType = (category, type) => {
+    return {
+      type: FILTER_CATEGORY_AND_TYPE,
+      category,
+      type
+    };
+  };
+

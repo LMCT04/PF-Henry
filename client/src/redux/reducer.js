@@ -7,6 +7,7 @@ import {
     FILTER_TYPE,
     RESET_FILTERS,
     GET_BY_NAME,
+    FILTER_CATEGORY_AND_TYPE,
 } from "./actionsType/productsAT";
 
 const initialState = {
@@ -105,6 +106,22 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 product: state.allProducts,
             };
+
+        case FILTER_CATEGORY_AND_TYPE:
+            const { category, type } = action;
+            let filteredProducts = state.allProducts;
+
+            if (category !== "ALL") {
+                filteredProducts = filteredProducts.filter(
+                    (product) => product.category === category
+                );
+            }
+
+            if (type !== "ALL") {
+                filteredProducts = filteredProducts.filter(
+                    (product) => product.type === type
+                );
+            }
 
         default:
             return state;
