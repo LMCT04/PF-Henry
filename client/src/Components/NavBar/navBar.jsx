@@ -12,7 +12,7 @@ const NavBar = () => {
 
     return (
         <div className={style.navBar}>
-            <NavLink to="/">
+            <NavLink to="/home">
                 <div className={style.logoContainer}>
                     <button className={style.logoBtn}>
                         <img src={logo} alt="logos" className={style.logo} />

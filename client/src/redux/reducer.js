@@ -6,6 +6,7 @@ import {
     FILTER_CATEGORY,
     FILTER_TYPE,
     RESET_FILTERS,
+    GET_BY_NAME,
     FILTER_CATEGORY_AND_TYPE,
 } from "./actionsType/productsAT";
 
@@ -22,6 +23,12 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 product: action.payload,
                 allProducts: action.payload,
+            };
+
+        case GET_BY_NAME:
+            return {
+                ...state,
+                product: action.payload,
             };
 
         case CREATE_PRODUCT:
