@@ -27,20 +27,10 @@ const NavBar = () => {
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
                         textDecoration: isActive ? "underline" : "none",
+                        color: isActive ? '#ffc9b9' : "#4c956c",
                     })}
                 >
                     New Product
-                </NavLink>
-
-                <NavLink
-                    to="/home"
-                    className={style.navLink}
-                    style={(isActive) => ({
-                        fontSize: isActive ? "28px" : "22px",
-                        textDecoration: isActive ? "underline" : "none",
-                    })}
-                >
-                    Home
                 </NavLink>
 
                 <NavLink
@@ -49,6 +39,7 @@ const NavBar = () => {
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
                         textDecoration: isActive ? "underline" : "none",
+                        color: isActive ? '#ffc9b9' : "#4c956c",
                     })}
                 >
                     Menu
@@ -60,6 +51,7 @@ const NavBar = () => {
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
                         textDecoration: isActive ? "underline" : "none",
+                        color: isActive ? '#ffc9b9' : "#4c956c",
                     })}
                 >
                     About

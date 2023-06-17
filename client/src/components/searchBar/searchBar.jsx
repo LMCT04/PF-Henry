@@ -32,7 +32,7 @@ const SearchBar = () => {
                     value={input}
                     onChange={handleInputChange}
                 />
-                <Button variant="contained" onClick={handleSubmit}>
+                <Button variant="contained" onClick={handleSubmit} >
                     Search
                 </Button>
             </div>
