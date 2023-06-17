@@ -1,0 +1,13 @@
+.home {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    padding-top: 2%;
+    height: 100vmin;
+    background-color: rgb(218, 218, 218);
+}
+
+.slidersContainer{
+    margin-top: 5%;
+}

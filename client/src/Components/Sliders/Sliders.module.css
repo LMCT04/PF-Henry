@@ -1,0 +1,11 @@
+.container {
+    width: 90%;
+    /* border-radius: 50px; */
+}
+
+.slide {
+    width: 100%;
+    aspect-ratio: 2/1;
+    border-radius: 30px;
+}
+
