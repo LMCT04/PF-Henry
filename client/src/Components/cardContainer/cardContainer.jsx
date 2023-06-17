@@ -3,8 +3,10 @@ import Card from '../cards/Card'
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import Pagination from "@mui/material/Pagination";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import Loading from '../../Views/Loading/Loading';
-import { orderAlphabetic, orderPrice, filterCategory, filterType } from '../../redux/actions/actionsProducts'
+import { orderAlphabetic, orderPrice, filterCategory, filterType, resetFilters } from '../../redux/actions/actionsProducts'
 import React from "react";
 
 const CardsContainer = () => {
@@ -41,12 +43,20 @@ const CardsContainer = () => {
 
     const handleAlphabeticOrder = (e) => {
         const value = e.target.value;
-        dispatch(orderAlphabetic(value));
+        if (value === "") {
+            dispatch(resetFilters());
+        } else {
+            dispatch(orderAlphabetic(value));
+        }
     };
 
     const handlePriceOrder = (e) => {
         const value = e.target.value;
-        dispatch(orderPrice(value));
+        if (value === "") {
+            dispatch(resetFilters());
+        } else {
+            dispatch(orderPrice(value));
+        }
     };
 
     const handleFilterCategory = (e) => {
@@ -62,37 +72,48 @@ const CardsContainer = () => {
     };
 
     return (
-        <>
-            <label>Alphabetic order</label>
-            <select onChange={handleAlphabeticOrder}>
-                <option value="default">ALPHABETIC ORDER</option>
-                <option value="asc">ASC</option>
-                <option value="desc">DESC</option>
-            </select>
+        <div className={style.cardContainer} >
+            <div className={style.filtersContainer} >
 
-            <label>PRICE ORDER</label>
-            <select onChange={handlePriceOrder}>
-                <option value="default">PRICE ORDER</option>
-                <option value="asc">ASC</option>
-                <option value="desc">DESC</option>
-            </select>
+                <div className={style.alfContainer} >
+                    <label>Alphabetic order</label>
+                    <Select onChange={handleAlphabeticOrder} className={style.input} >
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        <MenuItem value="asc">ASC</MenuItem>
+                        <MenuItem value="desc">DESC</MenuItem>
+                    </Select>
+                </div>
 
-            <label>FILTER CATEGORY</label>
-            <select onChange={handleFilterCategory}>
-                <option value="ALL">ALL</option>
-                <option value="solido">Solido</option>
-                <option value="liquido">Liquido</option>
-            </select>
+                <div className={style.alfContainer} >
+                    <label>PRICE ORDER</label>
+                    <Select onChange={handlePriceOrder} className={style.input} >
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        <MenuItem value="asc">ASC</MenuItem>
+                        <MenuItem value="desc">DESC</MenuItem>
+                    </Select>
+                </div>
 
-            <label>FILTER TYPE</label>
-            <select onChange={handleFilterType}>
-                <option value="ALL">ALL</option>
-                {Array.from(typesSet).map((type) => (
-                    <option value={type} key={type}>
-                        {type}
-                    </option>
-                ))}
-            </select>
+                <div className={style.alfContainer} >
+                    <label>FILTER CATEGORY</label>
+                    <Select onChange={handleFilterCategory} className={style.input} >
+                        <MenuItem value="ALL">ALL</MenuItem>
+                        <MenuItem value="solido">Solido</MenuItem>
+                        <MenuItem value="liquido">Liquido</MenuItem>
+                    </Select>
+                </div>
+
+                <div className={style.alfContainer} >
+                    <label>FILTER TYPE</label>
+                    <Select onChange={handleFilterType} className={style.input} >
+                        <MenuItem value="ALL">ALL</MenuItem>
+                        {Array.from(typesSet).map((type) => (
+                            <MenuItem value={type} key={type}>
+                                {type}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </div>
+            </div>
 
             <div className={style.container}>
                 {pageProducts.length > 0 ? (
@@ -113,7 +134,7 @@ const CardsContainer = () => {
                 onChange={handleChange}
                 className={style.pag}
             />
-        </>
+        </div>
     )
 }
 
