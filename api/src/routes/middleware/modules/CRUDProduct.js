@@ -5,7 +5,6 @@ const { User, Product } = require("../../../database.js"),
 
 //definir funciones
 
-
 const modulePostProduct = async (newProduct) => {
   try {
     const product = await Product.create(newProduct);
@@ -16,7 +15,6 @@ const modulePostProduct = async (newProduct) => {
   }
 };
 
-
 const moduleGetAllProductFromDatabase = async () => {
   try {
     const products = await Product.findAll();
@@ -24,6 +22,7 @@ const moduleGetAllProductFromDatabase = async () => {
     return products;
   } catch (error) {
     console.log(error);
+    throw new Error("Error al obtener todos los productos");
   }
 };
 
@@ -48,20 +47,28 @@ const moduleGetProductFromDatabaseByName = async (name) => {
     return formateProducts;
   } catch (error) {
     console.error(error);
+    throw new Error(`No se encontro el producto ${name}`);
   }
 };
-const moduleGetProductById = async (id) => {
-  try {
-    const productById = await Product.findOne({
-      where: { id: id },
-    });
 
+const moduleGetProductById = async (id) => {
+  if (isNaN(id)) {
+    throw new Error(`El id: ${id} no es válido`);
+  }
+
+  const totalProducts = await Product.count();
+
+  if (id > totalProducts) {
+    throw new Error(`El id: ${id} no es válido`);
+  }
+  try {
+    const productById = await Product.findByPk(id);
     return productById;
   } catch (error) {
     console.error(error);
+    throw new Error(`El id: ${id} no es valido`);
   }
 };
-
 const modulePutStatusProduct = async (id, status) => {
   try {
     const product = await Product.findByPk(id);
@@ -75,23 +82,30 @@ const modulePutStatusProduct = async (id, status) => {
 
 const modulePutUpdateProduct = async (id, upProduct) => {
   try {
-    const product = await Product.findByPk(id);
-    if (!product) {
-      throw new Error("Producto no encontrado");
-    }
+    Product.findByPk(id)
+      .then((product) => {
+        if (product) {
+          product.name = upProduct.name;
+          product.image = upProduct.image;
+          product.description = upProduct.description;
+          product.price = upProduct.price;
+          product.type = upProduct.type;
+          product.category = upProduct.category;
+          product.isActive = true;
 
-    product.name = upProduct.name;
-    product.image = upProduct.image;
-    product.description = upProduct.description;
-    product.price = upProduct.price;
-    product.type = upProduct.type;
-    product.category = upProduct.category;
-
-    await product.save();
-
-    return product;
+          return product.save(); // Guarda los cambios en la base de datos
+        } else {
+          throw new Error("Producto no encontrado");
+        }
+      })
+      .then((updatedProduct) => {
+        console.log("Producto actualizado:", updatedProduct);
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el producto:", error);
+      });
   } catch (error) {
-    throw error;
+    console.error(error);
   }
 };
 
