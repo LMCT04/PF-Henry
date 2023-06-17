@@ -6,7 +6,7 @@ import Pagination from "@mui/material/Pagination";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Loading from '../../Views/Loading/Loading';
-import { orderAlphabetic, orderPrice, filterCategory, filterType } from '../../redux/actions/actionsProducts'
+import { orderAlphabetic, orderPrice, filterCategory, filterType, resetFilters } from '../../redux/actions/actionsProducts'
 import React from "react";
 
 const CardsContainer = () => {
@@ -43,12 +43,20 @@ const CardsContainer = () => {
 
     const handleAlphabeticOrder = (e) => {
         const value = e.target.value;
-        dispatch(orderAlphabetic(value));
+        if (value === "") {
+            dispatch(resetFilters());
+        } else {
+            dispatch(orderAlphabetic(value));
+        }
     };
 
     const handlePriceOrder = (e) => {
         const value = e.target.value;
-        dispatch(orderPrice(value));
+        if (value === "") {
+            dispatch(resetFilters());
+        } else {
+            dispatch(orderPrice(value));
+        }
     };
 
     const handleFilterCategory = (e) => {
