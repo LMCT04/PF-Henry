@@ -1,6 +1,6 @@
 
 import axios from 'axios'
-import { ORDER_ALPHABETIC,ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT, FILTER_CATEGORY, FILTER_TYPE, RESET_FILTERS } from "../actionsType/productsAT";
+import { ORDER_ALPHABETIC,ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT, FILTER_CATEGORY, FILTER_TYPE, RESET_FILTERS, FILTER_CATEGORY_AND_TYPE } from "../actionsType/productsAT";
 
 
 export const orderAlphabetic = (payload) => {
@@ -68,3 +68,11 @@ export const resetFilters = () => {
       })
     }
   }
+
+  export const filterCategoryAndType = (category, type) => {
+    return {
+      type: FILTER_CATEGORY_AND_TYPE,
+      category,
+      type
+    };
+  };
