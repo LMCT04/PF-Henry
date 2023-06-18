@@ -65,7 +65,7 @@ const Login = () => {
                         user.username === valores.username && user.password === valores.password
                     )
                     if(foundUser) {
-                        history.push('/home')
+                        history.push('/menu')
                     } else {
                         setError('El usuario ingresado no existe')
                     }

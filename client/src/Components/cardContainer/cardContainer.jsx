@@ -108,7 +108,7 @@ const CardsContainer = () => {
     return (
         <div className={style.cardContainer}>
             <section>
-                <SearchBar></SearchBar>
+                <SearchBar className={style.search} ></SearchBar>
             </section>
             <div className={style.filtersAndCards}>
                 <div className={style.filtersContainer}>

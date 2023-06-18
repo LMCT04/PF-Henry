@@ -23,7 +23,7 @@ const SearchBar = () => {
         setInput("");
     }
     return (
-        <div>
+        <div className={style.content} >
             <div className={style.searchBar}>
                 <TextField
                     id="outlined-basic"
