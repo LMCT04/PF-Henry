@@ -6,9 +6,11 @@ import { useSelector, useDispatch } from "react-redux";
 import style from "./cardContainer.module.css";
 //-------------------------IMPORTS MUI------------------------
 import Pagination from "@mui/material/Pagination";
-import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+
 //---------------------IMPORTS COMPONENTS---------------------
 import Card from "../cards/Card";
 import Loading from "../../Views/Loading/Loading";
@@ -22,29 +24,26 @@ import {
 //-------------------------COMPONENT--------------------------
 
 const CardsContainer = () => {
-
     const dispatch = useDispatch();
     const allProducts = useSelector((state) => state.product);
 
     //-------------------------FILTROS--------------------------
-    
-        const [categoryFilter, setCategoryFilter] = useState("ALL");
-        const [typeFilter, setTypeFilter] = useState("ALL");
-    
-        const types = allProducts.map((product) => product.type);
-        const typesSet = new Set(types);
-    
-    //-------------------------PAGINADO--------------------------
-        
-        const [pageProducts, setPageProducts] = useState([]);
-        const [page, setPage] = useState({
-            current: 1,
-            total: Math.ceil(allProducts.length / 15),
-        });
 
-    
+    const [categoryFilter, setCategoryFilter] = useState("ALL");
+    const [typeFilter, setTypeFilter] = useState("ALL");
+
+    const types = allProducts.map((product) => product.type);
+    const typesSet = new Set(types);
+
+    //-------------------------PAGINADO--------------------------
+
+    const [pageProducts, setPageProducts] = useState([]);
+    const [page, setPage] = useState({
+        current: 1,
+        total: Math.ceil(allProducts.length / 15),
+    });
+
     useEffect(() => {
-    
         let filteredProducts = [...allProducts];
         // Filtrar por categoría
         if (categoryFilter !== "ALL") {
@@ -65,11 +64,9 @@ const CardsContainer = () => {
             ...prevPage,
             total: Math.ceil(filteredProducts.length / 15),
         }));
-    
     }, [allProducts, page.current, categoryFilter, typeFilter]);
 
-
-//-------------------------HANDLES--------------------------
+    //-------------------------HANDLES--------------------------
 
     const handleChange = (event, value) => {
         let productsPag = [...allProducts];
@@ -103,76 +100,95 @@ const CardsContainer = () => {
         dispatch(filterCategoryAndType(categoryFilter, value));
     };
 
-//-------------------------RENDERIZACION--------------------------
+    //-------------------------RENDERIZACION--------------------------
 
     return (
         <div className={style.cardContainer}>
             <section>
-                <SearchBar className={style.search} ></SearchBar>
+                <SearchBar className={style.search}></SearchBar>
             </section>
             <div className={style.filtersAndCards}>
                 <div className={style.filtersContainer}>
                     <div className={style.alfContainer}>
-                        <label>ALPHABETIC ORDER</label> 
-                        {/* <InputLabel id="demo-simple-select-label">
-                        Age
-                    </InputLabel> */}
+                        <FormControl fullWidth>
+                            {/* <label>ALPHABETIC ORDER</label> */}
+                            <InputLabel id="alphabetic">A - Z</InputLabel>
 
-                        <Select
-                            onChange={handleAlphabeticOrder}
-                            className={style.input}
-                            value={"age"}
-                        >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value="asc">ASC</MenuItem>
-                            <MenuItem value="desc">DESC</MenuItem>
-                        </Select>
-                    </div>
-
-                    <div className={style.alfContainer}>
-                        <label>PRICE ORDER</label>
-
-                        <Select
-                            onChange={handlePriceOrder}
-                            className={style.input}
-                        >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value="asc">ASC</MenuItem>
-                            <MenuItem value="desc">DESC</MenuItem>
-                        </Select>
-                    </div>
-
-                    <div className={style.alfContainer}>
-                        <label>FILTER CATEGORY</label>
-
-                        <Select
-                            onChange={handleFilterCategory}
-                            className={style.input}
-                        >
-                            <MenuItem value="ALL">ALL</MenuItem>
-                            <MenuItem value="solido">Solido</MenuItem>
-                            <MenuItem value="liquido">Liquido</MenuItem>
-                        </Select>
-                    </div>
-
-                    <div className={style.alfContainer}>
-                        <label>FILTER TYPE</label>
-
-                        <Select
-                            onChange={handleFilterType}
-                            className={style.input}
-                        >
-                            <MenuItem value="ALL">ALL</MenuItem>
-                            {Array.from(typesSet).map((type) => (
-                                <MenuItem value={type} key={type}>
-                                    {type}
+                            <Select
+                                labelId="alphabetic"
+                                id="alphabetic"
+                                onChange={handleAlphabeticOrder}
+                                label="A - Z"
+                                className={style.input}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
                                 </MenuItem>
-                            ))}
-                        </Select>
+                                <MenuItem value="asc">A - Z</MenuItem>
+                                <MenuItem value="desc">Z - A</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+
+                    <div className={style.alfContainer}>
+                        <FormControl fullWidth>
+                            {/* <label>PRICE ORDER</label> */}
+                            <InputLabel id="price">PRICE</InputLabel>
+                            <Select
+                                labelId="price"
+                                id="price"
+                                onChange={handlePriceOrder}
+                                label="PRICE"
+                                className={style.input}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value="asc">ASC</MenuItem>
+                                <MenuItem value="desc">DESC</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+
+                    <div className={style.alfContainer}>
+                        <FormControl fullWidth>
+                            {/* <label>FILTER CATEGORY</label> */}
+                            <InputLabel id="category">CATEGORY</InputLabel>
+
+                            <Select
+                                labelId="category"
+                                id="category"
+                                label="CATEGORY"
+                                onChange={handleFilterCategory}
+                                className={style.input}
+                            >
+                                <MenuItem value="ALL">ALL</MenuItem>
+                                <MenuItem value="solido">Solido</MenuItem>
+                                <MenuItem value="liquido">Liquido</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+
+                    <div className={style.alfContainer}>
+                        <FormControl fullWidth>
+                            {/* <label>FILTER TYPE</label> */}
+                            <InputLabel id="type">TYPE</InputLabel>
+
+                            <Select
+                                labelId="type"
+                                id="type"
+                                label="TYPE"
+                                onChange={handleFilterType}
+                                className={style.input}
+                            >
+                                <MenuItem value="ALL">ALL</MenuItem>
+                                {Array.from(typesSet).map((type) => (
+                                    <MenuItem value={type} key={type}>
+                                        {type}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
                     </div>
                 </div>
                 <section className={style.cardsAndPag}>
