@@ -19,18 +19,9 @@ const Cards = (props) => {
         <section>
             <Card  sx={{width: 300, height: 410, backgroundColor:'#eddcb9'}} >
                     <CardActionArea disableRipple >
-                    <Link className={style.link}  to={`/product/${props.element.id}`}>
-                        <CardContent
-                            sx={{height: 60, backgroundColor:'#A5CAA8', display:'flex', justifyContent:'center', alignItems:'center'}}
-                        >
-                            <Typography variant="h1" component="div" sx={{fontSize:23}} >
-                            {props.element.name}
-                            </Typography>
-                        </CardContent>
-                    </Link>
                         <CardMedia
                             component='img'
-                            height='160'
+                            height='210'
                             image={props.element.image}
                             alt='imagen'
                             sx={{backgroundColor: '#e4cfa5'}}
@@ -40,10 +31,19 @@ const Cards = (props) => {
                                 icon={<FavoriteBorder />} 
                                 checkedIcon={<Favorite />} 
                                 size="large"
-                                sx={{ position: "absolute", left: "240px", top: "195px", zIndex: 1}}
+                                sx={{ position: "absolute", left: "240px", top: "150px", zIndex: 1}}
                             />
+                    <Link className={style.link}  to={`/product/${props.element.id}`}>
                         <CardContent
-                            sx={{height: 50}}
+                            sx={{height: 20, backgroundColor:'#A5CAA8', display:'flex', justifyContent:'center', alignItems:'center'}}
+                        >
+                            <Typography variant="h1" component="div" sx={{fontSize:18, fontWeight:'bold'}} >
+                            {props.element.name}
+                            </Typography>
+                        </CardContent>
+                    </Link>
+                        <CardContent
+                            sx={{height: 40}}
                         >
                             <Rating name="size-small" defaultValue={0} size="small" sx={{display:'flex'}}/>
                             <Typography variant="body1" component="div" sx={{fontSize:35, display:'flex', alignItems:'center', }} >
