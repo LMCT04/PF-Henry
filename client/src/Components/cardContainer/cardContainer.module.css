@@ -1,28 +1,35 @@
-
-.cardContainer{
+.cardContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.filtersAndCards{
+.filtersAndCards {
     margin-top: 2%;
     display: flex;
-    justify-content:center;
+    flex-direction: row;
+    gap: 60px;
+    justify-content: center;
     align-items: flex-start;
 }
 
-.container{
+.container {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    flex-wrap: wrap;
+    width: 75vw;
+    gap: 10px;
+}
+
+.centradoDeCards {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    /* width: 100%; */
     width: 80vw;
-    gap: 10px;
-    
 }
-.cardsAndPag{
+
+.cardsAndPag {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,7 +38,7 @@
     gap: 10px;
 }
 
-.pag{
+.pag {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,7 +46,7 @@
     margin-bottom: 2.5%;
 }
 
-.filtersContainer{
+.filtersContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -48,7 +55,11 @@
     padding-left: 30px;
 }
 
-
-.input{
+.input {
     width: 250px;
 }
+
+/* .link{
+    text-decoration: none;
+	color:#0d2015;  
+} */

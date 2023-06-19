@@ -192,14 +192,16 @@ const CardsContainer = () => {
                     </div>
                 </div>
                 <section className={style.cardsAndPag}>
-                    <div className={style.container}>
-                        {pageProducts.length > 0 ? (
-                            pageProducts.map((e) => (
-                                <Card key={e.id} element={e} />
-                            ))
-                        ) : (
-                            <Loading />
-                        )}
+                    <div className={style.centradoDeCards}>
+                        <div className={style.container}>
+                            {pageProducts.length > 0 ? (
+                                pageProducts.map((e) => (
+                                    <Card key={e.id} element={e} />
+                                ))
+                            ) : (
+                                <Loading />
+                            )}
+                        </div>
                     </div>
 
                     <Pagination

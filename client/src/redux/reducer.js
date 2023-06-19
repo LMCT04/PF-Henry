@@ -8,11 +8,14 @@ import {
     RESET_FILTERS,
     GET_BY_NAME,
     FILTER_CATEGORY_AND_TYPE,
+    GET_BY_ID,
+    CLEAR_STATE,
 } from "./actionsType/productsAT";
 
 const initialState = {
     allProducts: [],
     product: [],
+    productDetail: {},
     newProduct: {},
 };
 
@@ -29,6 +32,18 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 product: action.payload,
+            };
+
+        case GET_BY_ID:
+            return {
+                ...state,
+                productDetail: action.payload,
+            };
+
+        case CLEAR_STATE:
+            return {
+                ...state,
+                recipesById: [],
             };
 
         case CREATE_PRODUCT:
