@@ -9,6 +9,8 @@ import {
     RESET_FILTERS,
     FILTER_CATEGORY_AND_TYPE,
     GET_BY_NAME,
+    GET_BY_ID,
+    CLEAR_STATE,
 } from "../actionsType/productsAT";
 
 export const orderAlphabetic = (payload) => {
@@ -79,6 +81,26 @@ export const getByName = (name) => {
     };
 };
 
+export const getById = (id) => {
+    return async (dispatch) => {
+        try {
+            const apiData = await axios.get(
+                `http://localhost:3001/product/${id}`
+            );
+
+            const product = apiData.data;
+
+            dispatch({
+                type: GET_BY_ID,
+                payload: product,
+            });
+        } catch (error) {
+            console.log("There is not a product with that id ", error);
+            alert("There is not a product with that id ");
+        }
+    };
+};
+
 export const createProduct = (payload) => {
     const request = {
         url: "http://localhost:3001/product/createProduct",
@@ -113,4 +135,8 @@ export const filterCategoryAndType = (category, type) => {
         type: FILTER_CATEGORY_AND_TYPE,
         category,
     };
+};
+
+export const clearState = () => {
+    return { type: CLEAR_STATE };
 };
