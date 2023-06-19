@@ -1,5 +1,5 @@
 //------------------------IMPORTS REACT-----------------------
-import React from "react";
+import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //-------------------------IMPORT CSS-------------------------
@@ -8,11 +8,11 @@ import style from "./cardContainer.module.css";
 import Pagination from "@mui/material/Pagination";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 
 //---------------------IMPORTS COMPONENTS---------------------
-import Card from "../cards/Card";
+import Cards from "../cards/Card";
 import Loading from "../../Views/Loading/Loading";
 import SearchBar from "../searchBar/searchBar";
 //---------------------IMPORTS ACTIONS------------------------
@@ -26,6 +26,7 @@ import {
 const CardsContainer = () => {
     const dispatch = useDispatch();
     const allProducts = useSelector((state) => state.product);
+    const [resetFilters, setResetFilters] = useState(false);
 
     //-------------------------FILTROS--------------------------
 
@@ -40,8 +41,10 @@ const CardsContainer = () => {
     const [pageProducts, setPageProducts] = useState([]);
     const [page, setPage] = useState({
         current: 1,
-        total: Math.ceil(allProducts.length / 15),
+        total: Math.ceil(allProducts.length / 8),
     });
+
+    const pageCurrentRef = useRef(page.current);
 
     useEffect(() => {
         let filteredProducts = [...allProducts];
@@ -57,22 +60,31 @@ const CardsContainer = () => {
                 (product) => product.type === typeFilter
             );
         }
-        const startIndex = (page.current - 1) * 15;
-        const endIndex = startIndex + 15;
+        if (resetFilters) {
+            setCategoryFilter("ALL");
+            setTypeFilter("ALL");
+            setResetFilters(false);
+        }
+        const startIndex = (pageCurrentRef.current - 1) * 8;
+        const endIndex = startIndex + 8;
         setPageProducts(filteredProducts.slice(startIndex, endIndex));
         setPage((prevPage) => ({
             ...prevPage,
-            total: Math.ceil(filteredProducts.length / 15),
+            total: Math.ceil(filteredProducts.length / 8),
         }));
-    }, [allProducts, page.current, categoryFilter, typeFilter]);
+    }, [allProducts, categoryFilter, typeFilter, pageCurrentRef, resetFilters]);
 
     //-------------------------HANDLES--------------------------
+
+    const handleResetFilters = () => {
+        setResetFilters(true);
+    };
 
     const handleChange = (event, value) => {
         let productsPag = [...allProducts];
         setPage((prevPage) => ({ ...prevPage, current: value }));
-        const startIndex = (value - 1) * 15;
-        const endIndex = startIndex + 15;
+        const startIndex = (value - 1) * 8;
+        const endIndex = startIndex + 8;
         setPageProducts(productsPag.slice(startIndex, endIndex));
     };
 
@@ -190,12 +202,13 @@ const CardsContainer = () => {
                             </Select>
                         </FormControl>
                     </div>
+                        <button onClick={handleResetFilters}>Reset Filters</button>
                 </div>
                 <section className={style.cardsAndPag}>
                     <div className={style.container}>
                         {pageProducts.length > 0 ? (
                             pageProducts.map((e) => (
-                                <Card key={e.id} element={e} />
+                                <Cards key={e.id} element={e} />
                             ))
                         ) : (
                             <Loading />
