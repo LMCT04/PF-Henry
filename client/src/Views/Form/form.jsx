@@ -3,20 +3,21 @@ import { Formik } from "formik";
 import style from "./form.module.css";
 import Footer from "../../Components/Footer/Footer";
 import { useDispatch } from "react-redux";
-import { createProduct } from '../../redux/actions/actionsProducts'
+import { createProduct } from "../../redux/actions/actionsProducts";
+import { Box, Button, TextField } from "@mui/material";
 
 const Form = () => {
     const lettersOrSpacesREGEX = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     // const imageURLREGEX = /\.(jpeg|jpg|gif|png)$/i;
-    //const imageURLREGEX = /^data:image\/jpeg;base64,[a-zA-Z0-9+/=]+$/;
+    const imageURLREGEX = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
 
     const numberREGEX = /^([0-9]+(?:\.[0-9]*)?)$/;
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     return (
         <div className={style.formBack}>
-            <h1>Create New Product</h1>
+            <h1 className={style.title}>Create New Product</h1>
             <Formik
                 initialValues={{
                     name: "",
@@ -45,9 +46,9 @@ const Form = () => {
                     if (!values.image) {
                         errors.image = "Image URL can't be empty.";
                     }
-                    /*if (values.image && !imageURLREGEX.test(values.image)) {
+                    if (values.image && !imageURLREGEX.test(values.image)) {
                         errors.image = "URL not valid.";
-                    }*/
+                    }
 
                     // DESCRIPTION //
                     if (!values.description) {
@@ -80,10 +81,18 @@ const Form = () => {
                     return errors;
                 }}
                 onSubmit={(values, { resetForm }) => {
-                    let { name, image, description, price, type, category } = values
+                    let { name, image, description, price, type, category } =
+                        values;
                     dispatch(
-                        createProduct({ name, image, description, price, type, category })
-                    )
+                        createProduct({
+                            name,
+                            image,
+                            description,
+                            price,
+                            type,
+                            category,
+                        })
+                    );
 
                     resetForm();
                     console.log(values);
@@ -100,104 +109,94 @@ const Form = () => {
                 }) => (
                     <form className={style.form} onSubmit={handleSubmit}>
                         <div className={style.formContainer}>
-                            <div>
-                                {/* <label htmlFor="name">Nombre:</label> */}
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    placeholder="Name:"
-                                    value={values.name}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                />
-                                {touched.name && errors.name && (
-                                    <p>{errors.name}</p>
-                                )}
-                            </div>
-                            <div>
-                                {/* <label htmlFor="image">Image:</label> */}
-                                <input
-                                    type="text"
-                                    id="image"
-                                    name="image"
-                                    placeholder="Image URL:"
-                                    value={values.image}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                />
-                                {touched.image && errors.image && (
-                                    <p>{errors.image}</p>
-                                )}
-                            </div>
-                            <div>
-                                {/* <label htmlFor="description">
-                                    Descripción:
-                                </label> */}
-                                <input
-                                    type="text"
-                                    id="description"
-                                    name="description"
-                                    placeholder="Description:"
-                                    value={values.description}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                />
-                                {touched.description && errors.description && (
-                                    <p>{errors.description}</p>
-                                )}
-                            </div>
-                            <div>
-                                {/* <label htmlFor="price">Precio:</label> */}
-                                <input
-                                    type="text"
-                                    id="price"
-                                    name="price"
-                                    placeholder="Price:"
-                                    value={values.price}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                />
-                                {touched.price && errors.price && (
-                                    <p>{errors.price}</p>
-                                )}
-                            </div>
-                            <div>
-                                {/* <label htmlFor="type">Tipo:</label> */}
-                                <input
-                                    type="text"
-                                    id="type"
-                                    name="type"
-                                    placeholder="Type:"
-                                    value={values.type}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                />
-                                {touched.type && errors.type && (
-                                    <p>{errors.type}</p>
-                                )}
-                            </div>
-                            <div>
-                                {/* <label htmlFor="category">Categoría:</label> */}
-                                <input
-                                    type="text"
-                                    id="category"
-                                    name="category"
-                                    placeholder="Category:"
-                                    value={values.category}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                />
-                                {touched.category && errors.category && (
-                                    <p>{errors.category}</p>
-                                )}
-                            </div>
-                            <button type="submit">Enviar</button>
+                            <TextField
+                                sx={{
+                                    "& .MuiTextField-root": {
+                                        m: 1,
+                                        width: "25ch",
+                                    },
+                                }}
+                                color="success"
+                                id="name"
+                                name="name"
+                                label="Name:"
+                                value={values.name}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.name && !!errors.name}
+                                helperText={touched.name && errors.name}
+                            />
+                            <TextField
+                                id="image"
+                                color="success"
+                                name="image"
+                                label="Image:"
+                                value={values.image}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.image && !!errors.image}
+                                helperText={touched.image && errors.image}
+                            />
+                            <TextField
+                                id="description"
+                                color="success"
+                                name="description"
+                                label="Description:"
+                                value={values.description}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={
+                                    touched.description && !!errors.description
+                                }
+                                helperText={
+                                    touched.description && errors.description
+                                }
+                            />
+                            <TextField
+                                color="success"
+                                id="price"
+                                name="price"
+                                label="Price:"
+                                value={values.price}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.price && !!errors.price}
+                                helperText={touched.price && errors.price}
+                            />
+                            <TextField
+                                color="success"
+                                id="type"
+                                name="type"
+                                label="Type:"
+                                value={values.type}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.type && !!errors.type}
+                                helperText={touched.type && errors.type}
+                            />
+                            <TextField
+                                color="success"
+                                id="category"
+                                name="category"
+                                label="Category:"
+                                value={values.category}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.category && !!errors.category}
+                                helperText={touched.category && errors.category}
+                            />
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="success"
+                            >
+                                Create
+                            </Button>
                         </div>
                     </form>
                 )}
             </Formik>
-            <Footer/>
+            <Footer />
         </div>
     );
 };

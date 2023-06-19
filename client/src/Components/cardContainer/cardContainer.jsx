@@ -21,6 +21,7 @@ import {
     orderPrice,
     filterCategoryAndType,
 } from "../../redux/actions/actionsProducts";
+import { Button } from "@mui/material";
 //-------------------------COMPONENT--------------------------
 
 const CardsContainer = () => {
@@ -124,9 +125,12 @@ const CardsContainer = () => {
                     <div className={style.alfContainer}>
                         <FormControl fullWidth>
                             {/* <label>ALPHABETIC ORDER</label> */}
-                            <InputLabel id="alphabetic">A - Z</InputLabel>
+                            <InputLabel id="alphabetic" color="success">
+                                A - Z
+                            </InputLabel>
 
                             <Select
+                                color="success"
                                 labelId="alphabetic"
                                 id="alphabetic"
                                 onChange={handleAlphabeticOrder}
@@ -145,8 +149,11 @@ const CardsContainer = () => {
                     <div className={style.alfContainer}>
                         <FormControl fullWidth>
                             {/* <label>PRICE ORDER</label> */}
-                            <InputLabel id="price">PRICE</InputLabel>
+                            <InputLabel id="price" color="success">
+                                PRICE
+                            </InputLabel>
                             <Select
+                                color="success"
                                 labelId="price"
                                 id="price"
                                 onChange={handlePriceOrder}
@@ -165,9 +172,12 @@ const CardsContainer = () => {
                     <div className={style.alfContainer}>
                         <FormControl fullWidth>
                             {/* <label>FILTER CATEGORY</label> */}
-                            <InputLabel id="category">CATEGORY</InputLabel>
+                            <InputLabel id="category" color="success">
+                                CATEGORY
+                            </InputLabel>
 
                             <Select
+                                color="success"
                                 labelId="category"
                                 id="category"
                                 label="CATEGORY"
@@ -184,9 +194,12 @@ const CardsContainer = () => {
                     <div className={style.alfContainer}>
                         <FormControl fullWidth>
                             {/* <label>FILTER TYPE</label> */}
-                            <InputLabel id="type">TYPE</InputLabel>
+                            <InputLabel id="type" color="success">
+                                TYPE
+                            </InputLabel>
 
                             <Select
+                                color="success"
                                 labelId="type"
                                 id="type"
                                 label="TYPE"
@@ -202,7 +215,14 @@ const CardsContainer = () => {
                             </Select>
                         </FormControl>
                     </div>
-                        <button onClick={handleResetFilters}>Reset Filters</button>
+                    <Button
+                        fullWidth
+                        color="success"
+                        variant="contained"
+                        onClick={handleResetFilters}
+                    >
+                        Reset Filters
+                    </Button>
                 </div>
                 <section className={style.cardsAndPag}>
                     <div className={style.centradoDeCards}>
@@ -215,7 +235,6 @@ const CardsContainer = () => {
                                 <Loading />
                             )}
                         </div>
-
                     </div>
 
                     <Pagination

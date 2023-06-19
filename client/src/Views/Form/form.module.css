@@ -5,8 +5,8 @@
     align-items: center;
 }
 
-.formBack{
-    background-color: #FFF0C9;
+.formBack {
+    background-color: #fff0c9;
     background-size: cover;
     height: 100vh;
 }
@@ -16,10 +16,14 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    width:30%;
+    width: 30%;
     height: 50vh;
-    border: solid 2px black;
+    border: solid 2px #0d2015;
     border-radius: 25px;
     padding: 40px;
     margin-bottom: 15%;
+}
+
+.title{
+    color: #0d2015;
 }
