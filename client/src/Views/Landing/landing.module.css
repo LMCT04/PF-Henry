@@ -1,7 +1,7 @@
 .home {
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     flex-direction: column;
     padding-top: 2%;
     height: 100vmin;

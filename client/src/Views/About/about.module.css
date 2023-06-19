@@ -1,0 +1,16 @@
+.aboutContainer{
+    height: 100vh;
+    background-color: #FFF0C9;
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+}
+
+.content{
+    width: 600px;
+    height: 600px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

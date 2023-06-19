@@ -2,7 +2,7 @@ import "./App.css";
 import { Route, useLocation } from "react-router-dom";
 import NavBar from "./Components/NavBar/navBar";
 import NavLand from "./Components/NavBarLanding/navLand";
-import { Landing, Register, Menu, Login, Form } from "./Views";
+import { Landing, Register, Menu, Login, Form, About } from "./Views";
 //import axios from "axios";
 //axios.defaults.baseURL = "http://localhost:3001/";
 
@@ -19,6 +19,7 @@ function App() {
             <Route exact path= "/menu" component = { Menu } />
             <Route exact path= "/login" component = { Login } />
             <Route exact path= "/create" component = { Form } />
+            <Route exact path= "/about" component = { About } />
 
         </div>
     );

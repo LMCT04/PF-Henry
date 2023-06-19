@@ -64,7 +64,7 @@ const Footer = () => {
                             to="/home"
                             style={(isActive) => ({
                                 color: "rgb(20, 20, 20)",
-                                "text-decoration": isActive && "none",
+                                "textTecoration": isActive && "none",
                             })}
                         >
                             <img
