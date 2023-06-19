@@ -57,15 +57,15 @@ const rootReducer = (state = initialState, action) => {
             let sortedName =
                 action.payload === "asc"
                     ? copyThree.sort((a, b) =>
-                          a.name
-                              .toLowerCase()
-                              .localeCompare(b.name.toLowerCase())
-                      )
+                        a.name
+                            .toLowerCase()
+                            .localeCompare(b.name.toLowerCase())
+                    )
                     : copyThree.sort((a, b) =>
-                          b.name
-                              .toLowerCase()
-                              .localeCompare(a.name.toLowerCase())
-                      );
+                        b.name
+                            .toLowerCase()
+                            .localeCompare(a.name.toLowerCase())
+                    );
             return {
                 ...state,
                 product: sortedName,
@@ -139,7 +139,9 @@ const rootReducer = (state = initialState, action) => {
             }
 
         default:
-            return state;
+            return {
+                ...state,
+            }
     }
 };
 export default rootReducer;

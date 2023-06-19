@@ -134,7 +134,6 @@ export const filterCategoryAndType = (category, type) => {
     return {
         type: FILTER_CATEGORY_AND_TYPE,
         category,
-        type,
     };
 };
 
