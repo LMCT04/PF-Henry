@@ -27,8 +27,6 @@ function App() {
                 path="/product/:id"
                 render={({ match }) => <Detail id={match.params.id} />}
             />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/create" component={Form} />
         </div>
     );
 }
