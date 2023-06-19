@@ -29,6 +29,10 @@ const Login = () => {
         {
             "username" : "miguel",
             "password" : "miguel1234"
+        },
+        {
+            "username" : "adminJulian",
+            "password" : "password98"
         }
     ]
 
@@ -44,14 +48,14 @@ const Login = () => {
 
                     //Validacion Username
                     if(!valores.username){
-                        errores.username = 'Por favor ingrese su usuario'
+                        errores.username = 'Please enter your username'
                     } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.username)){
-                        errores.username = 'Solo debe ingresar letras y espacios'
+                        errores.username = 'You only need to enter letters and spaces'
                     }
 
                     //Validacion Password
                     if(!valores.password){
-                        errores.password = 'Por favor ingresar su contraseña'
+                        errores.password = 'Please enter your password'
                     }
 
                     return errores
@@ -67,7 +71,7 @@ const Login = () => {
                     if(foundUser) {
                         history.push('/menu')
                     } else {
-                        setError('El usuario ingresado no existe')
+                        setError('The user entered does not exist')
                     }
 
                 }}
