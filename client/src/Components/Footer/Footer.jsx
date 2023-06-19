@@ -61,7 +61,7 @@ const Footer = () => {
                             </div>
                         </div>
                         <NavLink
-                            to="/home"
+                            to="/"
                             style={(isActive) => ({
                                 color: "rgb(20, 20, 20)",
                                 "textTecoration": isActive && "none",
