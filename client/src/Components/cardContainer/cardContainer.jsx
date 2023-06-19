@@ -2,7 +2,6 @@
 import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 
 //-------------------------IMPORT CSS-------------------------
 import style from "./cardContainer.module.css";
@@ -231,12 +230,7 @@ const CardsContainer = () => {
                         <div className={style.container}>
                             {pageProducts.length > 0 ? (
                                 pageProducts.map((e) => (
-                                    <Link
-                                        className={style.link}
-                                        to={`/product/${e.id}`}
-                                    >
                                         <Cards key={e.id} element={e} />
-                                    </Link>
                                 ))
                             ) : (
                                 <Loading />

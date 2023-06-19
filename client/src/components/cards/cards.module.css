@@ -1,68 +1,7 @@
-.container{
-    background-color:#A5CAA8;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 280px;
-    height: 370px;
-    border-radius: 25px;
-}
-.container:hover{
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.387);
-}
 
-.imageContainer{
-    height: 43%;
-    width: 80%;
-}
 
-.image{
-    width: 150px;
-    height: 150px;
-    border-radius: 100px;
-    margin-top: 2%;
-    background-color: #FFF0C9;
-    margin-bottom: 10px;
-    border: 1px solid #FFF0C9;
-}
+.link{
+    text-decoration: none;
+	color:#0d2015;  
 
-.content{
-    display: flex;
-    flex-direction: column;
-    height: 50%;
-    width: 100%;
-}
-
-.h{
-    font-size: 17px;
-    width: 100%;
-    height: 50%;
-    margin: 0;
-}
-
-.p{
-    font-size: 18px;
-    width: 100%;
-    height: 20%;
-    margin: 0;
-    font-weight: bold;
-}
-
-.favCont{
-    margin-top: 5px;
-}
-
-.buttons{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.more{
-    width: 50%;
-
-}
-
-.heart{
-    width: 50%;
 }

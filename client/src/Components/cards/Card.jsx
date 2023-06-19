@@ -1,6 +1,6 @@
 import React from "react";
-//import style from "./cards.module.css";
-
+import style from "./cards.module.css";
+import { Link } from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -17,8 +17,9 @@ import Rating from '@mui/material/Rating';
 const Cards = (props) => {
     return (
         <section>
-            <Card  sx={{width: 300, height: 400, backgroundColor:'#eddcb9'}} >
+            <Card  sx={{width: 300, height: 410, backgroundColor:'#eddcb9'}} >
                     <CardActionArea disableRipple >
+                    <Link className={style.link}  to={`/product/${props.element.id}`}>
                         <CardContent
                             sx={{height: 60, backgroundColor:'#A5CAA8', display:'flex', justifyContent:'center', alignItems:'center'}}
                         >
@@ -26,6 +27,7 @@ const Cards = (props) => {
                             {props.element.name}
                             </Typography>
                         </CardContent>
+                    </Link>
                         <CardMedia
                             component='img'
                             height='160'
