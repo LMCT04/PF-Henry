@@ -4,6 +4,7 @@ import Menu from './Menu/menu'
 import Login from './Login/login'
 import Form from './Form/form'
 import About from './About/about'
+import Detail from './Detail/detail'
 
 export {
     Landing,
@@ -12,4 +13,5 @@ export {
     Login,
     Form,
     About,
+    Detail,
 }
