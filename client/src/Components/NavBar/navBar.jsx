@@ -12,7 +12,7 @@ const NavBar = () => {
 
     return (
         <div className={style.navBar}>
-            <NavLink to="/home">
+            <NavLink to="/">
                 <div className={style.logoContainer}>
                     <button className={style.logoBtn}>
                         <img src={logo} alt="logos" className={style.logo} />
@@ -26,8 +26,8 @@ const NavBar = () => {
                     className={style.navLink}
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
-                        textDecoration: isActive ? "underline" : "none",
-                        color: isActive ? '#ffc9b9' : "#4c956c",
+                        textDecoration: isActive ? "none" : "none",
+                        color: isActive ? '#FFF0C9' : "#4c956c",
                     })}
                 >
                     New Product
@@ -38,24 +38,24 @@ const NavBar = () => {
                     className={style.navLink}
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
-                        textDecoration: isActive ? "underline" : "none",
-                        color: isActive ? '#ffc9b9' : "#4c956c",
+                        textDecoration: isActive ? "none" : "none",
+                        color: isActive ? '#FFF0C9' : "#4c956c",
                     })}
                 >
                     Menu
                 </NavLink>
 
-                <NavLink
+                {/*<NavLink
                     to="/about"
                     className={style.navLink}
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
-                        textDecoration: isActive ? "underline" : "none",
-                        color: isActive ? '#ffc9b9' : "#4c956c",
+                        textDecoration: isActive ? "none" : "none",
+                        color: isActive ? '#FFF0C9' : "#4c956c",
                     })}
                 >
                     About
-                </NavLink>
+                </NavLink>*/}
             </div>
             <div className={style.logoutContainer}>
                 <button onClick={logout} className={style.logout}>

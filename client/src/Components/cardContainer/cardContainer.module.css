@@ -63,3 +63,26 @@
     text-decoration: none;
 	color:#0d2015;  
 } */
+
+.btn{
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: #2c6e49;
+    color:  #FFF0C9;
+    border:  #2c6e49 2px solid;
+    height: 2.5rem;
+}
+
+.btn:hover {
+    background-color: #FFF0C9;
+    border:  #2c6e49 2px solid;
+    color: #2c6e49;
+    box-shadow: 2px 2px 2px #0d2015;
+    font-weight: bold;
+}
+
+.btn:active {
+    background-color: #FFF0C9;
+    border: none;
+    transform: scale(0.95);
+}

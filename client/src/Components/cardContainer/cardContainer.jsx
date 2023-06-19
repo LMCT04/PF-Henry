@@ -202,7 +202,7 @@ const CardsContainer = () => {
                             </Select>
                         </FormControl>
                     </div>
-                        <button onClick={handleResetFilters}>Reset Filters</button>
+                        <button onClick={handleResetFilters} className={style.btn} >RESET FILTERS</button>
                 </div>
                 <section className={style.cardsAndPag}>
                     <div className={style.centradoDeCards}>
