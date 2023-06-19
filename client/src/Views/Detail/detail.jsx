@@ -12,18 +12,22 @@ const Detail = () => {
 
     useEffect(() => {
         dispatch(getById(id));
-        console.log(product);
+        // console.log(product);
         dispatch(clearState(id));
-    }, [dispatch, id, product]);
-
+    }, [dispatch, id]);
 
     return (
         <div>
             <div>
                 <h1>{product.name}</h1>
+                <img src={product.image} alt="" />
+                <h1>{product.description}</h1>
+                <h1>{product.price}</h1>
+                <h1>{product.type}</h1>
+                <h1>{product.category}</h1>
             </div>
         </div>
     );
-}
+};
 
 export default Detail;

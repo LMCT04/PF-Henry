@@ -43,7 +43,7 @@ const rootReducer = (state = initialState, action) => {
         case CLEAR_STATE:
             return {
                 ...state,
-                recipesById: [],
+                productDetail: {},
             };
 
         case CREATE_PRODUCT:
