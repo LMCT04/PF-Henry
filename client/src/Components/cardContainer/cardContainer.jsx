@@ -230,14 +230,15 @@ const CardsContainer = () => {
                         <div className={style.container}>
                             {pageProducts.length > 0 ? (
                                 pageProducts.map((e) => (
-                                        <Cards key={e.id} element={e} />
+                                    <Cards key={e.id} element={e} />
                                 ))
                             ) : (
-                                <Loading />
+                                <div className={style.loading}>
+                                    <Loading />
+                                </div>
                             )}
                         </div>
                     </div>
-
                     <Pagination
                         count={page.total}
                         page={page.current}
