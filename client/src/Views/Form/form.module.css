@@ -13,10 +13,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color:  #fefee3;
+    background-color: #fefee3;
     background-size: cover;
     height: 100vh;
-    
 }
 
 .formContainer {
@@ -32,7 +31,16 @@
     margin-bottom: 15%;
 }
 
-.title{
+.title {
     color: #0d2015;
 }
 
+.content {
+    text-align: center;
+    width: 90%;
+    height: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 25px;
+    border-radius: 1rem;
+}
