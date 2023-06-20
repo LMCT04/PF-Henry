@@ -221,14 +221,16 @@ const Form = () => {
                                         }
                                     />
                                 </div>
-                                <Button
-                                    fullWidth
-                                    type="submit"
-                                    variant="contained"
-                                    color="success"
-                                >
-                                    Create
-                                </Button>
+                                <div className={style.content}>
+                                    <Button
+                                        fullWidth
+                                        type="submit"
+                                        variant="contained"
+                                        color="success"
+                                    >
+                                        Create
+                                    </Button>
+                                </div>
                             </div>
                         </form>
                     )}
