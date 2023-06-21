@@ -116,102 +116,121 @@ const Form = () => {
                     }) => (
                         <form className={style.form} onSubmit={handleSubmit}>
                             <div className={style.formContainer}>
-                                <TextField
-                                    fullWidth
-                                    sx={{
-                                        "& .MuiTextField-root": {
-                                            m: 1,
-                                            width: "25ch",
-                                        },
-                                    }}
-                                    color="success"
-                                    id="name"
-                                    name="name"
-                                    label="Name:"
-                                    value={values.name}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={touched.name && !!errors.name}
-                                    helperText={touched.name && errors.name}
-                                />
-                                <TextField
-                                    fullWidth
-                                    id="image"
-                                    color="success"
-                                    name="image"
-                                    label="Image:"
-                                    value={values.image}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={touched.image && !!errors.image}
-                                    helperText={touched.image && errors.image}
-                                />
-                                <TextField
-                                    fullWidth
-                                    id="description"
-                                    color="success"
-                                    name="description"
-                                    label="Description:"
-                                    value={values.description}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={
-                                        touched.description &&
-                                        !!errors.description
-                                    }
-                                    helperText={
-                                        touched.description &&
-                                        errors.description
-                                    }
-                                />
-                                <TextField
-                                    fullWidth
-                                    color="success"
-                                    id="price"
-                                    name="price"
-                                    label="Price:"
-                                    value={values.price}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={touched.price && !!errors.price}
-                                    helperText={touched.price &&    errors.price}
-                                />
-                                <TextField
-                                    fullWidth
-                                    color="success"
-                                    id="type"
-                                    name="type"
-                                    label="Type:"
-                                    value={values.type}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={touched.type && !!errors.type}
-                                    helperText={touched.type && errors.type}
-                                />
-                                <TextField
-                                    fullWidth
-                                    color="success"
-                                    id="category"
-                                    name="category"
-                                    label="Category:"
-                                    value={values.category}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={
-                                        touched.category && !!errors.category
-                                    }
-                                    helperText={
-                                        touched.category && errors.category
-                                    }
-                                />
-                                <Button
-                                    fullWidth
-                                    type="submit"
-                                    variant="contained"
-                                    color="success"
-                                >
-                                    Create
-                                </Button>
+                                <div className={style.content}>
+                                    <TextField
+                                        fullWidth
+                                        sx={{
+                                            "& .MuiTextField-root": {
+                                                m: 1,
+                                                width: "25ch",
+                                            },
+                                        }}
+                                        color="success"
+                                        id="name"
+                                        name="name"
+                                        label="Name:"
+                                        value={values.name}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={touched.name && !!errors.name}
+                                        helperText={touched.name && errors.name}
+                                    />
+                                </div>
+                                <div className={style.content}>
+                                    <TextField
+                                        fullWidth
+                                        id="image"
+                                        color="success"
+                                        name="image"
+                                        label="Image:"
+                                        value={values.image}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={touched.image && !!errors.image}
+                                        helperText={
+                                            touched.image && errors.image
+                                        }
+                                    />
+                                </div>
+                                <div className={style.content}>
+                                    <TextField
+                                        fullWidth
+                                        id="description"
+                                        color="success"
+                                        name="description"
+                                        label="Description:"
+                                        value={values.description}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={
+                                            touched.description &&
+                                            !!errors.description
+                                        }
+                                        helperText={
+                                            touched.description &&
+                                            errors.description
+                                        }
+                                    />
+                                </div>
+                                <div className={style.content}>
+                                    <TextField
+                                        fullWidth
+                                        color="success"
+                                        id="price"
+                                        name="price"
+                                        label="Price:"
+                                        value={values.price}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={touched.price && !!errors.price}
+                                        helperText={
+                                            touched.price && errors.price
+                                        }
+                                    />
+                                </div>
+                                <div className={style.content}>
+                                    <TextField
+                                        fullWidth
+                                        color="success"
+                                        id="type"
+                                        name="type"
+                                        label="Type:"
+                                        value={values.type}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={touched.type && !!errors.type}
+                                        helperText={touched.type && errors.type}
+                                    />
+                                </div>
+                                <div className={style.content}>
+                                    <TextField
+                                        fullWidth
+                                        color="success"
+                                        id="category"
+                                        name="category"
+                                        label="Category:"
+                                        value={values.category}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={
+                                            touched.category &&
+                                            !!errors.category
+                                        }
+                                        helperText={
+                                            touched.category && errors.category
+                                        }
+                                    />
+                                </div>
+                                <div className={style.content}>
+                                    <Button
+                                        fullWidth
+                                        type="submit"
+                                        variant="contained"
+                                        color="success"
+                                    >
+                                        Create
+                                    </Button>
+                                </div>
                             </div>
                         </form>
                     )}
