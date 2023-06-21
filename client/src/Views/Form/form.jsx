@@ -217,7 +217,6 @@ const Form = () => {
                     )}
                 </Formik>
             </div>
-            <Footer />
         </div>
     );
 };
