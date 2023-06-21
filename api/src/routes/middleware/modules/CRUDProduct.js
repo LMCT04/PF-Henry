@@ -46,8 +46,28 @@ const modulePostProduct = async (newProduct) => {
 
 const moduleGetAllProductFromDatabase = async () => {
   try {
-    const products = await Product.findAll();
-    return products;
+    const products = await Product.findAll({
+      include: [
+        {
+          model: Category,
+          attributes: ["name"],
+          through: { attributes: [] },
+        },
+      ],
+    });
+    const categories = products.map((c) => c.categories.map((c) => c.name));
+
+    const formatedProducts = products.map((product, index) => ({
+      id: product.id,
+      name: product.name,
+      image: product.image,
+      description: product.description,
+      price: product.price,
+      type: product.type,
+      categories: categories[index],
+    }));
+
+    return formatedProducts;
   } catch (error) {
     throw new Error("Error al obtener productos de la base de datos");
   }
@@ -56,11 +76,29 @@ const moduleGetAllProductFromDatabase = async () => {
 const moduleGetProductFromDatabaseByName = async (name) => {
   try {
     const products = await Product.findAll({
+      include: {
+        model: Category,
+        attributes: ["name"],
+        through: { attributes: [] },
+      },
       where: {
         name: { [Op.iLike]: `%${name}%` },
       },
     });
-    return products;
+
+    const categories = products.map((c) => c.categories.map((c) => c.name));
+
+    const formatedProducts = products.map((product, index) => ({
+      id: product.id,
+      name: product.name,
+      image: product.image,
+      description: product.description,
+      price: product.price,
+      type: product.type,
+      categories: categories[index],
+    }));
+
+    return formatedProducts;
   } catch (error) {
     throw new Error(
       "Error al obtener los productos de la base de datos por nombre"
@@ -71,9 +109,24 @@ const moduleGetProductById = async (id) => {
   try {
     const productById = await Product.findOne({
       where: { id: id },
+      include: {
+        model: Category,
+        attributes: ["name"],
+        through: { attributes: [] },
+      },
     });
 
-    return productById;
+    const categories = productById.categories.map((c) => c.name);
+    const formatedProduct = {
+      id: productById.id,
+      name: productById.name,
+      image: productById.image,
+      description: productById.description,
+      price: productById.price,
+      type: productById.type,
+      categories: categories,
+    };
+    return formatedProduct;
   } catch (error) {
     console.error(error);
   }
@@ -92,7 +145,7 @@ const modulePutStatusProduct = async (id, status) => {
 
 const modulePutUpdateProduct = async (id, upProduct) => {
   try {
-    const product = await Product.findByPk(id);
+    const product = await Product.findByPk(id, { include: Category });
     if (!product) {
       throw new Error("Producto no encontrado");
     }
@@ -102,13 +155,34 @@ const modulePutUpdateProduct = async (id, upProduct) => {
     product.description = upProduct.description;
     product.price = upProduct.price;
     product.type = upProduct.type;
-    product.category = upProduct.category;
 
     await product.save();
 
+    // Obtener las categorías asociadas al producto
+    const existingCategories = product.categories.map(
+      (category) => category.id
+    );
+
+    // Obtener las categorías nuevas del array categoryId
+    const newCategories = await Category.findAll({
+      where: { id: upProduct.categoryId },
+    });
+
+    // Eliminar las categorías existentes que no están seleccionadas en la solicitud
+    await product.removeCategories(
+      existingCategories.filter(
+        (categoryId) => !upProduct.categoryId.includes(categoryId)
+      )
+    );
+
+    // Agregar las nuevas categorías al producto
+    await product.addCategories(newCategories);
+
     return product;
   } catch (error) {
-    throw error;
+    console.error(error);
+    console.error("Error al modificar el producto", error);
+    throw new Error(`Error al modificar el producto `);
   }
 };
 
