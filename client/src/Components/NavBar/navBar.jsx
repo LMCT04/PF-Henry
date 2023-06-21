@@ -26,21 +26,11 @@ const NavBar = () => {
                     className={style.navLink}
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
-                        textDecoration: isActive ? "underline" : "none",
+                        textDecoration: isActive ? "none" : "none",
+                        color: isActive ? '#FFF0C9' : "#4c956c",
                     })}
                 >
                     New Product
-                </NavLink>
-
-                <NavLink
-                    to="/home"
-                    className={style.navLink}
-                    style={(isActive) => ({
-                        fontSize: isActive ? "28px" : "22px",
-                        textDecoration: isActive ? "underline" : "none",
-                    })}
-                >
-                    Home
                 </NavLink>
 
                 <NavLink
@@ -48,22 +38,24 @@ const NavBar = () => {
                     className={style.navLink}
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
-                        textDecoration: isActive ? "underline" : "none",
+                        textDecoration: isActive ? "none" : "none",
+                        color: isActive ? '#FFF0C9' : "#4c956c",
                     })}
                 >
                     Menu
                 </NavLink>
 
-                <NavLink
+                {/*<NavLink
                     to="/about"
                     className={style.navLink}
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
-                        textDecoration: isActive ? "underline" : "none",
+                        textDecoration: isActive ? "none" : "none",
+                        color: isActive ? '#FFF0C9' : "#4c956c",
                     })}
                 >
                     About
-                </NavLink>
+                </NavLink>*/}
             </div>
             <div className={style.logoutContainer}>
                 <button onClick={logout} className={style.logout}>

@@ -6,11 +6,16 @@ import {
     FILTER_CATEGORY,
     FILTER_TYPE,
     RESET_FILTERS,
+    GET_BY_NAME,
+    FILTER_CATEGORY_AND_TYPE,
+    GET_BY_ID,
+    CLEAR_STATE,
 } from "./actionsType/productsAT";
 
 const initialState = {
     allProducts: [],
     product: [],
+    productDetail: {},
     newProduct: {},
 };
 
@@ -23,6 +28,24 @@ const rootReducer = (state = initialState, action) => {
                 allProducts: action.payload,
             };
 
+        case GET_BY_NAME:
+            return {
+                ...state,
+                product: action.payload,
+            };
+
+        case GET_BY_ID:
+            return {
+                ...state,
+                productDetail: action.payload,
+            };
+
+        case CLEAR_STATE:
+            return {
+                ...state,
+                productDetail: {},
+            };
+
         case CREATE_PRODUCT:
             return {
                 ...state,
@@ -33,8 +56,16 @@ const rootReducer = (state = initialState, action) => {
             let copyThree = [...state.product];
             let sortedName =
                 action.payload === "asc"
-                    ? copyThree.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
-                    : copyThree.sort((a, b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase()));
+                    ? copyThree.sort((a, b) =>
+                        a.name
+                            .toLowerCase()
+                            .localeCompare(b.name.toLowerCase())
+                    )
+                    : copyThree.sort((a, b) =>
+                        b.name
+                            .toLowerCase()
+                            .localeCompare(a.name.toLowerCase())
+                    );
             return {
                 ...state,
                 product: sortedName,
@@ -85,14 +116,32 @@ const rootReducer = (state = initialState, action) => {
                 product: newproduct,
             };
 
-            case RESET_FILTERS:
-                return {
-                    ...state,
-                    product: state.allProducts,
-                };
+        case RESET_FILTERS:
+            return {
+                ...state,
+                product: state.allProducts,
+            };
+
+        case FILTER_CATEGORY_AND_TYPE:
+            const { category, type } = action;
+            let filteredProducts = state.allProducts;
+
+            if (category !== "ALL") {
+                filteredProducts = filteredProducts.filter(
+                    (product) => product.category === category
+                );
+            }
+
+            if (type !== "ALL") {
+                filteredProducts = filteredProducts.filter(
+                    (product) => product.type === type
+                );
+            }
 
         default:
-            return state;
+            return {
+                ...state,
+            }
     }
 };
 export default rootReducer;

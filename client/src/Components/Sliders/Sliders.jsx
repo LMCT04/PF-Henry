@@ -1,10 +1,9 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 // import React from "react";
 import { Autoplay, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import style from "./Sliders.module.css";
-
 
 import slide1 from "../../imgAssets/banner-01.png";
 import slide2 from "../../imgAssets/banner-02.png";
@@ -32,6 +31,7 @@ const Sliders = () => {
     //       el: '.swiper-scrollbar',
     //     },
     //   });
+
     return (
         <div className={style.container}>
             <Swiper
@@ -42,13 +42,12 @@ const Sliders = () => {
                 centeredSlides={true}
                 loop={true}
                 navigation
+                bulletclass="swiper-pagination-bullet"
                 autoplay={{
                     delay: 5000,
                     disableOnInteraction: false,
                 }}
                 pagination={{ clickable: true }}
-                onSwiper={(swiper) => console.log(swiper)}
-                onSlideChange={() => console.log("slide change")}
                 className={style.container}
             >
                 <SwiperSlide>

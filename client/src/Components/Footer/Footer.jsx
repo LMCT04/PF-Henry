@@ -14,20 +14,20 @@ const Footer = () => {
                 <div className={style.footerContainer}>
                     <section className={style.info}>
                         <div className={style.infoFooter}>
-                            <h2>Dirección:</h2>
-                            <h4>Lugar Random</h4>
+                            <h2>Location:</h2>
+                            <h4>Av. Duarte Quirós 3233, Córdoba</h4>
                         </div>
                         <div className={style.infoFooter}>
-                            <h2>Contacto:</h2>
-                            <h4>0800-4840539</h4>
+                            <h2>Contact:</h2>
+                            <h4>351-6571036</h4>
                         </div>
                         <div className={style.infoFooter}>
-                            <h2>Horarios:</h2>
-                            <h4>De 09:00 a 22:00</h4>
+                            <h2>Opening hours:</h2>
+                            <h4>From 09:00 to 22:00</h4>
                         </div>
                         <div className={style.infoFooter}>
                             <div className={style.infoFooterRedes}>
-                                <h2>Seguinos en:</h2>
+                                <h2>Follow us:</h2>
                                 <div>
                                     <button className={style.logoBtn}>
                                         <img
@@ -61,10 +61,10 @@ const Footer = () => {
                             </div>
                         </div>
                         <NavLink
-                            to="/home"
+                            to="/"
                             style={(isActive) => ({
                                 color: "rgb(20, 20, 20)",
-                                "text-decoration": isActive && "none",
+                                "textTecoration": isActive && "none",
                             })}
                         >
                             <img
