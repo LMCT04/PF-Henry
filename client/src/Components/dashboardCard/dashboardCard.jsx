@@ -16,29 +16,28 @@ const DashboardCard = (props) => {
     return (
         <Card
             sx={{
-                border: "2px solid black",
                 display: "flex",
                 alignItems: "center",
                 backgroundColor: "#FFF3B0",
-                height: "118px",
-                width: "1003px",
+                height: "145px",
+                width: "1903px",
             }}
         >
             <CardMedia
                 component="img"
                 height="98%"
                 image={props.element.image}
-                sx={{ width: "12%", backgroundColor: "red" }}
+                sx={{ width: "8.5%", backgroundColor: "red" }}
             />
-            <CardContent sx={{ height: "100%", width: "80%" }}>
-                <Box sx={{ border: "1px solid black", height: "20%" }}>
+            <CardContent sx={{ height: "100%", width: "88%" }}>
+                <Box sx={{ border: "1px solid black", height: "20%", fontWeight:'bold', backgroundColor:'#E09F3E' }}>
                     {props.element.name}
                 </Box>
                 <Box sx={{ border: "1px solid black", height: "80%" }}>
                     {props.element.price}
                     {props.element.description}
                     {props.element.type}
-                    {props.element.category}
+                    {props.element.categories}
                 </Box>
             </CardContent>
             <CardContent
@@ -47,7 +46,9 @@ const DashboardCard = (props) => {
                     height: "100%",
                     display: "flex",
                     alignItems: "center",
-                    width: "8%",
+                    justifyContent:'center',
+                    width: "3.5%",
+                    backgroundColor:'blue'
                 }}
             >
                 {" "}

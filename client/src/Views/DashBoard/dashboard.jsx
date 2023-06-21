@@ -72,7 +72,6 @@ const DashBoard = () => {
                 </Box>
                 {value === 0 && (
                     <div>
-                        <SearchBar />
                         <DashboardCardCont />
                     </div>
                 )}
