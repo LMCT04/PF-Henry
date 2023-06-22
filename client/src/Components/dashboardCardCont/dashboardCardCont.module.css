@@ -4,14 +4,6 @@
     justify-content: center;
     align-items: center;
 }
-.filtersAndCards {
-    margin-top: 2%;
-    display: flex;
-    flex-direction: row;
-    gap: 60px;
-    justify-content: center;
-    align-items: flex-start;
-}
 
 .container {
     display: flex;
@@ -20,22 +12,6 @@
     flex-wrap: wrap;
     width: 75vw;
     gap: 30px;
-}
-
-.centradoDeCards {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80vw;
-}
-
-.cardsAndPag {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0 10px 0 10px;
-    gap: 10px;
 }
 
 .pag {
@@ -48,9 +24,10 @@
 
 .filtersContainer {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
+    width: 90%;
     gap: 20px;
     padding-left: 30px;
 }
@@ -59,7 +36,7 @@
     width: 250px;
 }
 
-.loading{
+.loading {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,4 +45,3 @@
     width: 80%;
     padding-top: 300px;
 }
-

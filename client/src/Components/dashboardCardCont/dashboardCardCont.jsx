@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardCard from "../dashboardCard/dashboardCard";
-import { FormControl, InputLabel, MenuItem, Pagination, Select } from "@mui/material";
+import {
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Pagination,
+    Select,
+} from "@mui/material";
 import Loading from "../../Views/Loading/Loading";
 import style from "./dashboardCardCont.module.css";
 //---------------------IMPORTS ACTIONS------------------------
@@ -104,8 +110,8 @@ const DashboardCardCont = () => {
 
     return (
         <div className={style.cardContainer}>
-            <SearchBar />
             <div className={style.filtersContainer}>
+                <SearchBar />
                 <div className={style.alfContainer}>
                     <FormControl fullWidth>
                         {/* <label>ALPHABETIC ORDER</label> */}
@@ -215,7 +221,7 @@ const DashboardCardCont = () => {
                     ))
                 ) : (
                     <div>
-                        <Loading />
+                        <Loading/>
                     </div>
                 )}
             </div>
