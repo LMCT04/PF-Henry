@@ -104,7 +104,7 @@ const moduleGetProductFromDatabaseByName = async (name) => {
     console.error(error);
     throw new Error(
       "Error al obtener los productos de la base de datos por nombre"
-  }
+  )}
 };
 
 const moduleGetProductById = async (id) => {
