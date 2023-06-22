@@ -3,14 +3,12 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllProducts } from "../../redux/actions/actionsProducts";
-import SearchBar from "../../Components/searchBar/searchBar";
 
 import style from "./dashboard.module.css";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import { Tab } from "@mui/material";
 import { styled } from "@mui/material/styles";
-//import DashboardCard from '../../Components/dashboardCard/dashboardCard';
 import NavBarDashboard from "../../Components/Dash_Components/navbardash/navbar";
 import DashboardCardCont from "../../Components/Dash_Components/dashboardCardCont/dashboardCardCont";
 
@@ -23,10 +21,11 @@ const DashBoard = () => {
     }, [dispatch]);
 
     const CustomTab = styled(Tab)(({ theme, isActive }) => ({
-        color: isActive ? "#e09f3e" : "#9e2a2b",
+        color: isActive ? "#006D77" : "#83C5BE",
         "&.Mui-selected": {
-            color: "#e09f3e",
+            color: "#006D77",
         },
+        
     }));
 
     const [value, setValue] = useState(0);
@@ -42,7 +41,7 @@ const DashBoard = () => {
                 sx={{
                     width: "100%",
                     height: "70vh",
-                    backgroundColor: "#fff3b0",
+                    backgroundColor: "#B8DEDC",
                     display: "flex",
                     flexDirection: "column",
                 }}
@@ -51,22 +50,26 @@ const DashBoard = () => {
                     sx={{
                         borderBottom: 1,
                         borderColor: "divider",
-                        backgroundColor: "#335c67",
+                        backgroundColor: "#FFDDD2",
                     }}
                 >
-                    <Tabs value={value} onChange={handleChange}>
+                    <Tabs
+                        value={value} 
+                        onChange={handleChange}
+                        indicatorColor="primary"
+                    >
                         <CustomTab
-                            label="PESTAÑA UNO"
+                            label="GESTION DE PRODUCTOS"
                             isActive={value === 0}
                             sx={{ fontWeight: "bold" }}
                         />
                         <CustomTab
-                            label="PESTAÑA DOS"
+                            label="CREACION DE PRODUCTOS"
                             isActive={value === 1}
                             sx={{ fontWeight: "bold" }}
                         />
                         <CustomTab
-                            label="PESTAÑA TRES"
+                            label="GESTION DE USUARIOS"
                             isActive={value === 2}
                             sx={{ fontWeight: "bold" }}
                         />
@@ -77,7 +80,7 @@ const DashBoard = () => {
                         <DashboardCardCont />
                     </div>
                 )}
-                {value === 1 && <div>QUE TAL</div>}
+                {value === 1 && <div></div>}
                 {value === 2 && <div>ADIOS</div>}
             </Box>
         </div>
