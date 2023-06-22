@@ -7,6 +7,7 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import style from "./searchBar.module.css";
+import { Alert, AlertTitle, Stack } from "@mui/material";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const SearchBar = () => {
     } catch (error) {
       console.log("Error:", error);
       setProductFound(false);
+
     }
   }
 
@@ -39,6 +41,7 @@ const SearchBar = () => {
       handleSubmit(event);
     }
   }
+
 
   return (
     <div className={style.searchBar}>
@@ -77,6 +80,7 @@ const SearchBar = () => {
       {!productFound && <p>No products found</p>}
     </div>
   );
+
 };
 
 export default SearchBar;
