@@ -1,16 +1,9 @@
 .cardContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-}
-.filtersAndCards {
-    margin-top: 2%;
-    display: flex;
-    flex-direction: row;
-    gap: 60px;
-    justify-content: center;
-    align-items: flex-start;
+    height: 85vh;
 }
 
 .container {
@@ -22,49 +15,58 @@
     gap: 30px;
 }
 
-.centradoDeCards {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80vw;
-}
-
-.cardsAndPag {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0 10px 0 10px;
-    gap: 10px;
-}
-
 .pag {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 2.5%;
-    margin-bottom: 2.5%;
+    padding-top: 2.5%;
 }
 
 .filtersContainer {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 98%;
     gap: 20px;
-    padding-left: 30px;
 }
 
 .input {
     width: 250px;
 }
 
-.loading{
+.loading {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fefee3;
     height: 90vh;
     width: 80%;
     padding-top: 300px;
 }
 
+.scrollContainer {
+    height: 100vh;
+    width: 100%; /* Altura fija o máxima del contenedor */
+    overflow: auto; /* Habilitar el scroll */
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.112);
+}
+.scrollContainer::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 25px;
+}
+.scrollContainer::-webkit-scrollbar-track {
+    background: #d5cda4;
+}
+.scrollContainer::-webkit-scrollbar-thumb {
+    background: #a49856;
+    border-radius: 25px;
+    /* Color del pulgar */
+}
+.scrollContainer::-webkit-scrollbar-thumb:hover {
+    background: #c8bd81; /* Color del pulgar al pasar el cursor */
+}
+
+.loading {
+    padding-top: 300px;
+    padding-left: 100px;
+    background-color: transparent;
+}

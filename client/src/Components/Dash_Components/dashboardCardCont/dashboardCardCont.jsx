@@ -1,14 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardCard from "../dashboardCard/dashboardCard";
-import { FormControl, InputLabel, MenuItem, Pagination, Select } from "@mui/material";
+import {
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Pagination,
+    Select,
+} from "@mui/material";
 import Loading from "../../../Views/Loading/Loading";
 import style from "./dashboardCardCont.module.css";
+
 //---------------------IMPORTS ACTIONS------------------------
 import {
     orderAlphabetic,
     orderPrice,
     filterCategoryAndType,
+    getAllProducts,
 } from "../../../redux/actions/actionsProducts";
 import { Button } from "@mui/material";
 import SearchBar from "../../searchBar/searchBar";
@@ -42,6 +50,10 @@ const DashboardCardCont = () => {
 
     const pageCurrentRef = useRef(page.current);
 
+    function loadProducts() {
+        dispatch(getAllProducts());
+    }
+
     useEffect(() => {
         let filteredProducts = [...allProducts];
         // Filtrar por categoría
@@ -61,12 +73,12 @@ const DashboardCardCont = () => {
             setTypeFilter("ALL");
             setResetFilters(false);
         }
-        const startIndex = (pageCurrentRef.current - 1) * 8;
-        const endIndex = startIndex + 8;
+        const startIndex = (pageCurrentRef.current - 1) * 5;
+        const endIndex = startIndex + 5;
         setPageProducts(filteredProducts.slice(startIndex, endIndex));
         setPage((prevPage) => ({
             ...prevPage,
-            total: Math.ceil(filteredProducts.length / 8),
+            total: Math.ceil(filteredProducts.length / 5),
         }));
     }, [allProducts, categoryFilter, typeFilter, pageCurrentRef, resetFilters]);
 
@@ -78,8 +90,8 @@ const DashboardCardCont = () => {
     const handleChange = (event, value) => {
         let productsPag = [...allProducts];
         setPage((prevPage) => ({ ...prevPage, current: value }));
-        const startIndex = (value - 1) * 8;
-        const endIndex = startIndex + 8;
+        const startIndex = (value - 1) * 5;
+        const endIndex = startIndex + 5;
         setPageProducts(productsPag.slice(startIndex, endIndex));
     };
 
@@ -109,10 +121,10 @@ const DashboardCardCont = () => {
 
     return (
         <div className={style.cardContainer}>
-            <SearchBar />
             <div className={style.filtersContainer}>
+                <SearchBar />
                 <div className={style.alfContainer}>
-                    <FormControl fullWidth>
+                    <FormControl fullWidth size="small">
                         {/* <label>ALPHABETIC ORDER</label> */}
                         <InputLabel id="alphabetic" color="success">
                             A - Z
@@ -136,7 +148,7 @@ const DashboardCardCont = () => {
                 </div>
 
                 <div className={style.alfContainer}>
-                    <FormControl fullWidth>
+                    <FormControl fullWidth size="small">
                         {/* <label>PRICE ORDER</label> */}
                         <InputLabel id="price" color="success">
                             PRICE
@@ -159,65 +171,73 @@ const DashboardCardCont = () => {
                 </div>
 
                 <div className={style.alfContainer}>
-                        <FormControl fullWidth>
-                            <InputLabel id="type" color="success">
-                                TYPE
-                            </InputLabel>
+                    <FormControl fullWidth size="small">
+                        <InputLabel id="type" color="success">
+                            TYPE
+                        </InputLabel>
 
-                            <Select
-                                color="success"
-                                labelId="type"
-                                id="type"
-                                label="TYPE"
-                                onChange={handleFilterType}
-                                className={style.input}
-                            >
-                                <MenuItem value="ALL">ALL</MenuItem>
-                                <MenuItem value="Comida">Comida</MenuItem>
-                                <MenuItem value="Bebida">Bebida</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </div>
+                        <Select
+                            color="success"
+                            labelId="type"
+                            id="type"
+                            label="TYPE"
+                            onChange={handleFilterType}
+                            className={style.input}
+                        >
+                            <MenuItem value="ALL">ALL</MenuItem>
+                            <MenuItem value="Comida">Comida</MenuItem>
+                            <MenuItem value="Bebida">Bebida</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
 
-                    <div className={style.alfContainer}>
-                        <FormControl fullWidth>
-                            <InputLabel id="categories" color="success">
-                                CATEGORIES
-                            </InputLabel>
+                <div className={style.alfContainer}>
+                    <FormControl fullWidth size="small">
+                        <InputLabel id="categories" color="success">
+                            CATEGORIES
+                        </InputLabel>
 
-                            <Select
-                                color="success"
-                                labelId="categories"
-                                id="categories"
-                                label="CATEGORIES"
-                                onChange={handleFilterCategory}
-                                className={style.input}
-                            >
-                                <MenuItem value="ALL">ALL</MenuItem>
-                                {Object.keys(categories).map((category) => (
-                                    <MenuItem value={category} key={category}>
-                                        {category}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </div>
+                        <Select
+                            color="success"
+                            labelId="categories"
+                            id="categories"
+                            label="CATEGORIES"
+                            onChange={handleFilterCategory}
+                            className={style.input}
+                        >
+                            <MenuItem value="ALL">ALL</MenuItem>
+                            {Object.keys(categories).map((category) => (
+                                <MenuItem value={category} key={category}>
+                                    {category}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </div>
                 <Button
-                    fullWidth
                     color="success"
                     variant="contained"
                     onClick={handleResetFilters}
                 >
                     Reset Filters
                 </Button>
+                <Button
+                    color="success"
+                    variant="contained"
+                    onClick={loadProducts}
+                >
+                    all products
+                </Button>
             </div>
-            <div>
+            <div className={style.scrollContainer}>
                 {pageProducts.length > 0 ? (
                     pageProducts.map((e) => (
-                        <DashboardCard key={e.id} element={e} />
+                        <div>
+                            <DashboardCard key={e.id} element={e} />
+                        </div>
                     ))
                 ) : (
-                    <div>
+                    <div className={style.loading}>
                         <Loading />
                     </div>
                 )}

@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getByName } from "../../redux/actions/actionsProducts";
 import style from "./searchBar.module.css";
+import { Alert, AlertTitle, Stack } from "@mui/material";
 
 const SearchBar = () => {
     const dispatch = useDispatch();
@@ -27,6 +28,9 @@ const SearchBar = () => {
 
     function handleSubmit(event) {
         event.preventDefault();
+        if (!input.length) {
+            alert("Type something to search.");
+        }
         dispatch(getByName(name));
         setInput("");
     }
@@ -49,6 +53,7 @@ const SearchBar = () => {
                     display: "flex",
                     alignItems: "center",
                     width: 400,
+                    height: 35,
                     border: "solid 1px #756E5C",
                 }}
             >
@@ -58,6 +63,7 @@ const SearchBar = () => {
                     placeholder="Search a product:"
                     color="primary"
                     inputProps={{ "aria-label": "search a product" }}
+                    value={input}
                     onChange={handleInputChange}
                 />
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
