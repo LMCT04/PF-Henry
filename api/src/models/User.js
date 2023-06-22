@@ -39,7 +39,7 @@ module.exports = (sequelize) => {
           },
         },
       },
-      
+
       password: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -62,6 +62,11 @@ module.exports = (sequelize) => {
       },
       shoppingHistory: {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
+      },
+      role: {
+        values: ["Superadmin", "admin", "client"],
+        defaultValue: "client",
+        field: "role",
       },
     },
     {
