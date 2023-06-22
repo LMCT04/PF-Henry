@@ -41,8 +41,10 @@ const DashBoard = () => {
             <Box
                 sx={{
                     width: "100%",
-                    height: "100vh",
+                    height: "70vh",
                     backgroundColor: "#fff3b0",
+                    display: "flex",
+                    flexDirection: "column",
                 }}
             >
                 <Box
