@@ -56,7 +56,7 @@ const Detail = () => {
                                     </Fab>
                                 </div>
                                 <h4>{product.type}</h4>
-                                <h4>{product.category}</h4>
+                                <h4>{product.categories}</h4>
 
                                 <Checkbox
                                     {...label}
