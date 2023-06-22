@@ -57,9 +57,10 @@ productRoute.put("/:id", async (req, res) => {
     type,
     category,
   };
+
   try {
-    const updatedProduct = await putProduct(status, id, upProduct);
-    res.status(200).json(updatedProduct);
+    const updatedProduct = await putProduct(id, status, upProduct);
+    res.status(200).json(`El producto se actualizo correctamente`);
   } catch (error) {
     console.error(error);
     res.status(400).json({ error: "Error al actualizar el producto" });
