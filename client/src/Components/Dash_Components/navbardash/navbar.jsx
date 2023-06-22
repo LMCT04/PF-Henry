@@ -20,7 +20,7 @@ const NavBarDashboard = () => {
         <Box
             sx={{
                 width:'100%',
-                height:'8vh',
+                height:'6vh',
                 backgroundColor: '#540B0E',
                 display: 'flex',
                 justifyContent:'flex-end',
@@ -50,11 +50,11 @@ const NavBarDashboard = () => {
                 anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'right',
-                  }}
-                  transformOrigin={{
+                }}
+                transformOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
-                  }}
+                }}
             >
                 <MenuItem
                     sx={{

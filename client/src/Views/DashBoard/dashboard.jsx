@@ -11,8 +11,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { styled } from "@mui/material/styles";
 //import DashboardCard from '../../Components/dashboardCard/dashboardCard';
-import NavBarDashboard from "../../Components/navbardash/navbar";
-import DashboardCardCont from "../../Components/dashboardCardCont/dashboardCardCont";
+import NavBarDashboard from "../../Components/Dash_Components/navbardash/navbar";
+import DashboardCardCont from "../../Components/Dash_Components/dashboardCardCont/dashboardCardCont";
 
 /* COMPONENT */
 const DashBoard = () => {
@@ -42,7 +42,7 @@ const DashBoard = () => {
                 sx={{
                     width: "100%",
                     height: "100vh",
-                    backgroundColor: "##fff3b0",
+                    backgroundColor: "#fff3b0",
                 }}
             >
                 <Box

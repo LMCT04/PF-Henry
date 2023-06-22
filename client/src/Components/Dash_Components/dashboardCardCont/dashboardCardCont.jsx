@@ -2,16 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardCard from "../dashboardCard/dashboardCard";
 import { FormControl, InputLabel, MenuItem, Pagination, Select } from "@mui/material";
-import Loading from "../../Views/Loading/Loading";
+import Loading from "../../../Views/Loading/Loading";
 import style from "./dashboardCardCont.module.css";
 //---------------------IMPORTS ACTIONS------------------------
 import {
     orderAlphabetic,
     orderPrice,
     filterCategoryAndType,
-} from "../../redux/actions/actionsProducts";
+} from "../../../redux/actions/actionsProducts";
 import { Button } from "@mui/material";
-import SearchBar from "../searchBar/searchBar";
+import SearchBar from "../../searchBar/searchBar";
 
 //-------------------------COMPONENT--------------------------
 const DashboardCardCont = () => {
@@ -24,8 +24,13 @@ const DashboardCardCont = () => {
     const [categoryFilter, setCategoryFilter] = useState("ALL");
     const [typeFilter, setTypeFilter] = useState("ALL");
 
-    const types = allProducts.map((product) => product.type);
-    const typesSet = new Set(types);
+    const types = allProducts.map((product) => product.categories);
+    const categories = types.reduce((acc, categories) => {
+        categories.forEach((category) => {
+            acc[category] = true;
+        });
+        return acc;
+    }, {});
 
     //-------------------------PAGINADO--------------------------
 
@@ -41,8 +46,8 @@ const DashboardCardCont = () => {
         let filteredProducts = [...allProducts];
         // Filtrar por categoría
         if (categoryFilter !== "ALL") {
-            filteredProducts = filteredProducts.filter(
-                (product) => product.category === categoryFilter
+            filteredProducts = filteredProducts.filter((product) =>
+                product.categories.includes(categoryFilter)
             );
         }
         // Filtrar por tipo
@@ -92,14 +97,14 @@ const DashboardCardCont = () => {
         const value = e.target.value;
         setPage((prevPage) => ({ ...prevPage, current: 1 }));
         setCategoryFilter(value);
-        dispatch(filterCategoryAndType(value, typeFilter));
+        dispatch(filterCategoryAndType(value, categoryFilter));
     };
 
     const handleFilterType = (e) => {
         const value = e.target.value;
         setPage((prevPage) => ({ ...prevPage, current: 1 }));
         setTypeFilter(value);
-        dispatch(filterCategoryAndType(categoryFilter, value));
+        dispatch(filterCategoryAndType(typeFilter, value));
     };
 
     return (
@@ -154,51 +159,49 @@ const DashboardCardCont = () => {
                 </div>
 
                 <div className={style.alfContainer}>
-                    <FormControl fullWidth>
-                        {/* <label>FILTER CATEGORY</label> */}
-                        <InputLabel id="category" color="success">
-                            CATEGORY
-                        </InputLabel>
+                        <FormControl fullWidth>
+                            <InputLabel id="type" color="success">
+                                TYPE
+                            </InputLabel>
 
-                        <Select
-                            color="success"
-                            labelId="category"
-                            id="category"
-                            label="CATEGORY"
-                            onChange={handleFilterCategory}
-                            className={style.input}
-                        >
-                            <MenuItem value="ALL">ALL</MenuItem>
-                            <MenuItem value="solido">Solido</MenuItem>
-                            <MenuItem value="liquido">Liquido</MenuItem>
-                        </Select>
-                    </FormControl>
-                </div>
+                            <Select
+                                color="success"
+                                labelId="type"
+                                id="type"
+                                label="TYPE"
+                                onChange={handleFilterType}
+                                className={style.input}
+                            >
+                                <MenuItem value="ALL">ALL</MenuItem>
+                                <MenuItem value="Comida">Comida</MenuItem>
+                                <MenuItem value="Bebida">Bebida</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
 
-                <div className={style.alfContainer}>
-                    <FormControl fullWidth>
-                        {/* <label>FILTER TYPE</label> */}
-                        <InputLabel id="type" color="success">
-                            TYPE
-                        </InputLabel>
+                    <div className={style.alfContainer}>
+                        <FormControl fullWidth>
+                            <InputLabel id="categories" color="success">
+                                CATEGORIES
+                            </InputLabel>
 
-                        <Select
-                            color="success"
-                            labelId="type"
-                            id="type"
-                            label="TYPE"
-                            onChange={handleFilterType}
-                            className={style.input}
-                        >
-                            <MenuItem value="ALL">ALL</MenuItem>
-                            {Array.from(typesSet).map((type) => (
-                                <MenuItem value={type} key={type}>
-                                    {type}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </div>
+                            <Select
+                                color="success"
+                                labelId="categories"
+                                id="categories"
+                                label="CATEGORIES"
+                                onChange={handleFilterCategory}
+                                className={style.input}
+                            >
+                                <MenuItem value="ALL">ALL</MenuItem>
+                                {Object.keys(categories).map((category) => (
+                                    <MenuItem value={category} key={category}>
+                                        {category}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </div>
                 <Button
                     fullWidth
                     color="success"

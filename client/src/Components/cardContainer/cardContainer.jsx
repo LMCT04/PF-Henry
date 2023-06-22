@@ -35,8 +35,13 @@ const CardsContainer = () => {
     const [categoryFilter, setCategoryFilter] = useState("ALL");
     const [typeFilter, setTypeFilter] = useState("ALL");
 
-    const types = allProducts.map((product) => product.type);
-    const typesSet = new Set(types);
+    const types = allProducts.map((product) => product.categories);
+    const categories = types.reduce((acc, categories) => {
+        categories.forEach((category) => {
+            acc[category] = true;
+        });
+        return acc;
+    }, {});
 
     //-------------------------PAGINADO--------------------------
 
@@ -52,8 +57,8 @@ const CardsContainer = () => {
         let filteredProducts = [...allProducts];
         // Filtrar por categoría
         if (categoryFilter !== "ALL") {
-            filteredProducts = filteredProducts.filter(
-                (product) => product.category === categoryFilter
+            filteredProducts = filteredProducts.filter((product) =>
+                product.categories.includes(categoryFilter)
             );
         }
         // Filtrar por tipo
@@ -104,14 +109,14 @@ const CardsContainer = () => {
         const value = e.target.value;
         setPage((prevPage) => ({ ...prevPage, current: 1 }));
         setCategoryFilter(value);
-        dispatch(filterCategoryAndType(value, typeFilter));
+        dispatch(filterCategoryAndType(value, categoryFilter));
     };
 
     const handleFilterType = (e) => {
         const value = e.target.value;
         setPage((prevPage) => ({ ...prevPage, current: 1 }));
         setTypeFilter(value);
-        dispatch(filterCategoryAndType(categoryFilter, value));
+        dispatch(filterCategoryAndType(typeFilter, value));
     };
 
     //-------------------------RENDERIZACION--------------------------
@@ -125,7 +130,6 @@ const CardsContainer = () => {
                 <div className={style.filtersContainer}>
                     <div className={style.alfContainer}>
                         <FormControl fullWidth>
-                            {/* <label>ALPHABETIC ORDER</label> */}
                             <InputLabel id="alphabetic" color="success">
                                 A - Z
                             </InputLabel>
@@ -149,7 +153,6 @@ const CardsContainer = () => {
 
                     <div className={style.alfContainer}>
                         <FormControl fullWidth>
-                            {/* <label>PRICE ORDER</label> */}
                             <InputLabel id="price" color="success">
                                 PRICE
                             </InputLabel>
@@ -172,29 +175,6 @@ const CardsContainer = () => {
 
                     <div className={style.alfContainer}>
                         <FormControl fullWidth>
-                            {/* <label>FILTER CATEGORY</label> */}
-                            <InputLabel id="category" color="success">
-                                CATEGORY
-                            </InputLabel>
-
-                            <Select
-                                color="success"
-                                labelId="category"
-                                id="category"
-                                label="CATEGORY"
-                                onChange={handleFilterCategory}
-                                className={style.input}
-                            >
-                                <MenuItem value="ALL">ALL</MenuItem>
-                                <MenuItem value="solido">Solido</MenuItem>
-                                <MenuItem value="liquido">Liquido</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </div>
-
-                    <div className={style.alfContainer}>
-                        <FormControl fullWidth>
-                            {/* <label>FILTER TYPE</label> */}
                             <InputLabel id="type" color="success">
                                 TYPE
                             </InputLabel>
@@ -208,9 +188,30 @@ const CardsContainer = () => {
                                 className={style.input}
                             >
                                 <MenuItem value="ALL">ALL</MenuItem>
-                                {Array.from(typesSet).map((type) => (
-                                    <MenuItem value={type} key={type}>
-                                        {type}
+                                <MenuItem value="Comida">Comida</MenuItem>
+                                <MenuItem value="Bebida">Bebida</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+
+                    <div className={style.alfContainer}>
+                        <FormControl fullWidth>
+                            <InputLabel id="categories" color="success">
+                                CATEGORIES
+                            </InputLabel>
+
+                            <Select
+                                color="success"
+                                labelId="categories"
+                                id="categories"
+                                label="CATEGORIES"
+                                onChange={handleFilterCategory}
+                                className={style.input}
+                            >
+                                <MenuItem value="ALL">ALL</MenuItem>
+                                {Object.keys(categories).map((category) => (
+                                    <MenuItem value={category} key={category}>
+                                        {category}
                                     </MenuItem>
                                 ))}
                             </Select>
