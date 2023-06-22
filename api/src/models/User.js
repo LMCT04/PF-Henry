@@ -64,8 +64,8 @@ module.exports = (sequelize) => {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
       },
       role: {
-        values: ["Superadmin", "admin", "client"],
-        defaultValue: "client",
+        type: DataTypes.ENUM("admin", "user", "superAdmin"),
+        defaultValue: "user",
         field: "role",
       },
     },

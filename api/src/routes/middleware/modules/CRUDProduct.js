@@ -129,6 +129,7 @@ const moduleGetProductById = async (id) => {
     return formatedProduct;
   } catch (error) {
     console.error(error);
+    throw new Error(`El id: ${id} no es valido ${error}`);
   }
 };
 
