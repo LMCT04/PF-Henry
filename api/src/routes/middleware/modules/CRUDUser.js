@@ -3,16 +3,6 @@ const { User, Product } = require("../../../database.js"),
 ////En CRUDUser se definen todas las peticiones Create (Crear), Read (Leer), Update (Actualizar) y Delete (Borrar)
 
 //definir funciones
-
-const modelgetAllUsersFromDatabase = async () => {
-  try {
-    const users = await User.findAll();
-    return users;
-  } catch (error) {
-    console.error(error);
-    throw new Error("Error al obtener a los usuarios");
-  }
-};
 const modelgetUserFromDatabase = async (mail) => {
   try {
     const user = await User.findAll({
@@ -80,5 +70,4 @@ module.exports = {
   //exportar cada funcion
   modelgetUserFromDatabase,
   modelpostUserInDatabase,
-  modelgetAllUsersFromDatabase
 };
