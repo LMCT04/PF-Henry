@@ -69,7 +69,8 @@ const moduleGetAllProductFromDatabase = async () => {
 
     return formatedProducts;
   } catch (error) {
-    throw new Error("Error al obtener productos de la base de datos");
+    console.error(error);
+    throw new Error("Error al obtener todos los productos");
   }
 };
 
@@ -100,12 +101,16 @@ const moduleGetProductFromDatabaseByName = async (name) => {
 
     return formatedProducts;
   } catch (error) {
+    console.error(error);
     throw new Error(
       "Error al obtener los productos de la base de datos por nombre"
-    );
   }
 };
+
 const moduleGetProductById = async (id) => {
+  if (isNaN(id)) {
+    throw new Error(`El id: ${id} no es válido`);
+  }
   try {
     const productById = await Product.findOne({
       where: { id: id },
@@ -129,9 +134,9 @@ const moduleGetProductById = async (id) => {
     return formatedProduct;
   } catch (error) {
     console.error(error);
+    throw new Error(`El id: ${id} no es valido ${error}`);
   }
 };
-
 const modulePutStatusProduct = async (id, status) => {
   try {
     const product = await Product.findByPk(id);
@@ -144,7 +149,7 @@ const modulePutStatusProduct = async (id, status) => {
 };
 
 const modulePutUpdateProduct = async (id, upProduct) => {
-  try {
+  try { 
     const product = await Product.findByPk(id, { include: Category });
     if (!product) {
       throw new Error("Producto no encontrado");
@@ -180,7 +185,6 @@ const modulePutUpdateProduct = async (id, upProduct) => {
 
     return product;
   } catch (error) {
-    console.error(error);
     console.error("Error al modificar el producto", error);
     throw new Error(`Error al modificar el producto `);
   }
