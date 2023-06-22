@@ -215,16 +215,30 @@ const DashboardCardCont = () => {
                     </FormControl>
                 </div>
                 <Button
-                    color="success"
                     variant="contained"
                     onClick={handleResetFilters}
+                    sx={{
+                        backgroundColor:'#E29578', 
+                        color:'#EDF6F9',
+                        '&:hover': {
+                            backgroundColor: '#E29578', 
+                            color: '#EDF6F9',  
+                        },
+                    }}
                 >
                     Reset Filters
                 </Button>
                 <Button
-                    color="success"
                     variant="contained"
                     onClick={loadProducts}
+                    sx={{
+                        backgroundColor:'#E29578', 
+                        color:'#EDF6F9',
+                        '&:hover': {
+                            backgroundColor: '#E29578', 
+                            color: '#EDF6F9',  
+                        },
+                    }}
                 >
                     all products
                 </Button>

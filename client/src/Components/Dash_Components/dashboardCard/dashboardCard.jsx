@@ -5,6 +5,10 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
+import MuiAccordion from '@mui/material/Accordion';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 const DashboardCard = (props) => {
     const [checked, setChecked] = useState(true);
@@ -18,37 +22,50 @@ const DashboardCard = (props) => {
             sx={{
                 display: "flex",
                 alignItems: "center",
-                backgroundColor: "#FFF3B0",
-                height: "145px",
-                width: "1903px",
+                justifyContent:'center',
+                backgroundColor: "#EDF6F9",
+                height: "auto",
+                width: "100%",
+                borderBottom:'5px solid #FFDDD2'
             }}
         >
             <CardMedia
                 component="img"
-                height="98%"
+                height="90%"
                 image={props.element.image}
                 sx={{ width: "8.5%", backgroundColor: "red" }}
             />
-            <CardContent sx={{ height: "100%", width: "88%" }}>
-                <Box sx={{ border: "1px solid black", height: "20%", fontWeight:'bold', backgroundColor:'#E09F3E' }}>
+            <CardContent sx={{ height: "100%", width: "82.5%" }}>
+                <Box sx={{ color: "#343A40", height: "20%", fontWeight:'bold'}}>
                     {props.element.name}
                 </Box>
-                <Box sx={{ border: "1px solid black", height: "80%" }}>
-                    {props.element.price}
-                    {props.element.description}
-                    {props.element.type}
-                    {props.element.categories}
+                <Box sx={{height: "80%" ,display:'flex'}}>
+                    <Box sx={{width: "50%"}}>
+                        <Box sx={{}} >
+                            {props.element.type}:
+                            {props.element.categories}
+                        </Box>
+                        <Accordion sx={{margin: '1%'}} >
+                            <AccordionSummary>
+                                DESCRIPTION
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                {props.element.description}
+                            </AccordionDetails>
+                        </Accordion>
+                    </Box>
+                    <Box sx={{width: "50%"}}>
+                        {props.element.price}
+                    </Box>
                 </Box>
             </CardContent>
             <CardContent
                 sx={{
-                    border: "2px solid black",
                     height: "100%",
                     display: "flex",
                     alignItems: "center",
                     justifyContent:'center',
                     width: "3.5%",
-                    backgroundColor:'blue'
                 }}
             >
                 {" "}
