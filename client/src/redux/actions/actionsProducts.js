@@ -1,142 +1,128 @@
 import axios from "axios";
 import {
-    ORDER_ALPHABETIC,
-    ORDER_PRICE,
-    GET_ALL_PRODUCTS,
-    CREATE_PRODUCT,
-    FILTER_CATEGORY,
-    FILTER_TYPE,
-    RESET_FILTERS,
-    FILTER_CATEGORY_AND_TYPE,
-    GET_BY_NAME,
-    GET_BY_ID,
-    CLEAR_STATE,
+  ORDER_ALPHABETIC,
+  ORDER_PRICE,
+  GET_ALL_PRODUCTS,
+  CREATE_PRODUCT,
+  FILTER_CATEGORY,
+  FILTER_TYPE,
+  RESET_FILTERS,
+  FILTER_CATEGORY_AND_TYPE,
+  GET_BY_NAME,
+  GET_BY_ID,
+  CLEAR_STATE,
 } from "../actionsType/productsAT";
 
 export const orderAlphabetic = (payload) => {
-    return {
-        type: ORDER_ALPHABETIC,
-        payload,
-    };
+  return {
+    type: ORDER_ALPHABETIC,
+    payload,
+  };
 };
 
 export const orderPrice = (payload) => {
-    return {
-        type: ORDER_PRICE,
-        payload,
-    };
+  return {
+    type: ORDER_PRICE,
+    payload,
+  };
 };
 
 export const filterType = (payload) => {
-    return {
-        type: FILTER_TYPE,
-        payload,
-    };
+  return {
+    type: FILTER_TYPE,
+    payload,
+  };
 };
 
 export const filterCategory = (payload) => {
-    return {
-        type: FILTER_CATEGORY,
-        payload,
-    };
+  return {
+    type: FILTER_CATEGORY,
+    payload,
+  };
 };
 
 export const resetFilters = () => {
-    return {
-        type: RESET_FILTERS,
-    };
+  return {
+    type: RESET_FILTERS,
+  };
 };
 
 export const getAllProducts = () => {
-    return async function (dispatch) {
-        try {
-            const apiData = await axios.get("http://localhost:3001/product");
-            const products = apiData.data;
-            dispatch({
-                type: GET_ALL_PRODUCTS,
-                payload: products,
-            });
-        } catch (error) {
-            console.log("Error getAllproducts");
-        }
-    };
+  return async function (dispatch) {
+    try {
+      const apiData = await axios.get("http://localhost:3001/product");
+      const products = apiData.data;
+      dispatch({
+        type: GET_ALL_PRODUCTS,
+        payload: products,
+      });
+    } catch (error) {
+      console.log("Error: getAllProducts", error);
+      alert("Hubo un error al obtener todos los productos.");
+    }
+  };
 };
 
 export const getByName = (name) => {
-    return async (dispatch) => {
-        try {
-            const apiData = await axios.get(
-                `http://localhost:3001/product?name=${name}`
-            );
-            const product = apiData.data;
+  return async (dispatch) => {
+    try {
+      const apiData = await axios.get(`http://localhost:3001/product?name=${name}`);
+      const product = apiData.data;
 
-            return dispatch({
-                type: GET_BY_NAME,
-                payload: product,
-            });
-        } catch (error) {
-            console.log("There is not a product with that name ", error);
-            alert("There is not a product with that name ");
-        }
-    };
+      return dispatch({
+        type: GET_BY_NAME,
+        payload: product,
+      });
+    } catch (error) {
+      console.log("Error: getByName", error);
+      alert("No se encontró ningún producto con ese nombre.");
+      return Promise.reject(error);
+    }
+  };
 };
 
 export const getById = (id) => {
-    return async (dispatch) => {
-        try {
-            const apiData = await axios.get(
-                `http://localhost:3001/product/${id}`
-            );
+  return async (dispatch) => {
+    try {
+      const apiData = await axios.get(`http://localhost:3001/product/${id}`);
+      const product = apiData.data;
 
-            const product = apiData.data;
-
-            dispatch({
-                type: GET_BY_ID,
-                payload: product,
-            });
-        } catch (error) {
-            console.log("There is not a product with that id ", error);
-            alert("There is not a product with that id ");
-        }
-    };
+      dispatch({
+        type: GET_BY_ID,
+        payload: product,
+      });
+    } catch (error) {
+      console.log("Error: getById", error);
+      alert("No se encontró ningún producto con ese ID.");
+    }
+  };
 };
 
 export const createProduct = (payload) => {
-    const request = {
-        url: "http://localhost:3001/product/createProduct",
-        method: "POST",
-        data: payload,
-    };
-    return async (dispatch) => {
-        /*
-        console.log(request);
-        return axios(request).then((response) => {
-            dispatch({
-                type: CREATE_PRODUCT,
-                payload: response.data,
-            });
-        });
-    };
-};
-*/
+  return async (dispatch) => {
+    try {
+      const response = await axios.post("http://localhost:3001/product/createProduct", payload);
+      const createdProduct = response.data;
 
-        console.log(request);
-        return axios(request).then((response) => {
-            dispatch({
-                type: CREATE_PRODUCT,
-                payload: response.data,
-            });
-        });
-    };
+      dispatch({
+        type: CREATE_PRODUCT,
+        payload: createdProduct,
+      });
+    } catch (error) {
+      console.log("Error: createProduct", error);
+      alert("Hubo un error al crear el producto.");
+    }
+  };
 };
 
 export const filterCategoryAndType = (category, type) => {
-    return {
-        type: FILTER_CATEGORY_AND_TYPE,
-        category,
-    };
+  return {
+    type: FILTER_CATEGORY_AND_TYPE,
+    category,
+    type,
+  };
 };
 
 export const clearState = () => {
-    return { type: CLEAR_STATE };
+  return { type: CLEAR_STATE };
 };
