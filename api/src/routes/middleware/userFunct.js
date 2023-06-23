@@ -30,7 +30,7 @@ const postUser = async (
   address,
   favorite,
   shoppingHistory,
-  role
+  //role
 ) => {
   try {
     const createUsuario = await modelpostUserInDatabase(
@@ -43,7 +43,7 @@ const postUser = async (
       address,
       favorite,
       shoppingHistory,
-      role
+      //role
     );
     return createUsuario;
   } catch (error) {
