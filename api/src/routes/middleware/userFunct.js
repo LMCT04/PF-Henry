@@ -3,13 +3,16 @@
 const {
   modelgetUserFromDatabase,
   modelpostUserInDatabase,
+  modelgetAllUserFromDatabase,
 } = require("./modules/CRUDUser");
 
 //definir funciones
 
 const getUser = async (mail) => {
   try {
-    const databaseUser = await modelgetUserFromDatabase(mail);
+    const databaseUser = await (mail
+      ? modelgetUserFromDatabase(mail)
+      : modelgetAllUserFromDatabase());
     return databaseUser;
   } catch (error) {
     console.error("Error al obtener el usuario:", error);
@@ -26,7 +29,8 @@ const postUser = async (
   age,
   address,
   favorite,
-  shoppingHistory
+  shoppingHistory,
+  //role
 ) => {
   try {
     const createUsuario = await modelpostUserInDatabase(
@@ -38,7 +42,8 @@ const postUser = async (
       age,
       address,
       favorite,
-      shoppingHistory
+      shoppingHistory,
+      //role
     );
     return createUsuario;
   } catch (error) {

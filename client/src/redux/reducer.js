@@ -12,11 +12,18 @@ import {
     CLEAR_STATE,
 } from "./actionsType/productsAT";
 
+import {
+    POST_USERS,
+    GET_USERS
+} from "./actionsType/usersAT"
+
 const initialState = {
     allProducts: [],
     product: [],
     productDetail: {},
     newProduct: {},
+    newUser: {},
+    user:[]
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -136,6 +143,18 @@ const rootReducer = (state = initialState, action) => {
                 filteredProducts = filteredProducts.filter(
                     (product) => product.type === type
                 );
+            }
+        case POST_USERS:
+                return {
+                    ...state,
+                    newUser: action.payload,
+                };
+
+//----------USERS--------------------------------------
+        case GET_USERS:
+            return {
+                ...state,
+                user: action.payload,
             }
 
         default:

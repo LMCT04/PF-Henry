@@ -1,8 +1,10 @@
+
 import React, { useState } from "react";
 import { Formik } from "formik";
 import style from "./form.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../redux/actions/actionsProducts";
+
 import {
     Box,
     Button,
@@ -15,14 +17,16 @@ import {
     TextField,
 } from "@mui/material";
 
+
 const Form = () => {
-    const lettersOrSpacesREGEX = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
-    // const imageURLREGEX = /\.(jpeg|jpg|gif|png)$/i;
-    const imageURLREGEX = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+  const lettersOrSpacesREGEX = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+  // const imageURLREGEX = /\.(jpeg|jpg|gif|png)$/i;
+  const imageURLREGEX = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
 
-    const numberREGEX = /^([0-9]+(?:\.[0-9]*)?)$/;
+  const numberREGEX = /^([0-9]+(?:\.[0-9]*)?)$/;
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
 
     const allProducts = useSelector((state) => state.product);
     const types = allProducts.map((product) => product.categories);
@@ -60,43 +64,40 @@ const Form = () => {
                     validate={(values) => {
                         const errors = {};
 
-                        // NAME //
-                        if (!values.name) {
-                            errors.name = "Please insert product name.";
-                        }
-                        if (
-                            !lettersOrSpacesREGEX.test(values.name) &&
-                            values.name
-                        ) {
-                            errors.name =
-                                'Just "," , "." , letters and blank spaces.';
-                        }
 
-                        // IMAGE //
-                        if (!values.image) {
-                            errors.image = "Image URL can't be empty.";
-                        }
-                        if (values.image && !imageURLREGEX.test(values.image)) {
-                            errors.image = "URL not valid.";
-                        }
+            // NAME //
+            if (!values.name) {
+              errors.name = "Please insert product name.";
+            }
+            if (!lettersOrSpacesREGEX.test(values.name) && values.name) {
+              errors.name = 'Just "," , "." , letters and blank spaces.';
+            }
 
-                        // DESCRIPTION //
-                        if (!values.description) {
-                            errors.description =
-                                "Please insert product description.";
-                        }
-                        if (values.description.length > 200) {
-                            errors.description =
-                                "Description should be less than 200 characters.";
-                        }
+            // IMAGE //
+            if (!values.image) {
+              errors.image = "Image URL can't be empty.";
+            }
+            if (values.image && !imageURLREGEX.test(values.image)) {
+              errors.image = "URL not valid.";
+            }
 
-                        // PRICE //
-                        if (!values.price) {
-                            errors.price = "Please insert product price.";
-                        }
-                        if (values.price && !numberREGEX.test(values.price)) {
-                            errors.price = "Just numbers.";
-                        }
+            // DESCRIPTION //
+            if (!values.description) {
+              errors.description = "Please insert product description.";
+            }
+            if (values.description.length > 200) {
+              errors.description =
+                "Description should be less than 200 characters.";
+            }
+
+            // PRICE //
+            if (!values.price) {
+              errors.price = "Please insert product price.";
+            }
+            if (values.price && !numberREGEX.test(values.price)) {
+              errors.price = "Just numbers.";
+            }
+
 
                         // TYPE //
                         if (
@@ -112,31 +113,53 @@ const Form = () => {
                             errors.category = "Please insert product category.";
                         }
 
-                        return errors;
-                    }}
-                    onSubmit={(values, { resetForm }) => {
-                        let {
-                            name,
-                            image,
-                            description,
-                            price,
-                            type,
-                            category,
-                        } = values;
-                        dispatch(
-                            createProduct({
-                                name,
-                                image,
-                                description,
-                                price,
-                                type,
-                                category,
-                            })
-                        );
 
-                        resetForm();
-                        console.log(values);
+            return errors;
+          }}
+          onSubmit={async (values, { resetForm }) => {
+            let { name, description, price, type, category } = values;
+            let image = "";
+            if (values.image instanceof File) {
+              image = await uploadFile(values.image);
+            } else {
+              image = values.image;
+            }
+            dispatch(
+              createProduct({
+                name,
+                image,
+                description,
+                price,
+                type,
+                category,
+              })
+            );
+
+            resetForm();
+            console.log(values);
+          }}
+        >
+          {({
+            handleSubmit,
+            values,
+            handleChange,
+            handleBlur,
+            errors,
+            touched,
+            resetForm,
+          }) => (
+            <form className={style.form} onSubmit={handleSubmit}>
+              <div className={style.formContainer}>
+                <div className={style.content}>
+                  <TextField
+                    fullWidth
+                    sx={{
+                      "& .MuiTextField-root": {
+                        m: 1,
+                        width: "25ch",
+                      },
                     }}
+
                 >
                     {({
                         handleSubmit,
@@ -345,6 +368,7 @@ const Form = () => {
             </div>
         </div>
     );
+
 };
 
 export default Form;
