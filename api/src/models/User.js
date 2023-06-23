@@ -63,11 +63,11 @@ module.exports = (sequelize) => {
       shoppingHistory: {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
       },
-      /*role: {
+      role: {
         type: DataTypes.ENUM("admin", "user", "superAdmin"),
         defaultValue: "user",
         field: "role",
-      },*/
+      },
     },
     {
       timestamps: false,
