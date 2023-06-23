@@ -20,14 +20,22 @@ module.exports = (sequelize) => {
           },
         },
       },
-      name: {
+      fullName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      lastName: {
+      userName: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
+        validate: {
+          len: {
+            arg: [3],
+            msg: "El campo debe tener al menos 3 caracteres",
+          },
+        },
       },
+
       mail: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -51,17 +59,19 @@ module.exports = (sequelize) => {
       },
       age: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       favorite: {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
+        allowNull: true,
       },
       shoppingHistory: {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
+        allowNull: true,
       },
       role: {
         type: DataTypes.ENUM("admin", "user", "superAdmin"),
