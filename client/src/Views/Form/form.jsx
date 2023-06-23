@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import style from "./form.module.css";
-import Footer from "../../Components/Footer/Footer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../redux/actions/actionsProducts";
-import { Box, Button, TextField } from "@mui/material";
+import {
+    Box,
+    Button,
+    Chip,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    TextField,
+} from "@mui/material";
 
 const Form = () => {
     const lettersOrSpacesREGEX = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
@@ -14,6 +23,26 @@ const Form = () => {
     const numberREGEX = /^([0-9]+(?:\.[0-9]*)?)$/;
 
     const dispatch = useDispatch();
+
+    const allProducts = useSelector((state) => state.product);
+    const types = allProducts.map((product) => product.categories);
+    const categories = types.reduce((acc, categories) => {
+        categories.forEach((category) => {
+            acc[category] = true;
+        });
+        return acc;
+    }, {});
+
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+        PaperProps: {
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                width: 250,
+            },
+        },
+    };
 
     return (
         <div className={style}>
@@ -26,7 +55,7 @@ const Form = () => {
                         description: "",
                         price: "",
                         type: "",
-                        category: "",
+                        category: [],
                     }}
                     validate={(values) => {
                         const errors = {};
@@ -70,12 +99,16 @@ const Form = () => {
                         }
 
                         // TYPE //
-                        if (!values.type) {
+                        if (
+                            !values.type &&
+                            values.type !== "Comida" &&
+                            values.type !== "Bebida"
+                        ) {
                             errors.type = "Please insert product type.";
                         }
 
                         // CATEGORY //
-                        if (!values.category) {
+                        if (!values.category || values.category.length === 0) {
                             errors.category = "Please insert product category.";
                         }
 
@@ -189,40 +222,114 @@ const Form = () => {
                                     />
                                 </div>
                                 <div className={style.content}>
-                                    <TextField
-                                        fullWidth
-                                        color="success"
-                                        id="type"
-                                        name="type"
-                                        label="Type:"
-                                        value={values.type}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        error={touched.type && !!errors.type}
-                                        helperText={touched.type && errors.type}
-                                    />
+                                    <FormControl fullWidth>
+                                        <InputLabel id="type" color="success">
+                                            Type:
+                                        </InputLabel>
+
+                                        <Select
+                                            fullWidth
+                                            color="success"
+                                            labelId="type"
+                                            id="type"
+                                            name="type"
+                                            label="Type:"
+                                            value={values.type}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={
+                                                touched.type && !!errors.type
+                                            }
+                                            helperText={
+                                                touched.type && errors.type
+                                            }
+                                        >
+                                            <MenuItem value="Comida">
+                                                Comida
+                                            </MenuItem>
+                                            <MenuItem value="Bebida">
+                                                Bebida
+                                            </MenuItem>
+                                        </Select>
+                                        {touched.type && errors.type && (
+                                            <p className={style.errorText}>
+                                                {errors.type}
+                                            </p>
+                                        )}
+                                    </FormControl>
                                 </div>
                                 <div className={style.content}>
-                                    <TextField
-                                        fullWidth
-                                        color="success"
-                                        id="category"
-                                        name="category"
-                                        label="Category:"
-                                        value={values.category}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        error={
-                                            touched.category &&
-                                            !!errors.category
-                                        }
-                                        helperText={
-                                            touched.category && errors.category
-                                        }
-                                    />
+                                    <FormControl fullWidth>
+                                        <InputLabel
+                                            id="category"
+                                            color="success"
+                                        >
+                                            Category:
+                                        </InputLabel>
+
+                                        <Select
+                                            multiple
+                                            color="success"
+                                            labelId="category"
+                                            id="category"
+                                            name="category"
+                                            label="Category:"
+                                            value={values.category}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            MenuProps={MenuProps}
+                                            error={
+                                                touched.category &&
+                                                !!errors.category
+                                            }
+                                            helperText={
+                                                touched.category &&
+                                                errors.category
+                                            }
+                                            renderValue={(selected) => (
+                                                <Box
+                                                    sx={{
+                                                        display: "flex",
+                                                        flexWrap: "wrap",
+                                                        gap: 0.5,
+                                                    }}
+                                                >
+                                                    {selected.map((value) => (
+                                                        <div>
+                                                            <Chip
+                                                                key={value}
+                                                                label={value}
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </Box>
+                                            )}
+                                        >
+                                            {Object.keys(categories).map(
+                                                (category) => (
+                                                    <MenuItem
+                                                        value={category}
+                                                        key={category}
+                                                    >
+                                                        {category}
+                                                    </MenuItem>
+                                                )
+                                            )}
+                                        </Select>
+                                        {touched.category &&
+                                            errors.category && (
+                                                <p className={style.errorText}>
+                                                    {errors.category}
+                                                </p>
+                                            )}
+                                    </FormControl>
                                 </div>
+
                                 <div className={style.content}>
                                     <Button
+                                        sx={{
+                                            marginTop: "35%",
+                                        }}
                                         fullWidth
                                         type="submit"
                                         variant="contained"

@@ -22,24 +22,12 @@ const NavBar = () => {
 
             <div className={style.linksContainer}>
                 <NavLink
-                    to="/create"
-                    className={style.navLink}
-                    style={(isActive) => ({
-                        fontSize: isActive ? "28px" : "22px",
-                        textDecoration: isActive ? "none" : "none",
-                        color: isActive ? '#FFF0C9' : "#4c956c",
-                    })}
-                >
-                    New Product
-                </NavLink>
-
-                <NavLink
                     to="/menu"
                     className={style.navLink}
                     style={(isActive) => ({
                         fontSize: isActive ? "28px" : "22px",
                         textDecoration: isActive ? "none" : "none",
-                        color: isActive ? '#FFF0C9' : "#4c956c",
+                        color: isActive ? "#FFF0C9" : "#4c956c",
                     })}
                 >
                     Menu

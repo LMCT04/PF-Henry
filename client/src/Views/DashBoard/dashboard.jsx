@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllProducts } from "../../redux/actions/actionsProducts";
-
+import Form from "../Form/form";
 import style from "./dashboard.module.css";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
@@ -25,7 +25,6 @@ const DashBoard = () => {
         "&.Mui-selected": {
             color: "#006D77",
         },
-        
     }));
 
     const [value, setValue] = useState(0);
@@ -54,7 +53,7 @@ const DashBoard = () => {
                     }}
                 >
                     <Tabs
-                        value={value} 
+                        value={value}
                         onChange={handleChange}
                         indicatorColor="primary"
                     >
@@ -80,7 +79,11 @@ const DashBoard = () => {
                         <DashboardCardCont />
                     </div>
                 )}
-                {value === 1 && <div></div>}
+                {value === 1 && (
+                    <div>
+                        <Form />
+                    </div>
+                )}
                 {value === 2 && <div>ADIOS</div>}
             </Box>
         </div>
