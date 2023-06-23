@@ -24,6 +24,7 @@ userRoute.post("/", async (req, res) => {
     address,
     favorite,
     shoppingHistory,
+    role
   } = req.body;
   try {
     await postUser(
@@ -35,7 +36,8 @@ userRoute.post("/", async (req, res) => {
       age,
       address,
       favorite,
-      shoppingHistory
+      shoppingHistory,
+      role
     );
     res.status(200).send({ message: "Usuario creado con exito" });
   } catch (error) {
