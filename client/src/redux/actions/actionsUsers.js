@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
-    POST_USERS
+    POST_USERS,
+    GET_USERS,
 } from "../actionsType/usersAT"
 
 export const createUsers = (payload) => {
@@ -19,3 +20,19 @@ export const createUsers = (payload) => {
       }
     };
   };
+
+export const getAllUsers = () => {
+  return async function (dispatch) {
+    try {
+      const userData = await axios.get('http://localhost:3001/user')
+      const users = userData.data
+      dispatch({
+        type: GET_USERS,
+        payload: users,
+      })
+    } catch(error){
+      console.log("Error: getAllUsers", error);
+      alert("Hubo un error al obtener todos los usuarios.");
+    }
+  }
+}

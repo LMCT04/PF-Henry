@@ -25,7 +25,7 @@ const modelgetUserFromDatabase = async (mail) => {
       address: user[0].address,
       favorite: user[0].favorite,
       shoppingHistory: user[0].shoppingHistory,
-      role: user[0].role,
+      //role: user[0].role,
     };
   } catch (error) {
     console.error(error);
@@ -53,11 +53,11 @@ const modelpostUserInDatabase = async (
   address,
   favorite,
   shoppingHistory,
-  role
+  //role
 ) => {
-  if (!["admin", "user", "superAdmin"].includes(role)) {
-    throw new Error("El valor de 'role' no es válido");
-  }
+  //if (!["admin", "user", "superAdmin"].includes(role)) {
+  //  throw new Error("El valor de 'role' no es válido");
+  //}
   let [newUser, created] = await User.findOrCreate({
     where: {
       name: {
@@ -74,7 +74,7 @@ const modelpostUserInDatabase = async (
       address,
       favorite,
       shoppingHistory,
-      role,
+      //role,
     },
   });
   if (!created) {

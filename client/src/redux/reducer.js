@@ -13,7 +13,8 @@ import {
 } from "./actionsType/productsAT";
 
 import {
-    POST_USERS
+    POST_USERS,
+    GET_USERS
 } from "./actionsType/usersAT"
 
 const initialState = {
@@ -21,7 +22,8 @@ const initialState = {
     product: [],
     productDetail: {},
     newProduct: {},
-    newUser: {}
+    newUser: {},
+    user:[]
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -142,11 +144,18 @@ const rootReducer = (state = initialState, action) => {
                     (product) => product.type === type
                 );
             }
-        case CREATE_PRODUCT:
+        case POST_USERS:
                 return {
                     ...state,
                     newUser: action.payload,
                 };
+
+//----------USERS--------------------------------------
+        case GET_USERS:
+            return {
+                ...state,
+                user: action.payload,
+            }
 
         default:
             return {

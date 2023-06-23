@@ -1,18 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState} from "react";
 import { useHistory } from "react-router-dom";
 import { Formik } from "formik";
 import { TextField, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createUsers } from "../../redux/actions/actionsUsers"; 
 import { auth } from "../../firebase/config";
 import style from "./login.module.css";
+import {getAllUsers} from '../../redux/actions/actionsUsers'
 
 const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [error, setError] = useState("");
+
+  useEffect(()=>{
+    dispatch(getAllUsers())
+  })
+
+  const users = useSelector((state) => state.user)
+
 
   const handleRegister = () => {
     history.push("/register");
@@ -49,17 +57,6 @@ const Login = () => {
     }
   };
 
-  const users = [
-    {
-      username: "pepito",
-      password: "pepito1234",
-    },
-    {
-      username: "pablito",
-      password: "pablito1234",
-    },
-    // ... otros usuarios
-  ];
 
   return (
     <div className={style.loginContainer}>
@@ -92,7 +89,7 @@ const Login = () => {
 
           const foundUser = users.find(
             (user) =>
-              user.username === values.username &&
+              user.name === values.username &&
               user.password === values.password
           );
           if (foundUser) {
