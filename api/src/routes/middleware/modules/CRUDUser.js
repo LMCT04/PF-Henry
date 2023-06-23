@@ -18,8 +18,8 @@ const modelgetUserFromDatabase = async (mail) => {
     return {
       id: user[0].id,
       image: user[0].image,
-      name: user[0].name,
-      lastName: user[0].lastName,
+      fullName: user[0].fullName,
+      userName:user[0].userName,
       mail: user[0].mail,
       age: user[0].age,
       address: user[0].address,
@@ -44,8 +44,8 @@ const modelgetAllUserFromDatabase = async () => {
 };
 
 const modelpostUserInDatabase = async (
-  name,
-  lastName,
+  fullName,
+  userName,
   image,
   mail,
   password,
@@ -65,8 +65,8 @@ const modelpostUserInDatabase = async (
       },
     },
     defaults: {
-      name,
-      lastName,
+      fullName,
+      userName,
       image,
       mail,
       password,
@@ -89,3 +89,4 @@ module.exports = {
   modelpostUserInDatabase,
   modelgetAllUserFromDatabase,
 };
+

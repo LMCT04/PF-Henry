@@ -21,8 +21,8 @@ const getUser = async (mail) => {
 };
 
 const postUser = async (
-  name,
-  lastName,
+  fullName,
+  userName,
   image,
   mail,
   password,
@@ -34,8 +34,8 @@ const postUser = async (
 ) => {
   try {
     const createUsuario = await modelpostUserInDatabase(
-      name,
-      lastName,
+      fullName,
+      userName,
       image,
       mail,
       password,

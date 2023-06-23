@@ -15,8 +15,8 @@ userRoute.get("/", async (req, res) => {
 
 userRoute.post("/", async (req, res) => {
   const {
-    name,
-    lastName,
+    fullName,
+    userName,
     image,
     mail,
     password,
@@ -24,12 +24,12 @@ userRoute.post("/", async (req, res) => {
     address,
     favorite,
     shoppingHistory,
-    role
+    role,
   } = req.body;
   try {
     await postUser(
-      name,
-      lastName,
+      fullName,
+      userName,
       image,
       mail,
       password,
