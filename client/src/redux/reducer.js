@@ -12,11 +12,16 @@ import {
     CLEAR_STATE,
 } from "./actionsType/productsAT";
 
+import {
+    POST_USERS
+} from "./actionsType/usersAT"
+
 const initialState = {
     allProducts: [],
     product: [],
     productDetail: {},
     newProduct: {},
+    newUser: {}
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -137,6 +142,11 @@ const rootReducer = (state = initialState, action) => {
                     (product) => product.type === type
                 );
             }
+        case CREATE_PRODUCT:
+                return {
+                    ...state,
+                    newUser: action.payload,
+                };
 
         default:
             return {

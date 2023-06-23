@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 import { v4 } from "uuid";
 
 const firebaseConfig = {
@@ -13,11 +14,12 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
+export const auth = getAuth(app);
+
 
 export async function uploadFile(file) {
   const storageRef = ref(storage, "products/" + v4());
   await uploadBytes(storageRef, file);
   const url = await getDownloadURL(storageRef);
-
   return url;
 }
