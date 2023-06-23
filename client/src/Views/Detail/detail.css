@@ -1,0 +1,35 @@
+.container {
+  background-color: antiquewhite;
+  padding: 5rem;
+  padding-left: 8rem;
+}
+.img-container {
+  margin-top: 17px;
+  background-color: antiquewhite;
+  width: 40vw;
+}
+.img {
+  max-width: 40vw;
+}
+.detail-container {
+  margin-left: 3rem;
+  text-align: start;
+}
+.description {
+  text-align: justify;
+  text-indent: 20px;
+}
+
+.name,
+.price,
+.description,
+.type,
+.categories {
+  padding: 10px;
+}
+.button {
+  display: flex;
+}
+.name-favorite {
+  justify-content: space-between;
+}
