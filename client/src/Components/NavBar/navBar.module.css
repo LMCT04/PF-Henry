@@ -47,8 +47,7 @@
     transition: font 0.2s ease;
     transition: all 0.3s ease;
     font-weight: bold;
-
-
+    margin-left: 25px;
 }
 
 .navLink:hover {

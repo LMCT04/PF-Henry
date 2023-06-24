@@ -21,11 +21,11 @@ function App() {
 
     return (
         <div className="App">
-            {location.pathname === "/" && <NavLand />}
-            {location.pathname !== "/" &&
+            {
                 location.pathname !== "/login" &&
                 location.pathname !== "/register" &&
-                location.pathname !== "/dashboard" && <NavBar />}
+                location.pathname !== "/dashboard" && 
+            <NavBar />}
 
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
