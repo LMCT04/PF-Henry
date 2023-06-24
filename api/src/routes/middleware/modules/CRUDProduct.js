@@ -10,9 +10,9 @@ const modulePostProduct = async (newProduct) => {
     if (!newProduct.name || typeof newProduct.name !== "string") {
       throw new Error("El nombre del producto es incorrecto");
     }
-    if (!newProduct.image || typeof newProduct.image !== "string") {
-      throw new Error("No se proporciono imagen, o el formato es incorrecto");
-    }
+    // if (!newProduct.image || typeof newProduct.image !== "string") {
+    //   throw new Error("No se proporciono imagen, o el formato es incorrecto");
+    // }
     if (!newProduct.description || typeof newProduct.description !== "string") {
       throw new Error("La descripcion no puede estar vacia");
     }
@@ -104,7 +104,8 @@ const moduleGetProductFromDatabaseByName = async (name) => {
     console.error(error);
     throw new Error(
       "Error al obtener los productos de la base de datos por nombre"
-  )}
+    );
+  }
 };
 
 const moduleGetProductById = async (id) => {
@@ -149,7 +150,7 @@ const modulePutStatusProduct = async (id, status) => {
 };
 
 const modulePutUpdateProduct = async (id, upProduct) => {
-  try { 
+  try {
     const product = await Product.findByPk(id, { include: Category });
     if (!product) {
       throw new Error("Producto no encontrado");
