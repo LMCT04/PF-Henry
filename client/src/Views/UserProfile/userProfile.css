@@ -1,0 +1,22 @@
+.container {
+  background-color: #faebd7;
+  height: 80vh;
+}
+.setting {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border-right: 2px solid gray;
+  padding-right: 16px;
+  width: 15%;
+}
+.info-container {
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-left: 64px;
+}
+.edit-buttons {
+  position: absolute;
+}

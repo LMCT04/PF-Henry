@@ -41,7 +41,6 @@ const Detail = () => {
   const handleIncrease = () => {
     setQuantity(quantity + 1);
   };
-  console.log(product.categories);
   return (
     <Box display="flex" flexDirection="row" className="container">
       {product.id ? (
