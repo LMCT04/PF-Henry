@@ -39,7 +39,7 @@ const getProductById = async (id) => {
     console.error(`Error al encontrar el usuario con id: ${id}`, error);
   }
 };
-const putProduct = async (status, id, upProduct) => {
+const putProduct = async (id, status, upProduct) => {
   try {
     const updatedProduct = upProduct.name
       ? await modulePutUpdateProduct(id, upProduct)

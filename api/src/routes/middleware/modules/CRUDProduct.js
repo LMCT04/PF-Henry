@@ -151,13 +151,15 @@ const modulePutStatusProduct = async (id, status) => {
 
 const modulePutUpdateProduct = async (id, upProduct) => {
   try {
+    console.log(id);
+    console.log(upProduct);
     const product = await Product.findByPk(id, { include: Category });
     if (!product) {
       throw new Error("Producto no encontrado");
     }
 
     product.name = upProduct.name;
-    product.image = upProduct.image;
+    product.image = [upProduct.image];
     product.description = upProduct.description;
     product.price = upProduct.price;
     product.type = upProduct.type;
@@ -171,7 +173,9 @@ const modulePutUpdateProduct = async (id, upProduct) => {
 
     // Obtener las categorías nuevas del array categoryId
     const newCategories = await Category.findAll({
-      where: { id: upProduct.categoryId },
+      where: {
+        id: upProduct.categoryId.map((categoryId) => parseInt(categoryId)),
+      },
     });
 
     // Eliminar las categorías existentes que no están seleccionadas en la solicitud
