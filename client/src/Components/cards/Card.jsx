@@ -17,7 +17,7 @@ import Rating from '@mui/material/Rating';
 const Cards = (props) => {
     return (
         <section>
-            <Card  sx={{width: 300, height: 410, backgroundColor:'#eddcb9'}} >
+            <Card  sx={{width: 300, height: 410, backgroundColor:'#eddcb9', boxShadow:'1px 1px 3px 1px black'}} >
                     <CardActionArea disableRipple >
                         <CardMedia
                             component='img'

@@ -22,7 +22,7 @@ import {
     orderPrice,
     filterCategoryAndType,
 } from "../../redux/actions/actionsProducts";
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
 //-------------------------COMPONENT--------------------------
 
 const CardsContainer = () => {
@@ -123,9 +123,16 @@ const CardsContainer = () => {
 
     return (
         <div className={style.cardContainer}>
-            <section>
-                <SearchBar className={style.search}></SearchBar>
-            </section>
+            <Box
+                sx={{
+                    height:'auto',
+                    marginTop:'1.5%',
+                    display:'flex',
+                    marginLeft:'10%',
+                }}
+            >
+                <SearchBar/>
+            </Box>
             <div className={style.filtersAndCards}>
                 <div className={style.filtersContainer}>
                     <div className={style.alfContainer}>
