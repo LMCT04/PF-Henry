@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllProducts } from "../../redux/actions/actionsProducts";
+import { getAllUsers } from '../../redux/actions/actionsUsers'
 import Form from "../Form/form";
 import style from "./dashboard.module.css";
 import Box from "@mui/material/Box";
@@ -11,6 +12,7 @@ import { Tab } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import NavBarDashboard from "../../Components/Dash_Components/navbardash/navbar";
 import DashboardCardCont from "../../Components/Dash_Components/dashboardCardCont/dashboardCardCont";
+import UsersContainer from "../../Components/Dash_Components/usersContainer/usersContainer";
 
 /* COMPONENT */
 const DashBoard = () => {
@@ -18,6 +20,7 @@ const DashBoard = () => {
 
     useEffect(() => {
         dispatch(getAllProducts());
+        dispatch(getAllUsers())
     }, [dispatch]);
 
     const CustomTab = styled(Tab)(({ theme, isActive }) => ({
@@ -84,7 +87,11 @@ const DashBoard = () => {
                         <Form />
                     </div>
                 )}
-                {value === 2 && <div>ADIOS</div>}
+                {value === 2 && (
+                    <div>
+                        <UsersContainer />
+                    </div>
+                )}
             </Box>
         </div>
     );
