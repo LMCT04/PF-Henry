@@ -77,7 +77,7 @@ const SearchBar = () => {
           <SearchIcon />
         </IconButton>
       </Paper>
-      {!productFound && <p>No products found</p>}
+      {!productFound && <p className={style.alert} >No products found</p>}
     </div>
   );
 

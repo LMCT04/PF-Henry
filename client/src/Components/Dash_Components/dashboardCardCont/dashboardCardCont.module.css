@@ -25,9 +25,11 @@
 .filtersContainer {
     display: flex;
     justify-content: center;
-    align-items: center;
     width: 98%;
     gap: 20px;
+    height: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 .input {
@@ -70,3 +72,4 @@
     padding-left: 100px;
     background-color: transparent;
 }
+

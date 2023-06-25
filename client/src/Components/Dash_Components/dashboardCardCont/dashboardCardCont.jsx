@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardCard from "../dashboardCard/dashboardCard";
 import {
+    Box,
     FormControl,
     InputLabel,
     MenuItem,
@@ -122,7 +123,13 @@ const DashboardCardCont = () => {
     return (
         <div className={style.cardContainer}>
             <div className={style.filtersContainer}>
-                <SearchBar />
+                <Box
+                sx={{
+                    display:'flex',
+                }}
+                >
+                    <SearchBar />
+                </Box>
                 <div className={style.alfContainer}>
                     <FormControl fullWidth size="small">
                         {/* <label>ALPHABETIC ORDER</label> */}
@@ -143,8 +150,8 @@ const DashboardCardCont = () => {
                             </MenuItem>
                             <MenuItem value="asc">A - Z</MenuItem>
                             <MenuItem value="desc">Z - A</MenuItem>
-                        </Select>
-                    </FormControl>
+                            </Select>
+                        </FormControl>
                 </div>
 
                 <div className={style.alfContainer}>
@@ -220,13 +227,14 @@ const DashboardCardCont = () => {
                     sx={{
                         backgroundColor:'#E29578', 
                         color:'#EDF6F9',
+                        height:'40px',
                         '&:hover': {
                             backgroundColor: '#E29578', 
                             color: '#EDF6F9',  
                         },
                     }}
                 >
-                    Reset Filters
+                    RESET FILTERS
                 </Button>
                 <Button
                     variant="contained"
@@ -234,13 +242,14 @@ const DashboardCardCont = () => {
                     sx={{
                         backgroundColor:'#E29578', 
                         color:'#EDF6F9',
+                        height:'40px',
                         '&:hover': {
                             backgroundColor: '#E29578', 
                             color: '#EDF6F9',  
                         },
                     }}
                 >
-                    all products
+                    ALL PRODUCTS
                 </Button>
             </div>
             <div className={style.scrollContainer}>
