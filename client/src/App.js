@@ -20,13 +20,15 @@ import UserProfile from "./Views/UserProfile/userProfile";
 function App() {
   const location = useLocation();
 
-  return (
-    <div className="App">
-      {location.pathname === "/" && <NavLand />}
-      {location.pathname !== "/" &&
-        location.pathname !== "/login" &&
-        location.pathname !== "/register" &&
-        location.pathname !== "/dashboard" && <NavBar />}
+
+    return (
+        <div className="App">
+            {
+                location.pathname !== "/login" &&
+                location.pathname !== "/register" &&
+                location.pathname !== "/dashboard" && 
+            <NavBar />}
+
 
       <Route exact path="/" component={Landing} />
       <Route exact path="/register" component={Register} />
