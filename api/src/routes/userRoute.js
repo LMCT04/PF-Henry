@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const userRoute = Router();
-const { getUser, postUser } = require("./middleware/userFunct");
+const { getUser, postUser, updateUserInDatabase } = require("./middleware/userFunct");
 
 userRoute.get("/", async (req, res) => {
   let { mail } = req.body;
@@ -39,14 +39,27 @@ userRoute.post("/", async (req, res) => {
       shoppingHistory,
       role
     );
-    res.status(200).send({ message: "Usuario creado con exito" });
+    res.status(200).send({ message: "Usuario creado con éxito" });
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
       res.status(400).send({ error: "El usuario ya existe" });
+      alert("el usuario ya existe")
     } else {
       res.status(500).send({ error: "Error al crear el usuario" });
     }
   }
 });
+
+userRoute.put("/", async (req, res) => {
+  const { mail, password, userName } = req.body;
+  try {
+    await updateUserInDatabase(mail, password, userName);
+    res.status(200).send({ message: "Usuario actualizado con éxito" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Error al actualizar el usuario" });
+  }
+});
+
 
 module.exports = userRoute;

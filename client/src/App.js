@@ -3,14 +3,15 @@ import { Route, useLocation } from "react-router-dom";
 import NavBar from "./Components/NavBar/navBar";
 import NavLand from "./Components/NavBarLanding/navLand";
 import {
-  Landing,
-  Register,
-  Menu,
-  Login,
-  Form,
-  About,
-  Detail,
-  DashBoard,
+    Landing,
+    Register,
+    Menu,
+    Login,
+    Form,
+    About,
+    Detail,
+    DashBoard,
+    RegisterGmail
 } from "./Views";
 import UserProfile from "./Views/UserProfile/userProfile";
 
@@ -28,22 +29,20 @@ function App() {
                 location.pathname !== "/register" &&
                 location.pathname !== "/dashboard" && 
             <NavBar />}
-
-
-      <Route exact path="/" component={Landing} />
-      <Route exact path="/register" component={Register} />
-      <Route exact path="/menu" component={Menu} />
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/about" component={About} />
-      <Route exact path="/profile" component={UserProfile} />
-      <Route
-        exact
-        path="/product/:id"
-        render={({ match }) => <Detail id={match.params.id} />}
-      />
-      <Route exact path="/dashboard" component={DashBoard} />
-    </div>
-  );
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/registergmail" component={RegisterGmail} />
+            <Route exact path="/menu" component={Menu} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/about" component={About} />
+            <Route
+                exact
+                path="/product/:id"
+                render={({ match }) => <Detail id={match.params.id} />}
+            />
+            <Route exact path="/dashboard" component={DashBoard} />
+        </div>
+    );
 }
 
 export default App;
