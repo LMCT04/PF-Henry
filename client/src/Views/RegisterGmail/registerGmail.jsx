@@ -58,7 +58,7 @@ const RegisterGmail = (props) => {
         {({ handleSubmit, values, handleChange, handleBlur, errors, touched }) => (
           <form onSubmit={handleSubmit} className={style.form}>
             <section className={style.content}>
-              <h1 className={style.title}>Edit User:</h1>
+              <h1 className={style.title}>Welcome! To provide you with a better experience, we invite you to create a username and password that will allow you to continue enjoying our website.</h1>
               <div className={style.inputContainer}>
                 <TextField
                   InputLabelProps={{ shrink: true }}

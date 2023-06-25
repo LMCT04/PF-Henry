@@ -32,10 +32,10 @@ const Register = () => {
 
       // Extraer datos del usuario de Firebase
       const { displayName, email, photoURL } = user;
-      /*const findUser = users.find((user) => user.mail === email);
+      const findUser = users.find((user) => user.mail === email);
       if (findUser) {
         alert("An account with this email already exists");
-      } else {}*/
+      } else {
         const newUser = {
           userName: displayName,
           fullName: displayName,
@@ -53,10 +53,11 @@ const Register = () => {
           pathname: "/registergmail",
           state: { user: newUser }, 
         });
-      
+      }
     } catch (error) {
       setError("An error occurred during login");
     }
+
   }
   const handleRegister = async (values) => {
     try {
