@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Formik } from "formik";
+import { Field, Formik } from "formik";
 import style from "./form.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../redux/actions/actionsProducts";
+import CustomFileInput from "../../Components/CustomFileInput/CustomFileInput";
 import {
     Box,
     Button,
@@ -185,6 +186,10 @@ const Form = () => {
                                         }
                                     />
                                 </div>
+                                <Field
+                                    name="image"
+                                    component={CustomFileInput}
+                                />
                                 <div className={style.content}>
                                     <TextField
                                         fullWidth
@@ -347,4 +352,4 @@ const Form = () => {
     );
 };
 
-export default Form;
+export default Form;
