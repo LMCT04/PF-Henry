@@ -11,6 +11,7 @@ import {
     About,
     Detail,
     DashBoard,
+    RegisterGmail
 } from "./Views";
 
 //import axios from "axios";
@@ -29,6 +30,7 @@ function App() {
 
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/registergmail" component={RegisterGmail} />
             <Route exact path="/menu" component={Menu} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/about" component={About} />

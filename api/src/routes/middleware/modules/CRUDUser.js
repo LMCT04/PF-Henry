@@ -1,8 +1,5 @@
-const { User, Product } = require("../../../database.js"),
-  { Op } = require("sequelize");
-////En CRUDUser se definen todas las peticiones Create (Crear), Read (Leer), Update (Actualizar) y Delete (Borrar)
-
-//definir funciones
+const { User } = require("../../../database.js");
+const { Op } = require("sequelize");
 
 const modelgetUserFromDatabase = async (mail) => {
   try {
@@ -10,7 +7,6 @@ const modelgetUserFromDatabase = async (mail) => {
       where: { mail: mail },
     });
 
-    // Verificar si se encontró algún usuario
     if (user.length === 0) {
       throw new Error("Usuario no encontrado");
     }
@@ -19,7 +15,7 @@ const modelgetUserFromDatabase = async (mail) => {
       id: user[0].id,
       image: user[0].image,
       fullName: user[0].fullName,
-      userName:user[0].userName,
+      userName: user[0].userName,
       mail: user[0].mail,
       age: user[0].age,
       address: user[0].address,
@@ -39,7 +35,7 @@ const modelgetAllUserFromDatabase = async () => {
     return users;
   } catch (error) {
     console.log(`Error en getAllUsersFromDatabase ${error}`);
-    throw new Error("Error en al obtener los usuarios");
+    throw new Error("Error al obtener los usuarios");
   }
 };
 
@@ -60,9 +56,7 @@ const modelpostUserInDatabase = async (
   }
   let [newUser, created] = await User.findOrCreate({
     where: {
-      name: {
-        [Op.iLike]: `%${name}%`,
-      },
+      mail: mail,
     },
     defaults: {
       fullName,
@@ -83,10 +77,68 @@ const modelpostUserInDatabase = async (
   return newUser;
 };
 
+const modelupdatePasswordInDatabase = async (mail, newPassword) => {
+  try {
+    const user = await User.findOne({ where: { mail: mail } });
+
+    if (!user) {
+      throw new Error("Usuario no encontrado");
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    return {
+      id: user.id,
+      image: user.image,
+      fullName: user.fullName,
+      userName: user.userName,
+      mail: user.mail,
+      age: user.age,
+      address: user.address,
+      favorite: user.favorite,
+      shoppingHistory: user.shoppingHistory,
+      role: user.role,
+    };
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error al actualizar la contraseña");
+  }
+};
+
+const modelupdateUsernameInDatabase = async (mail, newUsername) => {
+  try {
+    const user = await User.findOne({ where: { mail: mail } });
+
+    if (!user) {
+      throw new Error("Usuario no encontrado");
+    }
+
+    user.userName = newUsername;
+    await user.save();
+
+    return {
+      id: user.id,
+      image: user.image,
+      fullName: user.fullName,
+      userName: user.userName,
+      mail: user.mail,
+      age: user.age,
+      address: user.address,
+      favorite: user.favorite,
+      shoppingHistory: user.shoppingHistory,
+      role: user.role,
+    };
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error al actualizar el nombre de usuario");
+  }
+};
+
 module.exports = {
-  //exportar cada funcion
   modelgetUserFromDatabase,
   modelpostUserInDatabase,
   modelgetAllUserFromDatabase,
+  modelupdatePasswordInDatabase,
+  modelupdateUsernameInDatabase,
 };
-

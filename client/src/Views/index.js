@@ -6,6 +6,7 @@ import Form from './Form/form'
 import About from './About/about'
 import Detail from './Detail/detail'
 import DashBoard from './DashBoard/dashboard'
+import RegisterGmail from "./RegisterGmail/registerGmail"
 
 export {
     Landing,
@@ -16,4 +17,5 @@ export {
     About,
     Detail,
     DashBoard,
+    RegisterGmail
 }

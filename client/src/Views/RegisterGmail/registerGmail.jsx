@@ -2,81 +2,81 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Formik } from "formik";
 import { TextField, Button } from "@mui/material";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import style from "./login.module.css";
-import { getAllUsers } from "../../redux/actions/actionsUsers";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../redux/actions/actionsUsers";
+import style from "./registerGmail.module.css";
 
-const Login = () => {
+const RegisterGmail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [error, setError] = useState("");
-  const users = useSelector((state) => state.user);
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, []);
+  const { user } = props.location.state;
+  console.log(user);
 
-  console.log(users);
+  const handleUpdateUser = async (values) => {
+    try {
+      const updatedUser = {
+        mail: user.mail,
+        userName: values.username,
+        password: values.password,
+      };
+      console.log(updatedUser);
+      await dispatch(updateUser(updatedUser));
+      history.push("/menu");
+    } catch (error) {
+      setError("An error occurred while updating the user");
+    }
+  };
 
   return (
     <div className={style.loginContainer}>
       <Formik
         initialValues={{
-          mail: "",
+          username: user.userName,
           password: "",
         }}
         validate={(values) => {
           let errors = {};
 
-          // Validación Username
-          if (!values.mail) {
-            errors.username = "Please enter your email";
-          }
+          if (!values.username) {
+            errors.username = "Please enter your username";
+          } 
 
-          // Validación Password
           if (!values.password) {
             errors.password = "Please enter your password";
+          } else if (values.password.length < 8 || values.password.length > 16) {
+            errors.password = "Password must be between 8 and 16 characters";
           }
 
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
           resetForm();
-          console.log("comprobar usuario");
-          console.log(values);
-
-          const foundUser = users.find(
-            (user) => user.mail === values.mail && user.password === values.password
-          );
-          if (foundUser) {
-            history.push("/menu");
-          } else {
-            setError("Invalid username or password");
-            alert("Invalid username or password");
-          }
+          handleUpdateUser(values);
         }}
       >
         {({ handleSubmit, values, handleChange, handleBlur, errors, touched }) => (
           <form onSubmit={handleSubmit} className={style.form}>
             <section className={style.content}>
-              <h1>Sign in:</h1>
-              <div>
+              <h1 className={style.title}>Edit User:</h1>
+              <div className={style.inputContainer}>
                 <TextField
                   InputLabelProps={{ shrink: true }}
                   fullWidth
                   type="text"
-                  id="mail"
-                  name="mail"
-                  label="mail"
-                  value={values.mail}
+                  id="username"
+                  name="username"
+                  label="Username"
+                  value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={touched.mail && !!errors.mail}
-                  helperText={touched.mail && errors.mail}
+                  error={touched.username && !!errors.username}
+                  helperText={touched.username && errors.username}
                   color="success"
+                  className={style.input}
                 />
               </div>
-              <div>
+              <div className={style.inputContainer}>
                 <TextField
                   InputLabelProps={{ shrink: true }}
                   fullWidth
@@ -90,6 +90,7 @@ const Login = () => {
                   error={touched.password && !!errors.password}
                   helperText={touched.password && errors.password}
                   color="success"
+                  className={style.input}
                 />
               </div>
               <div className={style.actions}>
@@ -100,11 +101,8 @@ const Login = () => {
                   color="success"
                   className={style.button}
                 >
-                  Sign In
+                  Update User
                 </Button>
-              </div>
-              <div className={style.registerLink}>
-                <Link to="/register">Don't have an account? Register here</Link>
               </div>
             </section>
           </form>
@@ -115,4 +113,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default RegisterGmail;

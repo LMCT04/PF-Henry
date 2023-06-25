@@ -1,12 +1,33 @@
-//destructurar todas las funciones de los modelos aca
-//destructurar todas las funciones de los modelos aca
 const {
   modelgetUserFromDatabase,
   modelpostUserInDatabase,
   modelgetAllUserFromDatabase,
+  modelupdatePasswordInDatabase,
+  modelupdateUsernameInDatabase,
 } = require("./modules/CRUDUser");
 
-//definir funciones
+const updateUserInDatabase = async (mail, password, userName) => {
+  try {
+    const user = await modelgetUserFromDatabase(mail);
+
+    if (!user) {
+      throw new Error("Usuario no encontrado");
+    }
+
+    if (password) {
+      await modelupdatePasswordInDatabase(mail, password);
+    }
+
+    if (userName) {
+      await modelupdateUsernameInDatabase(mail, userName);
+    }
+
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error al actualizar el usuario");
+  }
+};
 
 const getUser = async (mail) => {
   try {
@@ -55,5 +76,5 @@ const postUser = async (
 module.exports = {
   getUser,
   postUser,
-  //exportar cada funcion
+  updateUserInDatabase,
 };
