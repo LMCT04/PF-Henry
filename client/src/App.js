@@ -13,21 +13,22 @@ import {
     DashBoard,
     RegisterGmail
 } from "./Views";
+import UserProfile from "./Views/UserProfile/userProfile";
 
 //import axios from "axios";
 //axios.defaults.baseURL = "http://localhost:3001/";
 
 function App() {
-    const location = useLocation();
+  const location = useLocation();
+
 
     return (
         <div className="App">
-            {location.pathname === "/" && <NavLand />}
-            {location.pathname !== "/" &&
+            {
                 location.pathname !== "/login" &&
                 location.pathname !== "/register" &&
-                location.pathname !== "/dashboard" && <NavBar />}
-
+                location.pathname !== "/dashboard" && 
+            <NavBar />}
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/registergmail" component={RegisterGmail} />

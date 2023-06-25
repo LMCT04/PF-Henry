@@ -5,9 +5,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
-import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 const DashboardCard = (props) => {
