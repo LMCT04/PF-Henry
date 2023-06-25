@@ -27,11 +27,15 @@ const NavBar = () => {
         history.push('/register');
     };
 
+    const handleProfileClick = () => {
+        history.push('/profile');
+    };
+
     return (
         <Box
             sx={{
                 backgroundColor:'#2c6e49',
-                height:'10vh',
+                height:'8vh',
                 display:'flex',
             }}
         >
@@ -42,13 +46,11 @@ const NavBar = () => {
                     justifyContent:'flex-end'
                 }}
             >
-                <NavLink to="/">
-                    <div className={style.logoContainer}>
+
                         <button className={style.logoBtn}>
                             <img src={logo} alt="logos" className={style.logo} />
                         </button>
-                    </div>
-                </NavLink>
+
             </Box>
 
             <Box
@@ -63,9 +65,9 @@ const NavBar = () => {
                     to="/" exact
                     className={style.navLink}
                     style={(isActive) => ({
-                        fontSize: isActive ? "28px" : "22px",
+                        fontSize: isActive ? "20px" : "20px",
                         textDecoration: isActive ? "none" : "none",
-                        color: isActive ? "#FFF0C9" : "#4c956c",
+                        color: isActive ? "#fefee3" : "#4c956c",
                     })}
                 >
                     HOME
@@ -75,9 +77,9 @@ const NavBar = () => {
                     to="/menu"
                     className={style.navLink}
                     style={(isActive) => ({
-                        fontSize: isActive ? "28px" : "22px",
+                        fontSize: isActive ? "20px" : "20px",
                         textDecoration: isActive ? "none" : "none",
-                        color: isActive ? "#FFF0C9" : "#4c956c",
+                        color: isActive ? "#fefee3" : "#4c956c",
                     })}
                 >
                     MENU
@@ -95,10 +97,10 @@ const NavBar = () => {
                 <Button
                     sx={{
                         backgroundColor:'#2c6e49',
-                        border:'2px solid #FFF0C9',
-                        color:'#FFF0C9',
+                        border:'2px solid #fefee3',
+                        color:'#fefee3',
                         '&:hover': {
-                            backgroundColor:'#FFF0C9',
+                            backgroundColor:'#fefee3',
                             color:'#2c6e49',
                             fontWeight:'bold',
                         },
@@ -106,7 +108,7 @@ const NavBar = () => {
                         height:'50%',
                         marginRight:'5%',
                         fontFamily:'Roboto Mono, monospace',
-                        borderRadius:'10px'
+                        borderRadius:'25px'
                     }}
                     onClick={handleLoginClick}
                 >
@@ -114,20 +116,20 @@ const NavBar = () => {
                 </Button>
                 <Button
                     sx={{
-                        backgroundColor:'#FFF0C9',
-                        border:'2px solid #FFF0C9',
+                        backgroundColor:'#fefee3',
+                        border:'2px solid #fefee3',
                         color:'#2c6e49',
                         '&:hover': {
                             backgroundColor:'#2c6e49',
-                            border:'2px solid #FFF0C9',
-                            color:'#FFF0C9',
+                            border:'2px solid #fefee3',
+                            color:'#fefee3',
                             fontWeight:'bold',
                         },
                         width:'10%',
                         height:'50%',
                         marginRight:'5%',
                         fontFamily:'Roboto Mono, monospace',
-                        borderRadius:'10px'
+                        borderRadius:'25px'
                     }}
                     onClick={handleRegisterClick}
                 >
@@ -136,20 +138,19 @@ const NavBar = () => {
 
                 <Button
                     sx={{
-                        backgroundColor:'#FFF0C9',
-                        border:'2px solid #FFF0C9',
+                        backgroundColor:'#fefee3',
+                        border:'2px solid #fefee3',
                         color:'#2c6e49',
                         fontWeight:'bold',
                         '&:hover': {
-                            backgroundColor:'#FFF0C9',
-                            border:'2px solid #FFF0C9',
+                            backgroundColor:'#fefee3',
+                            border:'2px solid #fefee3',
                             color:'#2c6e49',
                         },
-                        width:'8%',
-                        height:'35%',
+                        width:'9%',
+                        height:'45%',
                         marginRight:'5%',
                         fontFamily:'Roboto Mono, monospace',
-                        borderRadius:'25px'
                     }}
                     onClick={handleClick}
                 >
@@ -168,7 +169,7 @@ const NavBar = () => {
                         horizontal: 'right',
                     }}
                 >
-                    <MenuItem>
+                    <MenuItem onClick={handleProfileClick} >
                         MY ACCOUNT
                     </MenuItem>
 

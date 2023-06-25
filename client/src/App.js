@@ -19,7 +19,7 @@ import UserProfile from "./Views/UserProfile/userProfile";
 //axios.defaults.baseURL = "http://localhost:3001/";
 
 function App() {
-  const location = useLocation();
+const location = useLocation();
 
 
     return (
@@ -35,6 +35,7 @@ function App() {
             <Route exact path="/menu" component={Menu} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/about" component={About} />
+            <Route exact path="/profile" component={UserProfile} />
             <Route
                 exact
                 path="/product/:id"
