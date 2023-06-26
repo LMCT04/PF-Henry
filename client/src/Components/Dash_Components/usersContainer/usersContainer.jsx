@@ -11,8 +11,8 @@ const UsersContainer = () => {
     const handleChange = (event, value) => {
         let usersPag = [...allUsers];
         setPage((prevPage) => ({ ...prevPage, current: value }));
-        const startIndex = (value - 1) *5;
-        const endIndex = startIndex +5;
+        const startIndex = (value - 1) * 5;
+        const endIndex = startIndex + 5;
         setPageUsers(usersPag.slice(startIndex, endIndex));
     };
 
@@ -21,7 +21,7 @@ const UsersContainer = () => {
     const [pageUsers, setPageUsers] = useState([]);
     const [page, setPage] = useState({
         current: 1,
-        total: Math.ceil(allUsers.length /5),
+        total: Math.ceil(allUsers.length / 5),
     });
 
     const pageCurrentRef = useRef(page.current);
@@ -29,17 +29,17 @@ const UsersContainer = () => {
     useEffect(() => {
         let filteredUsers = [...allUsers];
 
-        const startIndex = (pageCurrentRef.current - 1) *5;
-        const endIndex = startIndex +5;
+        const startIndex = (pageCurrentRef.current - 1) * 5;
+        const endIndex = startIndex + 5;
         setPageUsers(filteredUsers.slice(startIndex, endIndex));
         setPage((prevPage) => ({
             ...prevPage,
-            total: Math.ceil(filteredUsers.length /5),
+            total: Math.ceil(filteredUsers.length / 5),
         }));
     }, [allUsers, pageCurrentRef]);
 
     return (
-        <div>
+        <div className={style.container}>
             <div className={style.scrollContainer}>
                 {pageUsers.length > 0 ? (
                     pageUsers.map((e) => <UserCard key={e.id} element={e} />)

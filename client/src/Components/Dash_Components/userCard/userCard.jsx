@@ -6,6 +6,7 @@ import {
     FormControl,
     Select,
     InputLabel,
+    MenuItem,
 } from "@mui/material";
 import React from "react";
 
@@ -19,56 +20,59 @@ const UserCard = ({ element }) => {
             <Card
                 sx={{
                     width: "100%",
-                    height: "200px",
+                    height: "160px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    backgroundColor: "#eddcb9",
-                    boxShadow: "1px 1px 3px 1px black",
+                    backgroundColor: "#ced4da",
+                    borderTop:'1px solid #adb5bd'
                 }}
             >
                 <Box
                     sx={{
                         display: "flex",
-                        flexDirection: "column",
-                        height: "200px",
+                        height: "150px",
+                        width:'150px',
                     }}
                 >
                     <CardMedia
                         component="img"
-                        height="70%"
+                        height="100%"
                         image={element.image}
-                        sx={{ width: "100%", backgroundColor: "red" }}
+                        sx={{ borderRadius:'100px' }}
                     />
-                    <Box
-                        sx={{
-                            marginTop: "5%",
-                            marginBottom: "5%",
-                        }}
-                    >
-                        {element.userName}
-                    </Box>
                 </Box>
                 <CardContent sx={{ height: "100%", width: "82.5%" }}>
                     <Box
                         sx={{
-                            height: "20%",
+                            height: "100%",
+                            backgroundColor: "#ced4da",
                             display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            backgroundColor: "yellow",
+                            justifyContent:'flex-start',
+                            alignItems:'center'
                         }}
                     >
                         <Box
                             sx={{
-                                backgroundColor: "green",
+                                height:'15px',
+                                fontWeight:'bold',
+                                marginLeft:'20px'
                             }}
                         >
                             {element.fullName}
                         </Box>
+                        <Box
+                            sx={{
+                                height:'15px',
+                                marginLeft:'40px',
+                                marginRigth:'40px'
+                            }}
+                        >
+                            {element.userName}
+                        </Box>
                         <Box>
                             <FormControl fullWidth>
-                                {/* <InputLabel id="role">ROLE:</InputLabel>
+                                <InputLabel id="role">ROLE:</InputLabel>
                                     <Select
                                         labelId="role"
                                         id="role"
@@ -79,20 +83,9 @@ const UserCard = ({ element }) => {
                                         <MenuItem value={"user"}>User</MenuItem>
                                         <MenuItem value={"admin"}>Admin</MenuItem>
                                         <MenuItem value={"superAdmin"}>Super Admin</MenuItem>
-                                    </Select> */}
+                                    </Select>
                             </FormControl>
                         </Box>
-                    </Box>
-                    
-
-                    <Box
-                        sx={{
-                            height: "80%",
-                            backgroundColor: "blue",
-                            display: "flex",
-                            flexDirection: "column",
-                        }}
-                    >
                         {element.id}
                         {element.mail}
                         {element.password}
