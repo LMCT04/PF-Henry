@@ -31,6 +31,14 @@ const NavBar = () => {
         history.push('/profile');
     };
 
+    const handlePageClick = () => {
+        history.push('/');
+    };
+
+    const handleDashboardClick = () => {
+        history.push('/dashboard');
+    };
+
     return (
         <Box
             sx={{
@@ -173,11 +181,11 @@ const NavBar = () => {
                         MY ACCOUNT
                     </MenuItem>
 
-                    <MenuItem>
+                    <MenuItem onClick={handleDashboardClick}>
                         DASHBOARD
                     </MenuItem>
 
-                    <MenuItem>
+                    <MenuItem onClick={handlePageClick}>
                         WEB PAGE
                     </MenuItem>
 

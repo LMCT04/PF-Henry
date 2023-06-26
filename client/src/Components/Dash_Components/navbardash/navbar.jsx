@@ -3,8 +3,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useHistory } from "react-router-dom"
 
 const NavBarDashboard = () => {
+    const history = useHistory();
 
     const [anchorEl, setAnchorEl] = useState(null)
 
@@ -15,6 +17,18 @@ const NavBarDashboard = () => {
     const handleClose = () => {
         setAnchorEl(null)
     }
+
+    const handleProfileClick = () => {
+        history.push('/profile');
+    };
+
+    const handlePageClick = () => {
+        history.push('/');
+    };
+
+    const handleDashboardClick = () => {
+        history.push('/dashboard');
+    };
     
     return(
         <Box
@@ -58,34 +72,37 @@ const NavBarDashboard = () => {
             >
                 <MenuItem
                     sx={{
-                        backgroundColor:'#9E2A2B',
-                        borderBottom:'2px solid #540B0E',
+                        backgroundColor: "#EDF6F9",
+                        borderBottom: "2px solid #FFDDD2",
                     }}
+                    onClick={handleProfileClick}
                 >
                     My Account
                 </MenuItem>
 
                 <MenuItem
                     sx={{
-                        backgroundColor:'#9E2A2B',
-                        borderBottom:'2px solid #540B0E',
+                        backgroundColor: "#EDF6F9",
+                        borderBottom: "2px solid #FFDDD2",
                     }}
+                    onClick={handleDashboardClick}
                 >
                     DashBoard
                 </MenuItem>
 
                 <MenuItem
                     sx={{
-                        backgroundColor:'#9E2A2B',
-                        borderBottom:'2px solid #540B0E',
+                        backgroundColor: "#EDF6F9",
+                        borderBottom: "2px solid #FFDDD2",
                     }}
+                    onClick={handlePageClick}
                 >
                     Web Page
                 </MenuItem>
 
                 <MenuItem
                     sx={{
-                        backgroundColor:'#9E2A2B',
+                        backgroundColor: "#EDF6F9",
                     }}
                 >
                     Logout
