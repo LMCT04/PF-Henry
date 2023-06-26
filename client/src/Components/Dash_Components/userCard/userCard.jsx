@@ -86,7 +86,6 @@ const UserCard = ({ element }) => {
                         <Box sx={{marginLeft:'5%'}} >USERNAME:{element.userName}</Box>
                         <Box sx={{marginLeft:'5%'}} >MAIL:{element.mail}</Box>
                         {/*<Box sx={{marginLeft:'5%'}} >ADRESS:{element.adress}</Box>*/}
-                        <Box sx={{marginLeft:'5%'}} >PASSWORD:{element.password}</Box>
                     </Box>
                 </CardContent>
             </Card>
