@@ -37,7 +37,7 @@ const Cards = (props) => {
                         <CardContent
                             sx={{height: 20, backgroundColor:'#A5CAA8', display:'flex', justifyContent:'center', alignItems:'center'}}
                         >
-                            <Typography variant="h1" component="div" sx={{fontSize:18, fontWeight:'bold'}} >
+                            <Typography variant="h1" component="div" sx={{fontSize:18, fontWeight:'bold', fontFamily:'Roboto Mono, monospace'}} >
                             {props.element.name}
                             </Typography>
                         </CardContent>
