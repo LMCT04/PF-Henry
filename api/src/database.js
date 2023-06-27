@@ -39,12 +39,19 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 //Relacionar modelos
-const { User, Product, Category } = sequelize.models;
+const { User, Product, Category, ShoppingCart, PuchaseOrder, Favorite } =
+  sequelize.models;
 
 //Relaciones
-User.hasMany(Product);
-Product.belongsToMany(Category, { through: "categoryProducts" });
+User.hasMany(Product); //User tiene muchos Productos
+ShoppingCart.belongsTo(User); //ShoppingCart pertenece a User
+PuchaseOrder.belongsTo(User); //PuchaseOrder pertenece a User
+Favorite.belongsTo(User, { foreignKey: "userId" });
+Favorite.belongsTo(Product, { foreignKey: "productId" });
+Product.belongsToMany(Category, { through: "categoryProducts" }); //Productos tiene muchas categorias y viceversa.
 Category.belongsToMany(Product, { through: "categoryProducts" });
+ShoppingCart.belongsToMany(Product, { through: "cartProduct" }); //ShoppingCart tiene muchos productos y viceversa.
+Product.belongsToMany(ShoppingCart, { through: "cartProduct" });
 
 module.exports = {
   ...sequelize.models,
