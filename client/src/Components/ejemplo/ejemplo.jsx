@@ -6,7 +6,7 @@ import {
     orderPrice,
     filterCategoryAndType,
     getAllProducts,
-} from "../../../redux/actions/actionsProducts";
+} from "../../redux/actions/actionsProducts";
 import DashboardCard from "../dashboardCard/dashboardCard";
 import Loading from "../../../Views/Loading/Loading";
 import SearchBar from "../../searchBar/searchBar";
@@ -26,12 +26,10 @@ const DashboardCardCont = () => {
     const productsArray = useSelector((state) => state.product);
     const categories = useSelector((state) => state.category);
 
-    //-------------------------FILTROS--------------------------
     const [resetFilters, setResetFilters] = useState(false);
     const [categoryFilter, setCategoryFilter] = useState("ALL");
     const [typeFilter, setTypeFilter] = useState("ALL");
 
-    //-------------------------PAGINADO--------------------------
     const [pageProducts, setPageProducts] = useState([]);
     const [page, setPage] = useState({
         current: 1,
@@ -39,6 +37,10 @@ const DashboardCardCont = () => {
     });
 
     const pageCurrentRef = useRef(page.current);
+
+    function loadProducts() {
+        dispatch(getAllProducts());
+    }
 
     /* USE EFFECT */
     useEffect(() => {
@@ -68,7 +70,12 @@ const DashboardCardCont = () => {
             total: Math.ceil(filteredProducts.length / 5),
         }));
     }, [
-        productsArray, categoryFilter, typeFilter, pageCurrentRef, resetFilters ]);
+        productsArray,
+        categoryFilter,
+        typeFilter,
+        pageCurrentRef,
+        resetFilters,
+    ]);
 
     /* HANDLERS */
     const styles = {
