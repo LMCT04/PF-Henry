@@ -48,8 +48,8 @@
 
 .scrollContainer {
     height: 100vh;
-    width: 100%; /* Altura fija o máxima del contenedor */
-    overflow: auto; /* Habilitar el scroll */
+    width: 100%; 
+    overflow: auto; 
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.112);
 }
 .scrollContainer::-webkit-scrollbar {
@@ -62,10 +62,9 @@
 .scrollContainer::-webkit-scrollbar-thumb {
     background: #a49856;
     border-radius: 25px;
-    /* Color del pulgar */
 }
 .scrollContainer::-webkit-scrollbar-thumb:hover {
-    background: #c8bd81; /* Color del pulgar al pasar el cursor */
+    background: #c8bd81; 
 }
 
 .loading {

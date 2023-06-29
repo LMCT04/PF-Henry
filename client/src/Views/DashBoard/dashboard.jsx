@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllProducts } from "../../redux/actions/actionsProducts";
 import { getAllUsers } from '../../redux/actions/actionsUsers'
+import { getAllCategories } from '../../redux/actions/actionsCategories'
 import Form from "../Form/form";
 import style from "./dashboard.module.css";
 import Box from "@mui/material/Box";
@@ -14,6 +15,7 @@ import NavBarDashboard from "../../Components/Dash_Components/navbardash/navbar"
 import DashboardCardCont from "../../Components/Dash_Components/dashboardCardCont/dashboardCardCont";
 import UsersContainer from "../../Components/Dash_Components/usersContainer/usersContainer";
 
+
 /* COMPONENT */
 const DashBoard = () => {
     const dispatch = useDispatch();
@@ -21,6 +23,7 @@ const DashBoard = () => {
     useEffect(() => {
         dispatch(getAllProducts());
         dispatch(getAllUsers())
+        dispatch(getAllCategories())
     }, [dispatch]);
 
     const CustomTab = styled(Tab)(({ theme, isActive }) => ({
@@ -75,6 +78,11 @@ const DashBoard = () => {
                             isActive={value === 2}
                             sx={{ fontWeight: "bold" }}
                         />
+                        <CustomTab
+                            label="GESTION DE USUARIOS"
+                            isActive={value === 3}
+                            sx={{ fontWeight: "bold" }}
+                        />
                     </Tabs>
                 </Box>
                 {value === 0 && (
@@ -90,6 +98,11 @@ const DashBoard = () => {
                 {value === 2 && (
                     <div>
                         <UsersContainer />
+                    </div>
+                )}
+                {value === 3 && (
+                    <div>
+                        hola
                     </div>
                 )}
             </Box>

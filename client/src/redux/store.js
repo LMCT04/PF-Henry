@@ -1,6 +1,9 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { applyMiddleware, compose } from 'redux';
 import rootReducer from './reducer';
+import thunkMiddleware from 'redux-thunk';
+import { legacy_createStore as createStore } from 'redux';
+
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // Función para guardar el estado en localStorage
 const saveToLocalStorage = (state) => {
@@ -40,7 +43,7 @@ const initialState = {
 const store = createStore(
   rootReducer,
   initialState,
-  applyMiddleware(thunk)
+  composeEnhancer(applyMiddleware(thunkMiddleware))
 );
 
 // Suscribirse a cambios en el estado y guardar en localStorage

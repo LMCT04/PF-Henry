@@ -1,178 +1,180 @@
 import {
-  ORDER_ALPHABETIC,
-  ORDER_PRICE,
-  GET_ALL_PRODUCTS,
-  CREATE_PRODUCT,
-  FILTER_CATEGORY,
-  FILTER_TYPE,
-  RESET_FILTERS,
-  GET_BY_NAME,
-  FILTER_CATEGORY_AND_TYPE,
-  GET_BY_ID,
-  CLEAR_STATE,
-  ADD_FAVORITE,
-  REMOVE_FAVORITE,
+    ORDER_ALPHABETIC, ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT,
+    FILTER_CATEGORY, FILTER_TYPE, RESET_FILTERS, GET_BY_NAME,
+    FILTER_CATEGORY_AND_TYPE, GET_BY_ID, CLEAR_STATE,ADD_FAVORITE,
+    REMOVE_FAVORITE,
 } from "./actionsType/productsAT";
 
-import {
-  POST_USERS,
-  GET_USERS,
-  UPDATE_USER,
-  SET_USER,
-} from "./actionsType/usersAT";
+import { POST_USERS, GET_USERS, UPDATE_USER } from "./actionsType/usersAT";
+
+import {GET_ALL_CATEGORIES} from './actionsType/categoryAT'
 
 const initialState = {
-  allProducts: [],
-  product: [],
-  productDetail: {},
-  newProduct: {},
-  newUser: {},
-  user: [],
-  favoriteProduct: [],
+    allProducts: [],
+    product: [],
+    productDetail: {},
+    newProduct: {},
+    newUser: {},
+    user: [],
+    category: [],
+    favoriteProduct: [],
 };
 
 const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_ALL_PRODUCTS:
-      return {
-        ...state,
-        product: action.payload,
-        allProducts: action.payload,
-      };
+    switch (action.type) {
+        case GET_ALL_PRODUCTS:
+            return {
+                ...state,
+                product: action.payload,
+                allProducts: action.payload,
+            };
 
-    case GET_BY_NAME:
-      return {
-        ...state,
-        product: action.payload,
-      };
+        case GET_BY_NAME:
+            return {
+                ...state,
+                product: action.payload,
+            };
 
-    case GET_BY_ID:
-      return {
-        ...state,
-        productDetail: action.payload,
-      };
+        case GET_BY_ID:
+            return {
+                ...state,
+                productDetail: action.payload,
+            };
 
-    case CLEAR_STATE:
-      return {
-        ...state,
-        productDetail: {},
-      };
+        case CLEAR_STATE:
+            return {
+                ...state,
+                productDetail: {},
+            };
 
-    case CREATE_PRODUCT:
-      return {
-        ...state,
-        newProduct: action.payload,
-      };
+        case CREATE_PRODUCT:
+            return {
+                ...state,
+                newProduct: action.payload,
+            };
 
-    case ORDER_ALPHABETIC:
-      let copyThree = [...state.product];
-      let sortedName =
-        action.payload === "asc"
-          ? copyThree.sort((a, b) =>
-              a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-            )
-          : copyThree.sort((a, b) =>
-              b.name.toLowerCase().localeCompare(a.name.toLowerCase())
-            );
-      return {
-        ...state,
-        product: sortedName,
-      };
+        case ORDER_ALPHABETIC:
+            let copyThree = [...state.product];
+            let sortedName;
 
-    case ORDER_PRICE:
-      let priceOrder = [...state.product];
-      let price =
-        action.payload === "asc"
-          ? priceOrder.sort((a, b) => a.price - b.price)
-          : priceOrder.sort((a, b) => b.price - a.price);
-      return {
-        ...state,
-        product: price,
-      };
+            if (action.payload === "asc") {
+                sortedName = copyThree.sort((a, b) =>
+                    a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+                );
+            } else if (action.payload === "desc") {
+                sortedName = copyThree.sort((a, b) =>
+                    b.name.toLowerCase().localeCompare(a.name.toLowerCase())
+                );
+            } else {
+                return {
+                    ...state,
+                    product: [...state.product],
+                };
+            }
 
-    case FILTER_CATEGORY:
-      const products3 = state.allProducts;
-      const productFind3 = [];
-      let newproduct3 = [];
-      products3.forEach((product) => {
-        if (product.category === action.payload) productFind3.push(product);
-      });
+            return {
+                ...state,
+                product: sortedName,
+            };
 
-      action.payload === "ALL"
-        ? (newproduct3 = products3)
-        : (newproduct3 = productFind3);
-      return {
-        ...state,
-        product: newproduct3,
-      };
+        case ORDER_PRICE:
+            let priceOrder = [...state.product];
+            let price =
+                action.payload === "asc"
+                    ? priceOrder.sort((a, b) => a.price - b.price)
+                    : priceOrder.sort((a, b) => b.price - a.price);
+            return {
+                ...state,
+                product: price,
+            };
 
-    case FILTER_TYPE:
-      const products2 = state.allProducts;
-      const productFind = [];
-      let newproduct = [];
-      products2.forEach((product) => {
-        if (product.type.includes(action.payload)) productFind.push(product);
-      });
+        case FILTER_CATEGORY:
+            const allProducts = state.allProducts
+            const productsFilt = []
+            let filter = []
 
-      action.payload === "ALL"
-        ? (newproduct = products2)
-        : (newproduct = productFind);
-      return {
-        ...state,
-        product: newproduct,
-      };
+            allProducts.forEach((product) => {
+                if(product.category === action.payload)
+                    productsFilt.push(product)
+            })
 
-    case RESET_FILTERS:
-      return {
-        ...state,
-        product: state.allProducts,
-      };
+            action.payload === 'ALL'
+                ? (filter = allProducts)
+                : (filter = productsFilt)
 
-    case FILTER_CATEGORY_AND_TYPE:
-      const { category, type } = action;
-      let filteredProducts = state.allProducts;
+            return {
+                ...state,
+                product: filter
+            }
 
-      if (category !== "ALL") {
-        filteredProducts = filteredProducts.filter(
-          (product) => product.category === category
-        );
-      }
+        case FILTER_TYPE:
+            const products2 = state.allProducts;
+            let newproduct = [];
+            if (action.pawload === 'ALL') {
+                newproduct = products2
+            } else {
+                products2.forEach((product) => {
+                    if(product.categories.some((category) => category === action.payload)){
+                        newproduct.push(product)
+                    }
+                })
+            }
+            return {
+                ...state,
+                product: newproduct,
+            };
 
-      if (type !== "ALL") {
-        filteredProducts = filteredProducts.filter(
-          (product) => product.type === type
-        );
-      }
+        case RESET_FILTERS:
+            return {
+                ...state,
+                product: state.allProducts,
+            };
 
-      return {
-        ...state,
-        product: filteredProducts,
-      };
+        case FILTER_CATEGORY_AND_TYPE:
+            const { category, type } = action;
+            let filteredProducts = state.allProducts;
 
-    case POST_USERS:
-      return {
-        ...state,
-        newUser: action.payload,
-      };
+            if (category !== "ALL") {
+                filteredProducts = filteredProducts.filter(
+                    (product) => product.category === category
+                );
+            }
 
-    case GET_USERS:
-      return {
-        ...state,
-        user: action.payload,
-      };
+            if (type !== "ALL") {
+                filteredProducts = filteredProducts.filter(
+                    (product) => product.type === type
+                );
+            }
 
-    case UPDATE_USER:
-      const updatedUser = {
-        ...state.newUser,
-        mail: action.payload.mail,
-        password: action.payload.password,
-        userName: action.payload.username,
-      };
+        case POST_USERS:
+            return {
+                ...state,
+                newUser: action.payload,
+            };
 
-      return {
-        ...state,
-        newUser: updatedUser,
-      };
+        case GET_USERS:
+            return {
+                ...state,
+                user: action.payload,
+            };
+
+        case UPDATE_USER:
+            const updatedUser = {
+                ...state.newUser,
+                mail: action.payload.mail,
+                password: action.payload.password,
+                userName: action.payload.username,
+            };
+            return {
+                ...state,
+                newUser: updatedUser,
+            };
+
+        case GET_ALL_CATEGORIES:
+            return {
+                ...state,
+                category: action.payload
+            }
 
     case ADD_FAVORITE:
       return {
@@ -194,8 +196,10 @@ const rootReducer = (state = initialState, action) => {
       };
 
     default:
-      return state;
+              return {
+                  ...state,
+              };
+      }
   }
-};
 
 export default rootReducer;

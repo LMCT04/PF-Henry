@@ -1,50 +1,42 @@
-//------------------------IMPORTS REACT-----------------------
+/* IMPORTS */
 import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-//-------------------------IMPORT CSS-------------------------
 import style from "./cardContainer.module.css";
-//-------------------------IMPORTS MUI------------------------
-import Pagination from "@mui/material/Pagination";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
 
-//---------------------IMPORTS COMPONENTS---------------------
+import {
+    Button,
+    Box,
+    Pagination,
+    MenuItem,
+    InputLabel,
+    Select,
+    FormControl,
+} from "@mui/material";
+
 import Cards from "../cards/Card";
 import Loading from "../../Views/Loading/Loading";
 import SearchBar from "../searchBar/searchBar";
-//---------------------IMPORTS ACTIONS------------------------
+
 import {
     orderAlphabetic,
     orderPrice,
     filterCategoryAndType,
 } from "../../redux/actions/actionsProducts";
-import { Button, Box } from "@mui/material";
-//-------------------------COMPONENT--------------------------
 
+/* COMPONENT */
 const CardsContainer = () => {
     const dispatch = useDispatch();
     const allProducts = useSelector((state) => state.product);
-    const [resetFilters, setResetFilters] = useState(false);
+    const categories = useSelector((state) => state.category);
 
     //-------------------------FILTROS--------------------------
-
+    const [resetFilters, setResetFilters] = useState(false);
     const [categoryFilter, setCategoryFilter] = useState("ALL");
     const [typeFilter, setTypeFilter] = useState("ALL");
 
-    const types = allProducts.map((product) => product.categories);
-    const categories = types.reduce((acc, categories) => {
-        categories.forEach((category) => {
-            acc[category] = true;
-        });
-        return acc;
-    }, {});
-
     //-------------------------PAGINADO--------------------------
-
     const [pageProducts, setPageProducts] = useState([]);
     const [page, setPage] = useState({
         current: 1,
@@ -53,6 +45,7 @@ const CardsContainer = () => {
 
     const pageCurrentRef = useRef(page.current);
 
+    /* USE EFFECT */
     useEffect(() => {
         let filteredProducts = [...allProducts];
         // Filtrar por categoría
@@ -87,12 +80,33 @@ const CardsContainer = () => {
         setResetFilters(true);
     };
 
-    const handleChange = (event, value) => {
+    /*const handleChange = (event, value) => {
         let productsPag = [...allProducts];
         setPage((prevPage) => ({ ...prevPage, current: value }));
         const startIndex = (value - 1) * 8;
         const endIndex = startIndex + 8;
         setPageProducts(productsPag.slice(startIndex, endIndex));
+    };*/
+
+    const handleChange = (event, value) => {
+        const startIndex = (value - 1) * 8;
+        const endIndex = startIndex + 8;
+
+        // Filtrar por categoría y tipo
+        let filteredProducts = [...allProducts];
+        if (categoryFilter !== "ALL") {
+            filteredProducts = filteredProducts.filter((product) =>
+                product.categories.includes(categoryFilter)
+            );
+        }
+        if (typeFilter !== "ALL") {
+            filteredProducts = filteredProducts.filter(
+                (product) => product.type === typeFilter
+            );
+        }
+
+        setPage((prevPage) => ({ ...prevPage, current: value }));
+        setPageProducts(filteredProducts.slice(startIndex, endIndex));
     };
 
     const handleAlphabeticOrder = (e) => {
@@ -109,14 +123,14 @@ const CardsContainer = () => {
         const value = e.target.value;
         setPage((prevPage) => ({ ...prevPage, current: 1 }));
         setCategoryFilter(value);
-        dispatch(filterCategoryAndType(value, categoryFilter));
+        dispatch(filterCategoryAndType(value, typeFilter));
     };
 
     const handleFilterType = (e) => {
         const value = e.target.value;
         setPage((prevPage) => ({ ...prevPage, current: 1 }));
         setTypeFilter(value);
-        dispatch(filterCategoryAndType(typeFilter, value));
+        dispatch(filterCategoryAndType(categoryFilter, value));
     };
 
     //-------------------------RENDERIZACION--------------------------
@@ -125,13 +139,13 @@ const CardsContainer = () => {
         <div className={style.cardContainer}>
             <Box
                 sx={{
-                    height:'auto',
-                    marginTop:'1.5%',
-                    display:'flex',
-                    marginLeft:'10%',
+                    height: "auto",
+                    marginTop: "1.5%",
+                    display: "flex",
+                    marginLeft: "10%",
                 }}
             >
-                <SearchBar/>
+                <SearchBar />
             </Box>
             <div className={style.filtersAndCards}>
                 <div className={style.filtersContainer}>
@@ -216,9 +230,12 @@ const CardsContainer = () => {
                                 className={style.input}
                             >
                                 <MenuItem value="ALL">ALL</MenuItem>
-                                {Object.keys(categories).map((category) => (
-                                    <MenuItem value={category} key={category}>
-                                        {category}
+                                {categories.map((category) => (
+                                    <MenuItem
+                                        key={category.name}
+                                        value={category.name}
+                                    >
+                                        {category.name}
                                     </MenuItem>
                                 ))}
                             </Select>
