@@ -5,7 +5,7 @@ import {
     CREATE_PRODUCT,
     FILTER_CATEGORY,
     FILTER_TYPE,
-    RESET_FILTERS,
+    CLEAR_CART_FILTERS,
     GET_BY_NAME,
     FILTER_CATEGORY_AND_TYPE,
     GET_BY_ID,
@@ -32,6 +32,7 @@ const initialState = {
     user: [],
     category: [],
     favoriteProduct: [],
+    shoppingCart: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -142,7 +143,7 @@ const rootReducer = (state = initialState, action) => {
                 product: newproduct,
             };
 
-        case RESET_FILTERS:
+        case CLEAR_CART_FILTERS:
             return {
                 ...state,
                 product: state.allProducts,
@@ -211,6 +212,30 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload,
+            };
+
+            case ADD_TO_CART:
+            return {
+                ...state,
+                shoppingCart: action.payload,
+            };
+
+        case REMOVE_FROM_CART:
+            return {
+                ...state,
+                shoppingCart: action.payload,
+            };
+
+        case GET_CART_BY_ID:
+            return {
+                ...state,
+                shoppingCart: action.payload,
+            };
+
+        case CLEAR_CART:
+            return {
+                ...state,
+                shoppingCart: [],
             };
 
         default:
