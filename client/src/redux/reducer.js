@@ -1,13 +1,27 @@
 import {
-    ORDER_ALPHABETIC, ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT,
-    FILTER_CATEGORY, FILTER_TYPE, RESET_FILTERS, GET_BY_NAME,
-    FILTER_CATEGORY_AND_TYPE, GET_BY_ID, CLEAR_STATE,ADD_FAVORITE,
+    ORDER_ALPHABETIC,
+    ORDER_PRICE,
+    GET_ALL_PRODUCTS,
+    CREATE_PRODUCT,
+    FILTER_CATEGORY,
+    FILTER_TYPE,
+    RESET_FILTERS,
+    GET_BY_NAME,
+    FILTER_CATEGORY_AND_TYPE,
+    GET_BY_ID,
+    CLEAR_STATE,
+    ADD_FAVORITE,
     REMOVE_FAVORITE,
 } from "./actionsType/productsAT";
 
-import { POST_USERS, GET_USERS, UPDATE_USER } from "./actionsType/usersAT";
+import {
+    POST_USERS,
+    GET_USERS,
+    UPDATE_USER,
+    SET_USER,
+} from "./actionsType/usersAT";
 
-import {GET_ALL_CATEGORIES} from './actionsType/categoryAT'
+import { GET_ALL_CATEGORIES } from "./actionsType/categoryAT";
 
 const initialState = {
     allProducts: [],
@@ -89,35 +103,39 @@ const rootReducer = (state = initialState, action) => {
             };
 
         case FILTER_CATEGORY:
-            const allProducts = state.allProducts
-            const productsFilt = []
-            let filter = []
+            const allProducts = state.allProducts;
+            const productsFilt = [];
+            let filter = [];
 
             allProducts.forEach((product) => {
-                if(product.category === action.payload)
-                    productsFilt.push(product)
-            })
+                if (product.category === action.payload)
+                    productsFilt.push(product);
+            });
 
-            action.payload === 'ALL'
+            action.payload === "ALL"
                 ? (filter = allProducts)
-                : (filter = productsFilt)
+                : (filter = productsFilt);
 
             return {
                 ...state,
-                product: filter
-            }
+                product: filter,
+            };
 
         case FILTER_TYPE:
             const products2 = state.allProducts;
             let newproduct = [];
-            if (action.pawload === 'ALL') {
-                newproduct = products2
+            if (action.pawload === "ALL") {
+                newproduct = products2;
             } else {
                 products2.forEach((product) => {
-                    if(product.categories.some((category) => category === action.payload)){
-                        newproduct.push(product)
+                    if (
+                        product.categories.some(
+                            (category) => category === action.payload
+                        )
+                    ) {
+                        newproduct.push(product);
                     }
-                })
+                });
             }
             return {
                 ...state,
@@ -173,33 +191,33 @@ const rootReducer = (state = initialState, action) => {
         case GET_ALL_CATEGORIES:
             return {
                 ...state,
-                category: action.payload
-            }
+                category: action.payload,
+            };
 
-    case ADD_FAVORITE:
-      return {
-        ...state,
-        favoriteProduct: [...state.favoriteProduct, action.payload],
-      };
+        case ADD_FAVORITE:
+            return {
+                ...state,
+                favoriteProduct: [...state.favoriteProduct, action.payload],
+            };
 
-    case REMOVE_FAVORITE:
-      return {
-        ...state,
-        favoriteProduct: state.favoriteProduct.filter(
-          (productId) => productId !== action.payload
-        ),
-      };
-    case SET_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
+        case REMOVE_FAVORITE:
+            return {
+                ...state,
+                favoriteProduct: state.favoriteProduct.filter(
+                    (productId) => productId !== action.payload
+                ),
+            };
+        case SET_USER:
+            return {
+                ...state,
+                user: action.payload,
+            };
 
-    default:
-              return {
-                  ...state,
-              };
-      }
-  }
+        default:
+            return {
+                ...state,
+            };
+    }
+};
 
 export default rootReducer;

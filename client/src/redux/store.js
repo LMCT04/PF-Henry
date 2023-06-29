@@ -37,6 +37,9 @@ const initialState = {
   newProduct: {},
   newUser: {},
   user: [],
+  category: [],
+  favoriteProduct: [],
+  
   ...loadLocalStorageData(),
 };
 

@@ -5,7 +5,6 @@ import {
     orderAlphabetic,
     orderPrice,
     filterCategoryAndType,
-    getAllProducts,
 } from "../../../redux/actions/actionsProducts";
 import DashboardCard from "../dashboardCard/dashboardCard";
 import Loading from "../../../Views/Loading/Loading";
