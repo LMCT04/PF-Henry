@@ -1,4 +1,4 @@
-const { User, Product, Category } = require("../../../database.js"),
+const { User, Product, Category, Favorite } = require("../../../database.js"),
   { Op } = require("sequelize");
 //definir las funciones que hacen toda la logica para traer todos los usuarios, por nombre o por id.
 //En CRUDProduct se definen todas las peticiones Create (Crear), Read (Leer), Update (Actualizar) y Delete (Borrar)
@@ -195,6 +195,45 @@ const modulePutUpdateProduct = async (id, upProduct) => {
   }
 };
 
+const moduleGetFavorite = async (userId) => {
+  try {
+    const favorite = await Favorite.findAll({
+      where: { userId },
+    });
+
+    if (!favorite) {
+      throw new Error("No se encontró el favorito");
+    }
+
+    return favorite;
+  } catch (error) {
+    console.error(error);
+    throw new Error("No se pudo obtener el favorito");
+  }
+};
+
+const modulePostAddFavorite = async (productId, userId) => {
+  try {
+    let getFav = await Favorite.findOne({
+      where: { productId, userId },
+    });
+    if (!getFav) {
+      await Favorite.create({ productId, userId });
+      console.log("Se agrego a favoritos");
+
+      return true;
+    } else {
+      await Favorite.destroy({
+        where: { productId, userId },
+      });
+      console.log("Se elimino el producto de favoritos");
+    }
+  } catch (error) {
+    console.error("Error en la inserción del usuario", error);
+    throw new Error(`Error en la inserción del usuario`);
+  }
+};
+
 module.exports = {
   //exportar cada funcion
   modulePostProduct,
@@ -203,4 +242,6 @@ module.exports = {
   moduleGetProductById,
   modulePutStatusProduct,
   modulePutUpdateProduct,
+  modulePostAddFavorite,
+  moduleGetFavorite,
 };

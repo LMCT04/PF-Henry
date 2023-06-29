@@ -11,6 +11,8 @@ import {
   GET_BY_NAME,
   GET_BY_ID,
   CLEAR_STATE,
+  ADD_FAVORITE,
+  REMOVE_FAVORITE,
 } from "../actionsType/productsAT";
 
 export const orderAlphabetic = (payload) => {
@@ -66,7 +68,9 @@ export const getAllProducts = () => {
 export const getByName = (name) => {
   return async (dispatch) => {
     try {
-      const apiData = await axios.get(`http://localhost:3001/product?name=${name}`);
+      const apiData = await axios.get(
+        `http://localhost:3001/product?name=${name}`
+      );
       const product = apiData.data;
 
       return dispatch({
@@ -101,7 +105,10 @@ export const getById = (id) => {
 export const createProduct = (payload) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post("http://localhost:3001/product/createProduct", payload);
+      const response = await axios.post(
+        "http://localhost:3001/product/createProduct",
+        payload
+      );
       const createdProduct = response.data;
 
       dispatch({
@@ -125,4 +132,18 @@ export const filterCategoryAndType = (category, type) => {
 
 export const clearState = () => {
   return { type: CLEAR_STATE };
+};
+
+export const addFavorite = (cardId) => {
+  return {
+    type: ADD_FAVORITE,
+    payload: cardId,
+  };
+};
+
+export const removeFavorite = (cardId) => {
+  return {
+    type: REMOVE_FAVORITE,
+    payload: cardId,
+  };
 };
