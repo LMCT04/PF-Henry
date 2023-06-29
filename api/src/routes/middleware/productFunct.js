@@ -6,6 +6,8 @@ const {
   moduleGetProductById,
   modulePutStatusProduct,
   modulePutUpdateProduct,
+  modulePostAddFavorite,
+  moduleGetFavorite,
 } = require("./modules/CRUDProduct");
 
 //definir funciones
@@ -49,10 +51,30 @@ const putProduct = async (id, status, upProduct) => {
     console.error(error);
   }
 };
+
+const addFavorites = async (productId, userId) => {
+  try {
+    const favorites = await modulePostAddFavorite(productId, userId);
+    return favorites;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getFavorite = async (userId) => {
+  try {
+    const favorite = await moduleGetFavorite(userId);
+    return favorite;
+  } catch (error) {
+    console.error(error);
+  }
+};
 module.exports = {
   //exportar cada funcion
   getProducts,
   postCreateProduct,
   getProductById,
   putProduct,
+  addFavorites,
+  getFavorite,
 };

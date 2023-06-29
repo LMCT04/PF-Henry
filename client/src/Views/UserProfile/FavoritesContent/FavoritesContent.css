@@ -1,0 +1,5 @@
+.favorite-container {
+  display: grid;
+  grid-template-columns: repeat(3, 10fr);
+  grid-gap: 10px;
+}

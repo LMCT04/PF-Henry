@@ -1,8 +1,11 @@
 import axios from "axios";
+import { auth } from "../../firebase/config";
+
 import {
   POST_USERS,
   GET_USERS,
-  UPDATE_USER
+  UPDATE_USER,
+  SET_USER,
 } from "../actionsType/usersAT";
 
 export const createUsers = (payload) => {
@@ -53,3 +56,9 @@ export const updateUser = (updatedUser) => {
   };
 };
 
+export const setUser = (user) => {
+  return {
+    type: SET_USER,
+    payload: user,
+  };
+};
