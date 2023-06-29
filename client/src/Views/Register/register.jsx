@@ -48,7 +48,7 @@ const Register = () => {
         await dispatch(createUsers(newUser));
 
         setLoggedInUser(newUser); 
-
+        window.localStorage.setItem("loggedInUser", JSON.stringify(newUser));
         history.push({
           pathname: "/registergmail",
           state: { user: newUser }, 
@@ -84,7 +84,7 @@ const Register = () => {
       };
 
     await dispatch(createUsers(newUser));
-
+    window.localStorage.setItem("loggedInUser", JSON.stringify(newUser));
     history.push("/menu");
 
     } catch (error) {
