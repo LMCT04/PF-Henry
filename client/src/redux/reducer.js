@@ -1,7 +1,8 @@
 import {
     ORDER_ALPHABETIC, ORDER_PRICE, GET_ALL_PRODUCTS, CREATE_PRODUCT,
     FILTER_CATEGORY, FILTER_TYPE, RESET_FILTERS, GET_BY_NAME,
-    FILTER_CATEGORY_AND_TYPE, GET_BY_ID, CLEAR_STATE,
+    FILTER_CATEGORY_AND_TYPE, GET_BY_ID, CLEAR_STATE,ADD_FAVORITE,
+    REMOVE_FAVORITE,
 } from "./actionsType/productsAT";
 
 import { POST_USERS, GET_USERS, UPDATE_USER } from "./actionsType/usersAT";
@@ -16,6 +17,7 @@ const initialState = {
     newUser: {},
     user: [],
     category: [],
+    favoriteProduct: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -174,11 +176,30 @@ const rootReducer = (state = initialState, action) => {
                 category: action.payload
             }
 
-        default:
-            return {
-                ...state,
-            };
-    }
-};
+    case ADD_FAVORITE:
+      return {
+        ...state,
+        favoriteProduct: [...state.favoriteProduct, action.payload],
+      };
+
+    case REMOVE_FAVORITE:
+      return {
+        ...state,
+        favoriteProduct: state.favoriteProduct.filter(
+          (productId) => productId !== action.payload
+        ),
+      };
+    case SET_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    default:
+              return {
+                  ...state,
+              };
+      }
+  }
 
 export default rootReducer;

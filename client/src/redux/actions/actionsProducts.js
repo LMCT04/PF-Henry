@@ -1,16 +1,18 @@
 import axios from "axios";
 import {
-    ORDER_ALPHABETIC,
-    ORDER_PRICE,
-    GET_ALL_PRODUCTS,
-    CREATE_PRODUCT,
-    FILTER_CATEGORY,
-    FILTER_TYPE,
-    RESET_FILTERS,
-    FILTER_CATEGORY_AND_TYPE,
-    GET_BY_NAME,
-    GET_BY_ID,
-    CLEAR_STATE,
+  ORDER_ALPHABETIC,
+  ORDER_PRICE,
+  GET_ALL_PRODUCTS,
+  CREATE_PRODUCT,
+  FILTER_CATEGORY,
+  FILTER_TYPE,
+  RESET_FILTERS,
+  FILTER_CATEGORY_AND_TYPE,
+  GET_BY_NAME,
+  GET_BY_ID,
+  CLEAR_STATE,
+  ADD_FAVORITE,
+  REMOVE_FAVORITE,
 } from "../actionsType/productsAT";
 
 export const orderAlphabetic = (value) => {
@@ -106,6 +108,7 @@ export const getById = (id) => {
 };
 
 export const createProduct = (payload) => {
+
     return async (dispatch) => {
         try {
             const response = await axios.post(
@@ -135,4 +138,18 @@ export const filterCategoryAndType = (category, type) => {
 
 export const clearState = () => {
     return { type: CLEAR_STATE };
+};
+
+export const addFavorite = (cardId) => {
+  return {
+    type: ADD_FAVORITE,
+    payload: cardId,
+  };
+};
+
+export const removeFavorite = (cardId) => {
+  return {
+    type: REMOVE_FAVORITE,
+    payload: cardId,
+  };
 };
