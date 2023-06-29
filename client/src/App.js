@@ -43,7 +43,7 @@ function App() {
             <Route 
                 exact 
                 path="/cart/:id" 
-                render={({ match }) => <Cart id={match.params.id/>}/>}
+                render={({ match }) => <Cart id={match.params.id}/>}
             />
         </div>
     );
