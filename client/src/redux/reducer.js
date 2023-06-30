@@ -12,6 +12,8 @@ import {
   CLEAR_STATE,
   ADD_FAVORITE,
   REMOVE_FAVORITE,
+  SET_FAVORITE,
+
 } from "./actionsType/productsAT";
 
 import {
@@ -199,24 +201,42 @@ const rootReducer = (state = initialState, action) => {
         category: action.payload,
       };
 
-    case ADD_FAVORITE:
+    case SET_FAVORITE:
       return {
         ...state,
-        favoriteProduct: [...state.favoriteProduct, action.payload],
+        favoriteProduct: action.payload,
       };
-
-    case REMOVE_FAVORITE:
+    case ADD_FAVORITE:
+      const updatedFavoritesAdd = [
+        ...(state.favoriteProduct || []),
+        action.payload.productId,
+      ];
+      localStorage.setItem(
+        "favoriteProduct",
+        JSON.stringify(updatedFavoritesAdd)
+      );
       return {
         ...state,
-        favoriteProduct: state.favoriteProduct.filter(
-          (productId) => productId !== action.payload
-        ),
+        favoriteProduct: updatedFavoritesAdd,
+      };
+    case REMOVE_FAVORITE:
+      const updatedFavoritesRemove = state.favoriteProduct.filter(
+        (id) => id !== action.payload.productId
+      );
+      localStorage.setItem(
+        "favoriteProduct",
+        JSON.stringify(updatedFavoritesRemove)
+      );
+      return {
+        ...state,
+        favoriteProduct: updatedFavoritesRemove,
       };
     case SET_USER:
       return {
         ...state,
         user: action.payload,
       };
+
 
     case ADD_TO_CART:
       return {

@@ -13,7 +13,7 @@ import FavoritesContent from "./FavoritesContent/FavoritesContent";
 const UserProfile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  console.log(user);
+  console.log(user.id);
 
   const [editMode, setEditMode] = useState(false);
   const [showFavorites, setShowFavorites] = useState(false);
@@ -42,26 +42,26 @@ const UserProfile = () => {
     const image = event.target.files[0];
     setSelectedImage(image);
   };
-  useEffect(() => {
-    // Aquí puedes obtener los datos del usuario autenticado desde Firebase
-    // Por ejemplo, utilizando Firebase Auth:
-    const currentUser = auth.currentUser;
-    if (currentUser) {
-      // Aquí puedes obtener los datos del usuario como el nombre, correo electrónico, etc.
-      const { displayName, email, photoURL } = currentUser;
+  // useEffect(() => {
+  //   // Aquí puedes obtener los datos del usuario autenticado desde Firebase
+  //   // Por ejemplo, utilizando Firebase Auth:
+  //   const currentUser = auth.currentUser;
+  //   if (currentUser) {
+  //     // Aquí puedes obtener los datos del usuario como el nombre, correo electrónico, etc.
+  //     const { displayName, email, photoURL } = currentUser;
 
-      // Creas un objeto de usuario con los datos obtenidos
-      const userData = {
-        fullName: displayName,
-        userName: "", // Puedes establecer un nombre de usuario si está disponible
-        mail: email,
-        image: photoURL, // URL de la foto de perfil del usuario
-      };
+  //     // Creas un objeto de usuario con los datos obtenidos
+  //     const userData = {
+  //       fullName: displayName,
+  //       userName: "", // Puedes establecer un nombre de usuario si está disponible
+  //       mail: email,
+  //       image: photoURL, // URL de la foto de perfil del usuario
+  //     };
 
-      // Llamas a la acción setUser para establecer el usuario en el estado de Redux
-      dispatch(setUser(userData));
-    }
-  }, [dispatch]);
+  //     // Llamas a la acción setUser para establecer el usuario en el estado de Redux
+  //     dispatch(setUser(userData));
+  //   }
+  // }, [dispatch]);
   return (
     <Box display="flex" flexDirection="row" className="container">
       <Box className="setting">

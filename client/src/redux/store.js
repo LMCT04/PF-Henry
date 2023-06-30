@@ -1,7 +1,7 @@
-import { applyMiddleware, compose } from 'redux';
-import rootReducer from './reducer';
-import thunkMiddleware from 'redux-thunk';
-import { legacy_createStore as createStore } from 'redux';
+import { applyMiddleware, compose } from "redux";
+import rootReducer from "./reducer";
+import thunkMiddleware from "redux-thunk";
+import { legacy_createStore as createStore } from "redux";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -9,22 +9,22 @@ const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const saveToLocalStorage = (state) => {
   try {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem('state', serializedState);
+    localStorage.setItem("state", serializedState);
   } catch (error) {
-    console.log('Error saving state to localStorage:', error);
+    console.log("Error saving state to localStorage:", error);
   }
 };
-
+// localStorage.clear();
 // Función para cargar el estado desde localStorage
 const loadLocalStorageData = () => {
   try {
-    const serializedState = localStorage.getItem('state');
+    const serializedState = localStorage.getItem("state");
     if (serializedState === null) {
       return undefined;
     }
     return JSON.parse(serializedState);
   } catch (error) {
-    console.log('Error loading state from localStorage:', error);
+    console.log("Error loading state from localStorage:", error);
     return undefined;
   }
 };
@@ -40,8 +40,6 @@ const initialState = {
   category: [],
   favoriteProduct: [],
   shoppingCart: [],
-
-  
   ...loadLocalStorageData(),
 };
 
