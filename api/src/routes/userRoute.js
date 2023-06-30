@@ -8,7 +8,7 @@ const {
 
 userRoute.get("/", async (req, res) => {
   const { mail } = req.query;
-  console.log(mail);
+
   try {
     const user = await getUser(mail);
     res.status(200).send(user);

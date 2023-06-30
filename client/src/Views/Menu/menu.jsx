@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-
 import style from "./menu.module.css";
 import { getAllProducts } from "../../redux/actions/actionsProducts";
 import { getAllCategories } from "../../redux/actions/actionsCategories";
@@ -35,7 +34,7 @@ const Menu = () => {
             mail: email,
             image: photoURL,
           };
-          console.log(userData);
+
           dispatch(setUser(userData));
         }
         ///DEJAR SOLO EL PEDIDO DE ID
