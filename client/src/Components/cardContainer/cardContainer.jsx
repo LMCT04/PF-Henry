@@ -80,14 +80,6 @@ const CardsContainer = () => {
         setResetFilters(true);
     };
 
-    /*const handleChange = (event, value) => {
-        let productsPag = [...allProducts];
-        setPage((prevPage) => ({ ...prevPage, current: value }));
-        const startIndex = (value - 1) * 8;
-        const endIndex = startIndex + 8;
-        setPageProducts(productsPag.slice(startIndex, endIndex));
-    };*/
-
     const handleChange = (event, value) => {
         const startIndex = (value - 1) * 8;
         const endIndex = startIndex + 8;

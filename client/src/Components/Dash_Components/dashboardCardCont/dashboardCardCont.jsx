@@ -84,14 +84,14 @@ const DashboardCardCont = () => {
                 borderRadius: "25px",
             },
             "&::-webkit-scrollbar-track": {
-                background: "#d5cda4",
+                background: "#dddddd",
             },
             "&::-webkit-scrollbar-thumb": {
-                background: "#a49856",
+                background: "#1e88e5",
                 borderRadius: "25px",
             },
             "&::-webkit-scrollbar-thumb:hover": {
-                background: "#c8bd81",
+                background: "#155fa0",
             },
         },
     };
@@ -268,13 +268,7 @@ const DashboardCardCont = () => {
                         variant="contained"
                         onClick={handleResetFilters}
                         sx={{
-                            backgroundColor: "#E29578",
-                            color: "#EDF6F9",
                             height: "40px",
-                            "&:hover": {
-                                backgroundColor: "#E29578",
-                                color: "#EDF6F9",
-                            },
                         }}
                     >
                         RESET FILTERS
@@ -304,7 +298,7 @@ const DashboardCardCont = () => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: "8vh",
+                    height: "5.4vh",
                 }}
             >
                 <Pagination
