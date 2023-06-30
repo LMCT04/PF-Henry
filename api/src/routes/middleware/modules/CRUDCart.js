@@ -1,13 +1,47 @@
-const { Product, ShoppingCart } = require("../../../database.js");
+const {
+  Product,
+  ShoppingCart,
+  User,
+  CartProduct,
+} = require("../../../database.js");
 
 //Adiocionar al carrrito
 const moduleaPostaddTocart = async (userId, productId, quantity) => {
   try {
-    const cart = await ShoppingCart.findOne({ where: { userId } });
-    if (!cart) await ShoppingCart.create({ userId });
-    await cart.addProduct(productId, { through: { quantity } });
-    const totalprice = await calculateCartTotalPrice(cart);
-    await cart.update({ totalprice });
+    const user = await User.findByPk(userId);
+    if (!user) throw new Error("Usuario no encontrado");
+
+    let cart = await user.getShoppingCart();
+    if (!cart) {
+      cart = await ShoppingCart.create({ userId, quantity: 0 ,totalPrice: 0 });
+    }
+
+    // Busca si el producto ya está en el carrito
+    const cartProduct = await CartProduct.findOne({
+      where: { shoppingCartId: cart.id, productId },
+    });
+
+    if (cartProduct) {
+      // Si el producto ya está en el carrito, actualiza la cantidad
+      cartProduct.quantity += quantity;
+      await cartProduct.save();
+    } else {
+      // Si el producto no está en el carrito, crea un nuevo registro
+      await CartProduct.create({
+        shoppingCartId: cart.id,
+        productId,
+        quantity,
+      });
+    }
+    // Actualiza la cantidad total del carrito
+    cart.quantity += quantity;
+    await cart.save();
+    // Actualiza el total del carrito
+    const totalPrice = await calculateCartTotalPrice(cart);
+    cart.totalPrice = totalPrice;
+    await cart.save();
+    // Actualiza el total del carrito
+    await cart.save();
     return { message: "Product agregado correctamente" };
   } catch (error) {
     console.error(error);
@@ -19,15 +53,43 @@ const moduleaPostaddTocart = async (userId, productId, quantity) => {
 
 const moduleRemoveOneProductFromCart = async (userId, productId) => {
   try {
-    const cart = await ShoppingCart.findOne({ where: { userId } });
-    if (!cart) throw new Error("Carrito no encontrado");
-    await cart.removeProduct(productId);
-    const totalprice = await calculateCartTotalPrice(cart);
-    await cart.update({ totalprice });
-    return { message: "Product eliminado correctamente" };
+    const user = await User.findByPk(userId);
+    if (!user) throw new Error("Usuario no encontrado");
+
+    const cart = await user.getShoppingCart();
+    if (!cart) throw new Error("Carrito de compras no encontrado");
+
+    // Busca el producto en el carrito
+    const cartProduct = await CartProduct.findOne({
+      where: { shoppingCartId: cart.id, productId },
+    });
+
+    if (cartProduct) {
+      if (cartProduct.quantity > 1) {
+        // Si la cantidad del producto es mayor que 1, reduce la cantidad en 1
+        cartProduct.quantity -= 1;
+        await cartProduct.save();
+      } else {
+        // Si la cantidad del producto es 1, elimina el registro del carrito
+        await cartProduct.destroy();
+      }
+
+      // Actualiza la cantidad total del carrito
+      cart.quantity -= 1;
+      await cart.save();
+
+      // Actualiza el total del carrito
+      const totalPrice = await calculateCartTotalPrice(cart);
+      cart.totalPrice = totalPrice;
+      await cart.save();
+
+      return { message: "Producto removido correctamente", totalPrice };
+    } else {
+      throw new Error("Producto no encontrado en el carrito");
+    }
   } catch (error) {
     console.error(error);
-    throw new Error("Error al eliminar el producto del carrito");
+    throw new Error("Error al remover el producto del carrito");
   }
 };
 
@@ -82,12 +144,15 @@ const modluleRemoveAllProductsFromCart = async (userId) => {
     throw new Error(`Error al eliminar todos los productos del carrito`);
   }
 };
-
 const calculateCartTotalPrice = async (cart) => {
   const products = await cart.getProducts();
   let totalPrice = 0;
   products.forEach((product) => {
-    totalPrice += product.price * product.cartProduct.quantity;
+    const cartProduct = product.CartProduct;
+    if (cartProduct) {
+      const productQuantity = cartProduct.quantity;
+      totalPrice += product.price * productQuantity;
+    }
   });
   return totalPrice;
 };
