@@ -1,8 +1,7 @@
 import "./App.css";
-import { Route, useLocation, Switch } from "react-router-dom";
+import { Route, useLocation } from "react-router-dom";
 import NavBar from "./Components/NavBar/navBar";
 import NavLand from "./Components/NavBarLanding/navLand";
-import NotFound from "./Components/NotFound/NotFound";
 import {
     Landing,
     Register,
@@ -15,6 +14,7 @@ import {
     RegisterGmail,
 } from "./Views";
 import UserProfile from "./Views/UserProfile/userProfile";
+import Cart from "./Views/Cart/cart";
 
 //import axios from "axios";
 //axios.defaults.baseURL = "http://localhost:3001/";
@@ -39,9 +39,13 @@ function App() {
                     render={({ match }) => <Detail id={match.params.id} />}
                 />
                 <Route exact path="/dashboard" component={DashBoard} />
-
                 {/* Ruta 404 */}
                 <Route component={NotFound} />
+                 <Route 
+                exact 
+                path="/cart/:id" 
+                render={({ match }) => <Cart id={match.params.id}/>}
+                />
             </Switch>
         </div>
     );

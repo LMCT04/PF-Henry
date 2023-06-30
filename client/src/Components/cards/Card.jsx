@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./cards.module.css";
 import { Link } from "react-router-dom";
@@ -13,24 +14,54 @@ import Checkbox from "@mui/material/Checkbox";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
+
 import {
-  addFavorite,
   removeFavorite,
+  addFavorite,
 } from "../../redux/actions/actionsProducts";
 
 const Cards = (props) => {
   const dispatch = useDispatch();
-  const favorites = useSelector((state) => state.favoriteProduct);
+  const user = useSelector((state) => state.user);
+  // const favorites = useSelector((state) => state.favoriteProduct || []);
+  // console.log(favorites);
   const id = props.element.id;
-  console.log(favorites);
-  console.log(id);
-  const isFavorite = favorites.includes(id);
+  const userId = user.id;
 
-  const handleFavoriteToggle = () => {
+  const [isFavorite, setIsFavorite] = useState(false);
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem("favorites");
+    if (storedFavorites) {
+      const favorites = JSON.parse(storedFavorites);
+      setIsFavorite(favorites.includes(id));
+    }
+  }, [id]);
+
+  const handleFavoriteToggle = async () => {
+    const storedFavorites = localStorage.getItem("favorites");
+    let favorites = [];
+    if (storedFavorites) {
+      favorites = JSON.parse(storedFavorites);
+    }
+
     if (isFavorite) {
+      favorites = favorites.filter((favoriteId) => favoriteId !== id);
       dispatch(removeFavorite(id));
     } else {
+      favorites.push(id);
       dispatch(addFavorite(id));
+    }
+
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    setIsFavorite(!isFavorite);
+
+    try {
+      await axios.post("http://localhost:3001/product/profile", {
+        userId: userId,
+        productId: id,
+      });
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -79,8 +110,8 @@ const Cards = (props) => {
               top: "150px",
               zIndex: 1,
             }}
+            onClick={handleFavoriteToggle}
             checked={isFavorite}
-            onChange={handleFavoriteToggle}
           />
           <Link className={style.link} to={`/product/${props.element.id}`}>
             <CardContent

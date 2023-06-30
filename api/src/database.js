@@ -1,20 +1,20 @@
 require("dotenv").config();
-const { Sequelize } = require("sequelize");
+const { Sequelize, HasOne } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_DEPLOY } = process.env;
-/*const sequelize = new Sequelize(
+const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/spacafeteria`,
   {
     logging: false,
     native: false,
   }
-  );*/
+);
 
-const sequelize = new Sequelize(DB_DEPLOY, {
-  logging: false,
-  native: false,
-});
+// const sequelize = new Sequelize(DB_DEPLOY, {
+//   logging: false,
+//   native: false,
+// });
 
 const basename = path.basename(__filename);
 
@@ -39,12 +39,22 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 //Relacionar modelos
-const { User, Product, Category, ShoppingCart, PuchaseOrder, Favorite } =
-  sequelize.models;
+const {
+  User,
+  Product,
+  Category,
+  ShoppingCart,
+  PuchaseOrder,
+  Favorite,
+  CartProduct,
+} = sequelize.models;
 
 //Relaciones
 User.hasMany(Product); //User tiene muchos Productos
-ShoppingCart.belongsTo(User); //ShoppingCart pertenece a User
+//ShoppingCart.belongsTo(User); //ShoppingCart pertenece a User
+User.hasOne(ShoppingCart, { foreignKey: "userId" }); //
+ShoppingCart.belongsToMany(Product, { through: CartProduct });
+Product.belongsToMany(ShoppingCart, { through: CartProduct });
 PuchaseOrder.belongsTo(User); //PuchaseOrder pertenece a User
 Favorite.belongsTo(User, { foreignKey: "userId" });
 Favorite.belongsTo(Product, { foreignKey: "productId" });
