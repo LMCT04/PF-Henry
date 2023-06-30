@@ -33,7 +33,7 @@ cartRouter.post("/remove", async (req, res) => {
   }
 });
 
-cartRouter.get("/cart/:userId", async (req, res) => {
+cartRouter.get("/:userId", async (req, res) => {
   const { userId } = req.params;
   try {
     const result = await getCartContent(userId);
