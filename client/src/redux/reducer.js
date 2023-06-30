@@ -5,7 +5,7 @@ import {
   CREATE_PRODUCT,
   FILTER_CATEGORY,
   FILTER_TYPE,
-  RESET_FILTERS,
+  CLEAR_CART_FILTERS,
   GET_BY_NAME,
   FILTER_CATEGORY_AND_TYPE,
   GET_BY_ID,
@@ -13,6 +13,7 @@ import {
   ADD_FAVORITE,
   REMOVE_FAVORITE,
   SET_FAVORITE,
+
 } from "./actionsType/productsAT";
 
 import {
@@ -21,6 +22,13 @@ import {
   UPDATE_USER,
   SET_USER,
 } from "./actionsType/usersAT";
+
+import {
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  CLEAR_CART,
+  GET_CART_BY_ID,
+} from "./actionsType/cartAT";
 
 import { GET_ALL_CATEGORIES } from "./actionsType/categoryAT";
 
@@ -32,9 +40,8 @@ const initialState = {
   newUser: {},
   user: [],
   category: [],
-  favoriteProduct: localStorage.getItem("favoriteProduct")
-    ? JSON.parse(localStorage.getItem("favoriteProduct"))
-    : [],
+  favoriteProduct: [],
+  shoppingCart: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -142,7 +149,7 @@ const rootReducer = (state = initialState, action) => {
         product: newproduct,
       };
 
-    case RESET_FILTERS:
+    case CLEAR_CART_FILTERS:
       return {
         ...state,
         product: state.allProducts,
@@ -193,6 +200,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         category: action.payload,
       };
+
     case SET_FAVORITE:
       return {
         ...state,
@@ -223,11 +231,35 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         favoriteProduct: updatedFavoritesRemove,
       };
-
     case SET_USER:
       return {
         ...state,
         user: action.payload,
+      };
+
+
+    case ADD_TO_CART:
+      return {
+        ...state,
+        shoppingCart: action.payload,
+      };
+
+    case REMOVE_FROM_CART:
+      return {
+        ...state,
+        shoppingCart: action.payload,
+      };
+
+    case GET_CART_BY_ID:
+      return {
+        ...state,
+        shoppingCart: action.payload,
+      };
+
+    case CLEAR_CART:
+      return {
+        ...state,
+        shoppingCart: [],
       };
 
     default:
