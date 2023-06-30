@@ -35,7 +35,7 @@ const NavBarDashboard = () => {
             sx={{
                 width:'100%',
                 height:'6vh',
-                backgroundColor: '#83C5BE',
+                backgroundColor: '#ced4da',
                 display: 'flex',
                 justifyContent:'flex-end',
                 alignItems: 'center'
@@ -43,13 +43,13 @@ const NavBarDashboard = () => {
         >
             <Button
                 sx={{
-                    backgroundColor:'#E29578',
+                    backgroundColor:'#1e88e5',
                     marginRight:'30px',
                     color:'#EDF6F9',
                     fontSize: '10px',
                     transition: 'none',
                         '&:hover': {
-                            backgroundColor: '#E29578',
+                            backgroundColor: '#1e88e5',
                             boxShadow: 'none',
                         }
                 }}
