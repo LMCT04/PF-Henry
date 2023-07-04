@@ -46,7 +46,6 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-
     switch (action.type) {
         case GET_ALL_PRODUCTS:
             return {
@@ -212,11 +211,15 @@ const rootReducer = (state = initialState, action) => {
 
             if (action.payload === "asc") {
                 sortName = copyState.sort((a, b) =>
-                    a.fullName.toLowerCase().localeCompare(b.fullName.toLowerCase())
+                    a.fullName
+                        .toLowerCase()
+                        .localeCompare(b.fullName.toLowerCase())
                 );
             } else if (action.payload === "desc") {
                 sortName = copyState.sort((a, b) =>
-                    b.fullName.toLowerCase().localeCompare(a.fullName.toLowerCase())
+                    b.fullName
+                        .toLowerCase()
+                        .localeCompare(a.fullName.toLowerCase())
                 );
             } else {
                 return {
@@ -231,77 +234,76 @@ const rootReducer = (state = initialState, action) => {
             };
 
         case GET_ALL_CATEGORIES:
-      return {
-        ...state,
-        category: action.payload,
-      };
+            return {
+                ...state,
+                category: action.payload,
+            };
 
-    case SET_FAVORITE:
-      return {
-        ...state,
-        favoriteProduct: action.payload,
-      };
-    case ADD_FAVORITE:
-      const updatedFavoritesAdd = [
-        ...(state.favoriteProduct || []),
-        action.payload.productId,
-      ];
-      localStorage.setItem(
-        "favoriteProduct",
-        JSON.stringify(updatedFavoritesAdd)
-      );
-      return {
-        ...state,
-        favoriteProduct: updatedFavoritesAdd,
-      };
-    case REMOVE_FAVORITE:
-      const updatedFavoritesRemove = state.favoriteProduct.filter(
-        (id) => id !== action.payload.productId
-      );
-      localStorage.setItem(
-        "favoriteProduct",
-        JSON.stringify(updatedFavoritesRemove)
-      );
-      return {
-        ...state,
-        favoriteProduct: updatedFavoritesRemove,
-      };
-    case SET_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
+        case SET_FAVORITE:
+            return {
+                ...state,
+                favoriteProduct: action.payload,
+            };
+        case ADD_FAVORITE:
+            const updatedFavoritesAdd = [
+                ...(state.favoriteProduct || []),
+                action.payload.productId,
+            ];
+            localStorage.setItem(
+                "favoriteProduct",
+                JSON.stringify(updatedFavoritesAdd)
+            );
+            return {
+                ...state,
+                favoriteProduct: updatedFavoritesAdd,
+            };
+        case REMOVE_FAVORITE:
+            const updatedFavoritesRemove = state.favoriteProduct.filter(
+                (id) => id !== action.payload.productId
+            );
+            localStorage.setItem(
+                "favoriteProduct",
+                JSON.stringify(updatedFavoritesRemove)
+            );
+            return {
+                ...state,
+                favoriteProduct: updatedFavoritesRemove,
+            };
+        case SET_USER:
+            return {
+                ...state,
+                user: action.payload,
+            };
 
-    case ADD_TO_CART:
-      return {
-        ...state,
-        // shoppingCart: [...state.shoppingCart],
-      };
+        case ADD_TO_CART:
+            return {
+                ...state,
+                // shoppingCart: [...state.shoppingCart],
+            };
 
-    case REMOVE_FROM_CART:
-      return {
-        ...state,
-        // shoppingCart: action.payload,
-      };
+        case REMOVE_FROM_CART:
+            return {
+                ...state,
+                // shoppingCart: action.payload,
+            };
 
-    case GET_CART_BY_ID:
-      return {
-        ...state,
-        shoppingCart: action.payload,
-      };
+        case GET_CART_BY_ID:
+            return {
+                ...state,
+                shoppingCart: action.payload,
+            };
 
-    case CLEAR_CART:
-      return {
-        ...state,
-        shoppingCart: [],
-      };
+        case CLEAR_CART:
+            return {
+                ...state,
+                shoppingCart: [],
+            };
 
-    default:
-      return {
-        ...state,
-      };
-  }
-
+        default:
+            return {
+                ...state,
+            };
+    }
 };
 
 export default rootReducer;

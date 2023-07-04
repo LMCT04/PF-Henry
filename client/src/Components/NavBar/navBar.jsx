@@ -14,7 +14,7 @@ import { getCartById } from "../../redux/actions/actionsCart";
 const NavBar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const quantity = useSelector((state) => state.shoppingCart.cart.quantity);
+  //const quantity = useSelector((state) => state.shoppingCart.cart.quantity);
   const userId = useSelector((state) => state.user.id);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -210,7 +210,7 @@ const NavBar = () => {
           }}
           onClick={handleCartClick}
         >
-          <Badge badgeContent={quantity} color="primary">
+          {/*<Badge badgeContent={quantity} color="primary">
             <ShoppingCartIcon
               sx={{
                 color: "#fefee3",
@@ -222,7 +222,7 @@ const NavBar = () => {
                 fontFamily: "Roboto Mono, monospace",
               }}
             />
-          </Badge>
+            </Badge>*/}
         </Button>
       </Box>
     </Box>
