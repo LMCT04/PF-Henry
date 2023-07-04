@@ -71,11 +71,6 @@ const DashBoard = () => {
                             isActive={value === 2}
                             sx={{ fontWeight: "bold" }}
                         />
-                        <Tab
-                            label="GESTION DE USUARIOS"
-                            isActive={value === 3}
-                            sx={{ fontWeight: "bold" }}
-                        />
                     </Tabs>
                 </Box>
                 {value === 0 && (
@@ -91,11 +86,6 @@ const DashBoard = () => {
                 {value === 2 && (
                     <div>
                         <UsersContainer />
-                    </div>
-                )}
-                {value === 3 && (
-                    <div>
-                        hola
                     </div>
                 )}
             </Box>

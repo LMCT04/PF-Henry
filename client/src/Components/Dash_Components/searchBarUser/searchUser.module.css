@@ -1,0 +1,11 @@
+.alert{
+    color: red;
+    background-color: darkred;
+    font-size: 13px;
+    border: 1px solid red;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 25%;
+}

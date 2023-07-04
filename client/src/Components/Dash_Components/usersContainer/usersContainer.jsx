@@ -1,8 +1,10 @@
-import { Pagination, Box } from "@mui/material";
+import { Pagination, Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Loading from "../../../Views/Loading/Loading";
 import UserCard from "../userCard/userCard";
+import SearchUser from "../searchBarUser/searchUser";
+import { orderAlphabetic } from '../../../redux/actions/actionsUsers'
 
 const UsersContainer = () => {
     const allUsers = useSelector((state) => state.user);
@@ -14,6 +16,8 @@ const UsersContainer = () => {
         const endIndex = startIndex + 5;
         setPageUsers(usersPag.slice(startIndex, endIndex));
     };
+
+    const dispatch = useDispatch()
 
     //-------------------------PAGINADO--------------------------
 
@@ -36,7 +40,6 @@ const UsersContainer = () => {
             total: Math.ceil(filteredUsers.length / 5),
         }));
     }, [allUsers, pageCurrentRef]);
-
 
     const styles = {
         scrollContainer: {
@@ -64,13 +67,52 @@ const UsersContainer = () => {
         },
     };
 
+    const handleAlphabeticOrder = (event) => {
+        const value = event.target.value;
+        if (value === "") {
+            dispatch(orderAlphabetic("none"));
+        } else {
+            dispatch(orderAlphabetic(value));
+        }
+    };
 
     return (
         <Box
             sx={{
-                backgroundColor:"#dddddd",
+                backgroundColor: "#dddddd",
             }}
         >
+            <Box
+                sx={{
+                    height: "8vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <SearchUser />
+            </Box>
+            <Box>
+                <FormControl fullWidth size="small" sx={{ width: "150px" }}>
+                    <InputLabel id="alphabetic" color="primary">
+                        A - Z
+                    </InputLabel>
+                    <Select
+                        color="primary"
+                        labelId="alphabetic"
+                        id="alphabetic"
+                        label="A - Z"
+                        sx={{ width: "110px" }}
+                        onChange={handleAlphabeticOrder}
+                    >
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem value="asc">A - Z</MenuItem>
+                        <MenuItem value="desc">Z - A</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
             <Box
                 sx={{
                     ...styles.scrollContainer,

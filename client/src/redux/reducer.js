@@ -1,200 +1,236 @@
 import {
-  ORDER_ALPHABETIC,
-  ORDER_PRICE,
-  GET_ALL_PRODUCTS,
-  CREATE_PRODUCT,
-  FILTER_CATEGORY,
-  FILTER_TYPE,
-  CLEAR_CART_FILTERS,
-  GET_BY_NAME,
-  FILTER_CATEGORY_AND_TYPE,
-  GET_BY_ID,
-  CLEAR_STATE,
-  ADD_FAVORITE,
-  REMOVE_FAVORITE,
-  SET_FAVORITE,
+    ORDER_ALPHABETIC,
+    ORDER_PRICE,
+    GET_ALL_PRODUCTS,
+    CREATE_PRODUCT,
+    FILTER_CATEGORY,
+    FILTER_TYPE,
+    CLEAR_CART_FILTERS,
+    GET_BY_NAME,
+    FILTER_CATEGORY_AND_TYPE,
+    GET_BY_ID,
+    CLEAR_STATE,
+    ADD_FAVORITE,
+    REMOVE_FAVORITE,
+    SET_FAVORITE,
 } from "./actionsType/productsAT";
 
 import {
-  POST_USERS,
-  GET_USERS,
-  UPDATE_USER,
-  SET_USER,
+    POST_USERS,
+    GET_USERS,
+    UPDATE_USER,
+    SET_USER,
+    USER_BY_NAME,
+    USER_ORDER_ALPHABETIC,
 } from "./actionsType/usersAT";
 
 import {
-  ADD_TO_CART,
-  REMOVE_FROM_CART,
-  CLEAR_CART,
-  GET_CART_BY_ID,
+    ADD_TO_CART,
+    REMOVE_FROM_CART,
+    CLEAR_CART,
+    GET_CART_BY_ID,
 } from "./actionsType/cartAT";
 
 import { GET_ALL_CATEGORIES } from "./actionsType/categoryAT";
 
 const initialState = {
-  allProducts: [],
-  product: [],
-  productDetail: {},
-  newProduct: {},
-  newUser: {},
-  user: [],
-  category: [],
-  favoriteProduct: [],
-  shoppingCart: [],
+    allProducts: [],
+    product: [],
+    productDetail: {},
+    newProduct: {},
+    newUser: {},
+    user: [],
+    category: [],
+    favoriteProduct: [],
+    shoppingCart: [],
 };
 
 const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_ALL_PRODUCTS:
-      return {
-        ...state,
-        product: action.payload,
-        allProducts: action.payload,
-      };
 
-    case GET_BY_NAME:
-      return {
-        ...state,
-        product: action.payload,
-      };
+    switch (action.type) {
+        case GET_ALL_PRODUCTS:
+            return {
+                ...state,
+                product: action.payload,
+                allProducts: action.payload,
+            };
 
-    case GET_BY_ID:
-      return {
-        ...state,
-        productDetail: action.payload,
-      };
+        case GET_BY_NAME:
+            return {
+                ...state,
+                product: action.payload,
+            };
 
-    case CLEAR_STATE:
-      return {
-        ...state,
-        productDetail: {},
-      };
+        case GET_BY_ID:
+            return {
+                ...state,
+                productDetail: action.payload,
+            };
 
-    case CREATE_PRODUCT:
-      return {
-        ...state,
-        newProduct: action.payload,
-      };
+        case CLEAR_STATE:
+            return {
+                ...state,
+                productDetail: {},
+            };
 
-    case ORDER_ALPHABETIC:
-      let copyThree = [...state.product];
-      let sortedName;
+        case CREATE_PRODUCT:
+            return {
+                ...state,
+                newProduct: action.payload,
+            };
 
-      if (action.payload === "asc") {
-        sortedName = copyThree.sort((a, b) =>
-          a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-        );
-      } else if (action.payload === "desc") {
-        sortedName = copyThree.sort((a, b) =>
-          b.name.toLowerCase().localeCompare(a.name.toLowerCase())
-        );
-      } else {
-        return {
-          ...state,
-          product: [...state.product],
-        };
-      }
+        case ORDER_ALPHABETIC:
+            let copyThree = [...state.product];
+            let sortedName;
 
-      return {
-        ...state,
-        product: sortedName,
-      };
+            if (action.payload === "asc") {
+                sortedName = copyThree.sort((a, b) =>
+                    a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+                );
+            } else if (action.payload === "desc") {
+                sortedName = copyThree.sort((a, b) =>
+                    b.name.toLowerCase().localeCompare(a.name.toLowerCase())
+                );
+            } else {
+                return {
+                    ...state,
+                    product: [...state.product],
+                };
+            }
 
-    case ORDER_PRICE:
-      let priceOrder = [...state.product];
-      let price =
-        action.payload === "asc"
-          ? priceOrder.sort((a, b) => a.price - b.price)
-          : priceOrder.sort((a, b) => b.price - a.price);
-      return {
-        ...state,
-        product: price,
-      };
+            return {
+                ...state,
+                product: sortedName,
+            };
 
-    case FILTER_CATEGORY:
-      const allProducts = state.allProducts;
-      const productsFilt = [];
-      let filter = [];
+        case ORDER_PRICE:
+            let priceOrder = [...state.product];
+            let price =
+                action.payload === "asc"
+                    ? priceOrder.sort((a, b) => a.price - b.price)
+                    : priceOrder.sort((a, b) => b.price - a.price);
+            return {
+                ...state,
+                product: price,
+            };
 
-      allProducts.forEach((product) => {
-        if (product.category === action.payload) productsFilt.push(product);
-      });
+        case FILTER_CATEGORY:
+            const allProducts = state.allProducts;
+            const productsFilt = [];
+            let filter = [];
 
-      action.payload === "ALL"
-        ? (filter = allProducts)
-        : (filter = productsFilt);
+            allProducts.forEach((product) => {
+                if (product.category === action.payload)
+                    productsFilt.push(product);
+            });
 
-      return {
-        ...state,
-        product: filter,
-      };
+            action.payload === "ALL"
+                ? (filter = allProducts)
+                : (filter = productsFilt);
 
-    case FILTER_TYPE:
-      const products2 = state.allProducts;
-      let newproduct = [];
-      if (action.pawload === "ALL") {
-        newproduct = products2;
-      } else {
-        products2.forEach((product) => {
-          if (
-            product.categories.some((category) => category === action.payload)
-          ) {
-            newproduct.push(product);
-          }
-        });
-      }
-      return {
-        ...state,
-        product: newproduct,
-      };
+            return {
+                ...state,
+                product: filter,
+            };
 
-    case CLEAR_CART_FILTERS:
-      return {
-        ...state,
-        product: state.allProducts,
-      };
+        case FILTER_TYPE:
+            const products2 = state.allProducts;
+            let newproduct = [];
+            if (action.pawload === "ALL") {
+                newproduct = products2;
+            } else {
+                products2.forEach((product) => {
+                    if (
+                        product.categories.some(
+                            (category) => category === action.payload
+                        )
+                    ) {
+                        newproduct.push(product);
+                    }
+                });
+            }
+            return {
+                ...state,
+                product: newproduct,
+            };
 
-    case FILTER_CATEGORY_AND_TYPE:
-      const { category, type } = action;
-      let filteredProducts = state.allProducts;
+        case CLEAR_CART_FILTERS:
+            return {
+                ...state,
+                product: state.allProducts,
+            };
 
-      if (category !== "ALL") {
-        filteredProducts = filteredProducts.filter(
-          (product) => product.category === category
-        );
-      }
+        case FILTER_CATEGORY_AND_TYPE:
+            const { category, type } = action;
+            let filteredProducts = state.allProducts;
 
-      if (type !== "ALL") {
-        filteredProducts = filteredProducts.filter(
-          (product) => product.type === type
-        );
-      }
+            if (category !== "ALL") {
+                filteredProducts = filteredProducts.filter(
+                    (product) => product.category === category
+                );
+            }
 
-    case POST_USERS:
-      return {
-        ...state,
-        newUser: action.payload,
-      };
+            if (type !== "ALL") {
+                filteredProducts = filteredProducts.filter(
+                    (product) => product.type === type
+                );
+            }
 
-    case GET_USERS:
-      return {
-        ...state,
-        user: action.payload,
-      };
+        case POST_USERS:
+            return {
+                ...state,
+                newUser: action.payload,
+            };
 
-    case UPDATE_USER:
-      const updatedUser = {
-        ...state.newUser,
-        mail: action.payload.mail,
-        password: action.payload.password,
-        userName: action.payload.username,
-      };
-      return {
-        ...state,
-        newUser: updatedUser,
-      };
+        case GET_USERS:
+            return {
+                ...state,
+                user: action.payload,
+            };
 
-    case GET_ALL_CATEGORIES:
+        case USER_BY_NAME:
+            return {
+                ...state,
+                user: action.payload,
+            };
+
+        case UPDATE_USER:
+            const updatedUser = {
+                ...state.newUser,
+                mail: action.payload.mail,
+                password: action.payload.password,
+                userName: action.payload.username,
+            };
+            return {
+                ...state,
+                newUser: updatedUser,
+            };
+
+        case USER_ORDER_ALPHABETIC:
+            let copyState = [...state.user];
+            let sortName;
+
+            if (action.payload === "asc") {
+                sortName = copyState.sort((a, b) =>
+                    a.fullName.toLowerCase().localeCompare(b.fullName.toLowerCase())
+                );
+            } else if (action.payload === "desc") {
+                sortName = copyState.sort((a, b) =>
+                    b.fullName.toLowerCase().localeCompare(a.fullName.toLowerCase())
+                );
+            } else {
+                return {
+                    ...state,
+                    user: [...state.user],
+                };
+            }
+
+            return {
+                ...state,
+                user: sortName,
+            };
+
+        case GET_ALL_CATEGORIES:
       return {
         ...state,
         category: action.payload,
@@ -265,6 +301,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
   }
+
 };
 
 export default rootReducer;
