@@ -7,6 +7,7 @@ import logo from "../../imgAssets/logo_sin_texto.png";
 import { Box, Button, Menu, MenuItem } from "@mui/material";
 
 const NavBar = () => {
+    const roleUser= JSON.parse(window.localStorage.getItem('loggedInUser'));
     const history = useHistory();
 
     const [anchorEl, setAnchorEl] = useState(null)
@@ -38,6 +39,12 @@ const NavBar = () => {
     const handleDashboardClick = () => {
         history.push('/dashboard');
     };
+
+    const handleLogOut=()=>{
+        window.localStorage.setItem("loggedInUser", JSON.stringify({})); 
+        history.push("/login")
+        
+    }
 
     return (
         <Box
@@ -102,6 +109,8 @@ const NavBar = () => {
                     alignItems:'center'
                 }}
             >
+                {!roleUser.role &&
+                
                 <Button
                     sx={{
                         backgroundColor:'#2c6e49',
@@ -122,6 +131,8 @@ const NavBar = () => {
                 >
                     LOGIN IN
                 </Button>
+                }
+                 {!roleUser.role &&
                 <Button
                     sx={{
                         backgroundColor:'#fefee3',
@@ -143,7 +154,10 @@ const NavBar = () => {
                 >
                     JOIN NOW
                 </Button>
+                }
 
+                {(roleUser.role === "admin" || roleUser.role === "superAdmin"
+                    ||roleUser.role=="user")&&
                 <Button
                     sx={{
                         backgroundColor:'#fefee3',
@@ -164,6 +178,8 @@ const NavBar = () => {
                 >
                     PROFILE
                 </Button>
+                }
+
                 <Menu
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
@@ -177,21 +193,29 @@ const NavBar = () => {
                         horizontal: 'right',
                     }}
                 >
+                     {(roleUser.role === "admin" || roleUser.role === "superAdmin"
+                    ||roleUser.role=="user")&&
                     <MenuItem onClick={handleProfileClick} >
                         MY ACCOUNT
                     </MenuItem>
+                    }
 
+                    { (roleUser.role === "admin" || roleUser.role === "superAdmin") &&
                     <MenuItem onClick={handleDashboardClick}>
                         DASHBOARD
                     </MenuItem>
+                    }
 
                     <MenuItem onClick={handlePageClick}>
                         WEB PAGE
                     </MenuItem>
-
-                    <MenuItem>
+                    
+                    {(roleUser.role === "admin" || roleUser.role === "superAdmin"
+                    ||roleUser.role=="user")&&
+                    <MenuItem onClick={handleLogOut}>
                         LOG OUT
                     </MenuItem>
+                    }
                 </Menu>
             </Box>
         </Box>

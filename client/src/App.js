@@ -21,6 +21,8 @@ import UserProfile from "./Views/UserProfile/userProfile";
 
 function App() {
   const location = useLocation();
+  const roleUser= JSON.parse(window.localStorage.getItem('loggedInUser'));
+  
 
   return (
     <div className="App">
@@ -29,18 +31,22 @@ function App() {
         location.pathname !== "/dashboard" && <NavBar />}
       <Switch>
         <Route exact path="/" component={Landing} />
+        
         <Route exact path="/register" component={Register} />
         <Route exact path="/registergmail" component={RegisterGmail} />
         <Route exact path="/menu" component={Menu} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/about" component={About} />
-        <Route exact path="/profile" component={UserProfile} />
+        { (roleUser.role === "admin" || roleUser.role === "superAdmin" ||
+        roleUser.role === "user" ) &&
+        <Route exact path="/profile" component={UserProfile} />}
         <Route
           exact
           path="/product/:id"
           render={({ match }) => <Detail id={match.params.id} />}
         />
-        <Route exact path="/dashboard" component={DashBoard} />
+       { (roleUser.role === "admin" || roleUser.role === "superAdmin") && <Route exact path="/dashboard" component={DashBoard} />}
+
 
         {/* Ruta 404 */}
         <Route component={NotFound} />
