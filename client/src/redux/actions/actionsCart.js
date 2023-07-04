@@ -4,7 +4,7 @@ import {
   CLEAR_CART,
   GET_CART_BY_ID,
 } from "../actionsType/cartAT";
-import { axios } from "axios";
+import  axios  from "axios";
 
 export const addToCart = (payload) => {
   return async (dispatch) => {
@@ -46,10 +46,10 @@ export const removeFromCart = (payload) => {
   };
 };
 
-export const getCartById = (id) => {
+export const getCartById = (userId) => {  
   return async (dispatch) => {
     try {
-      const apiData = await axios.get(`http://localhost:3001/cart/${id}`);
+      const apiData = await axios.get(`http://localhost:3001/cart/${userId}`);
       const cart = apiData.data;
 
       dispatch({
@@ -63,12 +63,12 @@ export const getCartById = (id) => {
   };
 };
 
-export const clearCart = () => {
+export const clearCart = (userId) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
         "http://localhost:3001/cart/clear",
-        payload
+        {userId}
       );
       const clearedCart = response.data;
 
