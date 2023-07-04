@@ -13,7 +13,6 @@ import {
   ADD_FAVORITE,
   REMOVE_FAVORITE,
   SET_FAVORITE,
-
 } from "./actionsType/productsAT";
 
 import {
@@ -237,17 +236,16 @@ const rootReducer = (state = initialState, action) => {
         user: action.payload,
       };
 
-
     case ADD_TO_CART:
       return {
         ...state,
-        shoppingCart: action.payload,
+        // shoppingCart: [...state.shoppingCart],
       };
 
     case REMOVE_FROM_CART:
       return {
         ...state,
-        shoppingCart: action.payload,
+        // shoppingCart: action.payload,
       };
 
     case GET_CART_BY_ID:

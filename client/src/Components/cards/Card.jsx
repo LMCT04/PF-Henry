@@ -14,19 +14,45 @@ import Checkbox from "@mui/material/Checkbox";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 import {
   removeFavorite,
   addFavorite,
 } from "../../redux/actions/actionsProducts";
 
+import { addToCart, removeFromCart } from "../../redux/actions/actionsCart";
+
 const Cards = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const shoppingCart = useSelector((state) => state.shoppingCart);
   // const favorites = useSelector((state) => state.favoriteProduct || []);
   // console.log(favorites);
   const id = props.element.id;
   const userId = user.id;
+  const [quantity, setQuantity] = useState(0);
+
+  const handleAddToCart = () => {
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+    const payload = {
+      userId: userId,
+      productId: props.element.id,
+      quantity: newQuantity,
+    };
+    setQuantity(0);
+    dispatch(addToCart(payload));
+    // alert("Added to Cart");
+  };
+
+  const handleRemoveFromCart = () => {
+    const payload = {
+      userId: userId,
+      productId: props.element.id,
+    };
+    dispatch(removeFromCart(payload));
+  };
 
   const [isFavorite, setIsFavorite] = useState(false);
   useEffect(() => {
@@ -157,9 +183,24 @@ const Cards = (props) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              gap: "20px",
             }}
           >
-            <Fab size="medium" color="success" aria-label="add">
+            <Fab
+              style={{ backgroundColor: "#A5CAA8" }}
+              size="medium"
+              color="default"
+              aria-label="add"
+              onClick={handleRemoveFromCart}
+            >
+              <RemoveIcon />
+            </Fab>
+            <Fab
+              size="medium"
+              color="success"
+              aria-label="add"
+              onClick={handleAddToCart}
+            >
               <AddIcon />
             </Fab>
           </CardContent>
