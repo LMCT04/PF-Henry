@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getByName } from "../../redux/actions/actionsProducts";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import style from "./searchBar.module.css";
-import { Alert, AlertTitle, Stack } from "@mui/material";
+import { Paper, InputBase, Divider, Box } from "@mui/material";
+import { getUserbyName } from "../../../redux/actions/actionsUsers";
+import style from './searchUser.module.css'
 
-const SearchBar = () => {
+const SearchUser = () => {
     const dispatch = useDispatch();
+
     const [input, setInput] = useState("");
-    const [productFound, setProductFound] = useState(true);
+    const [userFound, setUserFound] = useState(true);
 
     function handleInputChange(event) {
         setInput(event.target.value);
@@ -21,16 +19,16 @@ const SearchBar = () => {
     async function handleSubmit(event) {
         event.preventDefault();
         try {
-            const result = await dispatch(getByName(input));
+            const result = await dispatch(getUserbyName(input));
             if (result.payload.length === 0) {
-                setProductFound(false);
+                setUserFound(false);
             } else {
-                setProductFound(true);
+                setUserFound(true);
             }
-            setInput(""); // Restablecer el estado del input
+            setInput("");
         } catch (error) {
             console.log("Error:", error);
-            setProductFound(false);
+            setUserFound(false);
         }
     }
 
@@ -42,7 +40,11 @@ const SearchBar = () => {
     }
 
     return (
-        <div className={style.searchBar}>
+        <Box
+            sx={{
+                display:'flex', flexDirection:'column'
+            }}
+        >
             <Paper
                 component="form"
                 sx={{
@@ -54,7 +56,7 @@ const SearchBar = () => {
                     border: "solid 1px #756E5C",
                 }}
             >
-                <InputBase
+                <InputBase 
                     sx={{ ml: 1, flex: 1 }}
                     variant="standard"
                     placeholder="Search a product:"
@@ -75,9 +77,9 @@ const SearchBar = () => {
                     <SearchIcon />
                 </IconButton>
             </Paper>
-            {!productFound && <p className={style.alert}>No products found</p>}
-        </div>
+            {!userFound && <p className={style.alert} >User not Found</p>}
+        </Box>
     );
 };
 
-export default SearchBar;
+export default SearchUser;
