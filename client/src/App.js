@@ -1,25 +1,26 @@
 import "./App.css";
-import { Route, useLocation, Switch } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import NavBar from "./Components/NavBar/navBar";
-import NavLand from "./Components/NavBarLanding/navLand";
-import NotFound from "./Components/NotFound/NotFound";
 import {
-  Landing,
-  Register,
-  Menu,
-  Login,
-  Form,
-  About,
-  Detail,
-  DashBoard,
-  RegisterGmail,
+    Landing,
+    Register,
+    Menu,
+    Login,
+    Form,
+    About,
+    Detail,
+    DashBoard,
+    RegisterGmail,
 } from "./Views";
 import UserProfile from "./Views/UserProfile/userProfile";
+import Cart from "./Views/Cart/cart";
+import  NotFound  from './Components/NotFound/NotFound'
 
 //import axios from "axios";
 //axios.defaults.baseURL = "http://localhost:3001/";
 
 function App() {
+
   const location = useLocation();
   const roleUser= JSON.parse(window.localStorage.getItem('loggedInUser'));
   
@@ -53,6 +54,8 @@ function App() {
       </Switch>
     </div>
   );
+
+ 
 }
 
 export default App;

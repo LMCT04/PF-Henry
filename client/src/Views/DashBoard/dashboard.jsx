@@ -10,7 +10,6 @@ import style from "./dashboard.module.css";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import { Tab } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import NavBarDashboard from "../../Components/Dash_Components/navbardash/navbar";
 import DashboardCardCont from "../../Components/Dash_Components/dashboardCardCont/dashboardCardCont";
 import UsersContainer from "../../Components/Dash_Components/usersContainer/usersContainer";
@@ -26,12 +25,6 @@ const DashBoard = () => {
         dispatch(getAllCategories())
     }, [dispatch]);
 
-    const CustomTab = styled(Tab)(({ theme, isActive }) => ({
-        color: isActive ? "#006D77" : "#83C5BE",
-        "&.Mui-selected": {
-            color: "#006D77",
-        },
-    }));
 
     const [value, setValue] = useState(0);
 
@@ -55,7 +48,7 @@ const DashBoard = () => {
                     sx={{
                         borderBottom: 1,
                         borderColor: "divider",
-                        backgroundColor: "#FFDDD2",
+                        backgroundColor: "#f8f9fa",
                     }}
                 >
                     <Tabs
@@ -63,22 +56,22 @@ const DashBoard = () => {
                         onChange={handleChange}
                         indicatorColor="primary"
                     >
-                        <CustomTab
+                        <Tab
                             label="GESTION DE PRODUCTOS"
                             isActive={value === 0}
                             sx={{ fontWeight: "bold" }}
                         />
-                        <CustomTab
+                        <Tab
                             label="CREACION DE PRODUCTOS"
                             isActive={value === 1}
                             sx={{ fontWeight: "bold" }}
                         />
-                        <CustomTab
+                        <Tab
                             label="GESTION DE USUARIOS"
                             isActive={value === 2}
                             sx={{ fontWeight: "bold" }}
                         />
-                        <CustomTab
+                        <Tab
                             label="GESTION DE USUARIOS"
                             isActive={value === 3}
                             sx={{ fontWeight: "bold" }}
