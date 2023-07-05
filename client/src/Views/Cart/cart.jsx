@@ -6,7 +6,7 @@ import Loading from "../Loading/Loading";
 import { Button, Box, CardContent, Typography } from "@mui/material";
 import CartCard from "../../Components/cartCard/cartCard";
 import style from "./Cart.module.css";
-
+import PayCarrito from "../../Components/PayCarrito/PayCarrito"
 const Cart = () => {
     let { userId } = useParams();
     const dispatch = useDispatch();
@@ -137,16 +137,7 @@ const Cart = () => {
                             </Typography>
                         </Box>
                     </CardContent>
-                    <Button
-                        color="success"
-                        variant="contained"
-                        minWidth="50%"
-                        // sx={{
-                        //   minWidth: "50%",
-                        // }}
-                    >
-                        PAY NOW
-                    </Button>
+                   <PayCarrito params={shoppingCart.cart.products}></PayCarrito>
                 </Box>
             </Box>
     );

@@ -12,6 +12,64 @@ const {
 const { modulePutRating } = require("./middleware/modules/CRUDProduct");
 const productRoute = Router();
 
+const Stripe = require("stripe");
+require("dotenv").config()
+const { KEY } = process.env
+
+productRoute.post("/pay", async (req, res) => {
+  console.log("entre");
+  const stripe = new Stripe(KEY);
+  const session = await stripe.checkout.sessions.create({
+    line_items: [ 
+      {
+        price_data: {
+          product_data: {
+            name: `${req.body.name}`,
+          },
+          currency: "usd",
+          unit_amount: parseInt(req.body.price * 100), // Convertir a centavos
+
+        },
+        quantity: 1,
+      },
+    ],
+    mode: "payment",
+    success_url: "http://localhost:3000/menu",
+    cancel_url: "http://localhost:3000/menu",
+  });
+
+
+  console.log(session);
+  return res.json({ url: session.url });
+
+})
+
+productRoute.post("/payCarrito", async (req, res) => {
+  const stripe = new Stripe(KEY);
+
+  const lineItems = req.body.map((product) => {
+    return {
+      price_data: {
+        product_data: {
+          name: product.name,
+        },
+        currency: "usd",
+        unit_amount: parseInt(product.price * 100), // Convertir a centavos
+      },
+      quantity: parseInt(product.cartProducts.quantity * 1),
+    };
+  });
+
+  const session = await stripe.checkout.sessions.create({
+    line_items: lineItems,
+    mode: "payment",
+    success_url: "http://localhost:3000/menu",
+    cancel_url: "http://localhost:3000/menu",
+  });
+
+  console.log(session);
+  return res.json({ url: session.url });
+});
 productRoute.post("/createProduct", async (req, res) => {
   const { name, image, description, price, type, userId, categoryId } =
     req.body;
