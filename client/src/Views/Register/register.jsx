@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Formik } from "formik";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { getAuth, signInWithPopup } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
@@ -97,7 +97,14 @@ const Register = () => {
     };
 
     return (
-        <div className={style.registerContainer}>
+        <Box
+            sx={{
+                backgroundColor:'#fefee3',
+                height:'92vh',
+                display:'center',
+                justifyContent:'center',
+            }}
+        >
             <Formik
                 initialValues={{
                     username: "",
@@ -147,10 +154,19 @@ const Register = () => {
                     errors,
                     touched,
                 }) => (
-                    <form onSubmit={handleSubmit}>
-                        <section className={style.form}>
-                            <h2>Register</h2>
-                            <div>
+                    <form onSubmit={handleSubmit} className={style.formContainer}>
+                        <section className={style.content}>
+                            <Box
+                            sx={{color:'#fefee3'}}
+                            >
+                                <h2>Register now!</h2>
+                            </Box>
+                            <Box
+                                sx={{
+                                    height:'14%',
+                                    display:'flex',
+                                }}
+                            >
                                 <TextField
                                     InputLabelProps={{ shrink: true }}
                                     fullWidth
@@ -168,10 +184,15 @@ const Register = () => {
                                         touched.username && errors.username
                                     }
                                     color="success"
-                                    className={style.inputField}
+                                    sx={{marginTop:'3%'}}
                                 />
-                            </div>
-                            <div>
+                            </Box>
+                            <Box
+                                sx={{
+                                    height:'14%',
+                                    display:'flex',
+                                }}
+                            >
                                 <TextField
                                     InputLabelProps={{ shrink: true }}
                                     fullWidth
@@ -189,10 +210,15 @@ const Register = () => {
                                         touched.password && errors.password
                                     }
                                     color="success"
-                                    className={style.inputField}
+                                    sx={{marginTop:'3%'}}
                                 />
-                            </div>
-                            <div>
+                            </Box>
+                            <Box
+                                sx={{
+                                    height:'14%',
+                                    display:'flex',
+                                }}
+                            >
                                 <TextField
                                     InputLabelProps={{ shrink: true }}
                                     fullWidth
@@ -206,10 +232,15 @@ const Register = () => {
                                     error={touched.email && !!errors.email}
                                     helperText={touched.email && errors.email}
                                     color="success"
-                                    className={style.inputField}
+                                    sx={{marginTop:'3%'}}
                                 />
-                            </div>
-                            <div>
+                            </Box>
+                            <Box
+                                sx={{
+                                    height:'14%',
+                                    display:'flex',
+                                }}
+                            >
                                 <TextField
                                     InputLabelProps={{ shrink: true }}
                                     fullWidth
@@ -225,16 +256,16 @@ const Register = () => {
                                         touched.address && errors.address
                                     }
                                     color="success"
-                                    className={style.inputField}
+                                    sx={{marginTop:'3%'}}
                                 />
-                            </div>
-                            <div className={style.actions}>
+                            </Box>
+                            <Box className={style.actions}>
                                 <Button
                                     fullWidth
                                     variant="contained"
                                     type="submit"
                                     color="success"
-                                    className={style.button}
+                                    sx={{width:'60%', height:'45%'}}
                                 >
                                     Register
                                 </Button>
@@ -244,22 +275,30 @@ const Register = () => {
                                     type="submit"
                                     color="success"
                                     onClick={handleGoogleLogin}
-                                    className={style.button}
+                                    sx={{width:'60%', marginTop:'5%', height:'45%'}}
                                 >
                                     Register with Google
                                 </Button>
-                            </div>
-                            <div className={style.loginLink}>
-                                <Link to="/login">
+                            </Box>
+                            <Box
+                                sx={{
+                                    height:'10%',
+                                    display:'flex',
+                                    justifyContent:'center',
+                                    alignItems:'center',
+                                    marginTop:'30%',
+                                }}
+                            >
+                                <Link to="/login" className={style.link} >
                                     Already have an account? Login here
                                 </Link>
-                            </div>
+                            </Box>
                         </section>
                     </form>
                 )}
             </Formik>
-            {error && <div className={style.error}>{error}</div>}
-        </div>
+            {error && <Box sx={{height:'3%', marginTop:'0.7%', border:'1px solid red', color:'red', width:'360px', borderRadius:'10px'}} >{error}</Box>}
+        </Box>
     );
 };
 
