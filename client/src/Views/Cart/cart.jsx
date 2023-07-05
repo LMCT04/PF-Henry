@@ -137,7 +137,7 @@ const Cart = () => {
                             </Typography>
                         </Box>
                     </CardContent>
-                   <PayCarrito params={shoppingCart.cart.products}></PayCarrito>
+                   <PayCarrito params={shoppingCart?.cart?.products}></PayCarrito>
                 </Box>
             </Box>
     );

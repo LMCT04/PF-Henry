@@ -33,9 +33,9 @@ function App() {
                 <Route exact path="/menu" component={Menu} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/about" component={About} />
-                {(roleUser.role === "admin" ||
-                    roleUser.role === "superAdmin" ||
-                    roleUser.role === "user") && (
+                {(roleUser?.role === "admin" ||
+                    roleUser?.role === "superAdmin" ||
+                    roleUser?.role === "user") && (
                     <Route exact path="/profile" component={UserProfile} />
                 )}
 
@@ -45,8 +45,8 @@ function App() {
                     render={({ match }) => <Detail id={match.params.id} />}
                 />
 
-                {(roleUser.role === "admin" ||
-                    roleUser.role === "superAdmin") && (
+                {(roleUser?.role === "admin" ||
+                    roleUser?.role === "superAdmin") && (
                     <Route exact path="/dashboard" component={DashBoard} />
                 )}
 
