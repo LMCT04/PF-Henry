@@ -20,7 +20,9 @@ import NotFound from "./Components/NotFound/NotFound";
 //axios.defaults.baseURL = "http://localhost:3001/";
 
 function App() {
+
   const location = useLocation();
+  const roleUser= JSON.parse(window.localStorage.getItem('loggedInUser')); 
 
   return (
     <div className="App">
@@ -34,16 +36,19 @@ function App() {
         <Route exact path="/menu" component={Menu} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/about" component={About} />
-        <Route exact path="/profile" component={UserProfile} />
+        { (roleUser.role === "admin" || roleUser.role === "superAdmin" ||
+        roleUser.role === "user" ) &&
+        <Route exact path="/profile" component={UserProfile} />}
+
         <Route
           exact
           path="/product/:id"
           render={({ match }) => <Detail id={match.params.id} />}
         />
 
-        <Route exact path="/dashboard" component={DashBoard} />
-        {/* Ruta 404 */}
-        {/* <Route component={NotFound} /> */}
+       { (roleUser.role === "admin" || roleUser.role === "superAdmin") && <Route exact path="/dashboard" component={DashBoard} />}
+        <Route component={NotFound} />
+          
         <Route
           exact
           path="/cart/:userId"
