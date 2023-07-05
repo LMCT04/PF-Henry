@@ -17,7 +17,7 @@ import Rating from "@mui/material/Rating";
 
 import { addRating, getRating } from "../../redux/actions/actionsProducts";
 import RemoveIcon from "@mui/icons-material/Remove";
-
+import Pay from "../Pay/Pay"
 
 import {
     removeFavorite,
@@ -110,7 +110,7 @@ const Cards = (props) => {
             <Card
                 sx={{
                     width: 300,
-                    height: 410,
+                    height: 460,
                     backgroundColor: "#eddcb9",
                     boxShadow: "1px 1px 3px 1px black",
                 }}
@@ -216,6 +216,7 @@ const Cards = (props) => {
                             <AddIcon />
                         </Fab>
                     </CardContent>
+                    <Pay name={props.element.name} price={props.element.price}></Pay>
                 </CardActionArea>
             </Card>
         </section>
