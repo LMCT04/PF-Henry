@@ -44,6 +44,7 @@
     align-items: center;
     margin-top: 2.5%;
     margin-bottom: 2.5%;
+    margin-right: 9.5%;
 }
 
 .filtersContainer {
@@ -68,4 +69,5 @@
     width: 80%;
     padding-top: 300px;
 }
+
 

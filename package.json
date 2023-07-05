@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "firebase": "^9.22.2",
-    "uuid": "^9.0.0"
+    "react-paginate": "^8.2.0"
   }
 }

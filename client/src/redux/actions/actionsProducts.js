@@ -11,13 +11,19 @@ import {
     GET_BY_NAME,
     GET_BY_ID,
     CLEAR_STATE,
+    ADD_FAVORITE,
+    REMOVE_FAVORITE,
+    SET_FAVORITE,
 } from "../actionsType/productsAT";
 
-export const orderAlphabetic = (payload) => {
-    return {
-        type: ORDER_ALPHABETIC,
-        payload,
-    };
+export const orderAlphabetic = (value) => {
+    if (value === "asc") {
+        return { type: ORDER_ALPHABETIC, payload: "asc" };
+    } else if (value === "desc") {
+        return { type: ORDER_ALPHABETIC, payload: "desc" };
+    } else {
+        return { type: ORDER_ALPHABETIC, payload: "none" };
+    }
 };
 
 export const orderPrice = (payload) => {
@@ -57,7 +63,8 @@ export const getAllProducts = () => {
                 payload: products,
             });
         } catch (error) {
-            console.log("Error getAllproducts");
+            console.log("Error: getAllProducts", error);
+            alert("Hubo un error al obtener todos los productos.");
         }
     };
 };
@@ -75,8 +82,9 @@ export const getByName = (name) => {
                 payload: product,
             });
         } catch (error) {
-            console.log("There is not a product with that name ", error);
-            alert("There is not a product with that name ");
+            console.log("Error: getByName", error);
+            alert("No se encontró ningún producto con ese nombre.");
+            return Promise.reject(error);
         }
     };
 };
@@ -87,7 +95,6 @@ export const getById = (id) => {
             const apiData = await axios.get(
                 `http://localhost:3001/product/${id}`
             );
-
             const product = apiData.data;
 
             dispatch({
@@ -95,38 +102,29 @@ export const getById = (id) => {
                 payload: product,
             });
         } catch (error) {
-            console.log("There is not a product with that id ", error);
-            alert("There is not a product with that id ");
+            console.log("Error: getById", error);
+            alert("No se encontró ningún producto con ese ID.");
         }
     };
 };
 
 export const createProduct = (payload) => {
-    const request = {
-        url: "http://localhost:3001/product/createProduct",
-        method: "POST",
-        data: payload,
-    };
     return async (dispatch) => {
-        /*
-        console.log(request);
-        return axios(request).then((response) => {
-            dispatch({
-                type: CREATE_PRODUCT,
-                payload: response.data,
-            });
-        });
-    };
-};
-*/
+        try {
+            const response = await axios.post(
+                "http://localhost:3001/product/createProduct",
+                payload
+            );
+            const createdProduct = response.data;
 
-        console.log(request);
-        return axios(request).then((response) => {
             dispatch({
                 type: CREATE_PRODUCT,
-                payload: response.data,
+                payload: createdProduct,
             });
-        });
+        } catch (error) {
+            console.log("Error: createProduct", error);
+            alert("Hubo un error al crear el producto.");
+        }
     };
 };
 
@@ -134,9 +132,30 @@ export const filterCategoryAndType = (category, type) => {
     return {
         type: FILTER_CATEGORY_AND_TYPE,
         category,
+        type,
     };
 };
 
 export const clearState = () => {
     return { type: CLEAR_STATE };
+};
+
+export const setFavorite = (productId) => {
+    return {
+        type: SET_FAVORITE,
+        payload: productId,
+    };
+};
+export const addFavorite = (productId) => {
+    return {
+        type: ADD_FAVORITE,
+        payload: productId,
+    };
+};
+
+export const removeFavorite = (productId) => {
+    return {
+        type: REMOVE_FAVORITE,
+        payload: productId,
+    };
 };

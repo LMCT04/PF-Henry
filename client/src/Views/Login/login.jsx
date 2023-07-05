@@ -1,87 +1,152 @@
-import style from "./login.module.css";
-//import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { getAuth, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
+import { createUsers, getAllUsers } from "../../redux/actions/actionsUsers";
+import { TextField, Button, Box } from "@mui/material";
 import { Formik } from "formik";
-import { useHistory } from "react-router-dom";
-import { useState } from "react";
-import { TextField, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import style from "./login.module.css";
+import { auth } from "../../firebase/config";
 
 const Login = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const [error, setError] = useState("");
+    const users = useSelector((state) => state.user);
+    const [loggedInUser, setLoggedInUser] = useState(null);
 
-    const handleRegister = () => {
-        history.push("/register");
+    useEffect(() => {
+        dispatch(getAllUsers());
+    }, []);
+
+    const handleGoogleLogin = async () => {
+        try {
+            const provider = new GoogleAuthProvider();
+            const authInstance = getAuth();
+            const result = await signInWithPopup(authInstance, provider);
+            const { user } = result;
+
+            // Extraer datos del usuario de Firebase
+            const { displayName, email, photoURL } = user;
+            const findUser = users.find((user) => user.mail === email);
+            if (findUser) {
+                window.localStorage.setItem(
+                    "loggedInUser",
+                    JSON.stringify(findUser)
+                );
+                history.push({
+                    pathname: "/menu",
+                });
+            } else {
+                const newUser = {
+                    userName: displayName,
+                    fullName: displayName,
+                    image: photoURL,
+                    mail: email,
+                    password: "Usuario1234",
+                    role: "user",
+                };
+
+                await dispatch(createUsers(newUser));
+
+                setLoggedInUser(newUser);
+                localStorage.setItem("loggedInUser", JSON.stringify(newUser));
+                history.push({
+                    pathname: "/registergmail",
+                    state: { user: newUser },
+                });
+            }
+        } catch (error) {
+            setError("An error occurred during login");
+        }
     };
 
-    const users = [
-        {
-            username: "pepito",
-            password: "pepito1234",
-        },
-        {
-            username: "pablito",
-            password: "pablito1234",
-        },
-        {
-            username: "carmen",
-            password: "carmen1234",
-        },
-        {
-            username: "juana",
-            password: "juana1234",
-        },
-        {
-            username: "miguel",
-            password: "miguel1234",
-        },
-        {
-            username: "adminJulian",
-            password: "password98",
-        },
-    ];
+    const handleRegister = async (values) => {
+        try {
+            const gmailUser = users.find((user) => user.mail === values.email);
+            if (gmailUser) {
+                alert("An account with this email already exists");
+                return;
+            }
+            const UserNameFind = users.find(
+                (user) => user.userName === values.username
+            );
+            if (UserNameFind) {
+                alert("An account with this username already exists");
+                return;
+            }
+
+            const newUser = {
+                userName: values.username,
+                fullName: values.username,
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpMGbo721CsaKbKgnmgF9D5KXg6ULWXOdBZ8Qid9csRQ&s",
+                mail: values.email,
+                password: values.password,
+                address: values.address,
+                role: "user",
+            };
+
+            await dispatch(createUsers(newUser));
+            window.localStorage.setItem(
+                "loggedInUser",
+                JSON.stringify(newUser)
+            );
+            history.push("/menu");
+        } catch (error) {
+            setError("An error occurred while creating the user");
+        }
+    };
 
     return (
-        <div className={style.loginContainer}>
+        <Box
+            sx={{
+                backgroundColor:'#fefee3',
+                height:'92vh',
+                display:'flex',
+                alignItems:'center',
+                flexDirection:'column',
+            }}
+        >
             <Formik
                 initialValues={{
-                    username: "",
+                    mail: "",
                     password: "",
                 }}
-                validate={(valores) => {
-                    let errores = {};
+                validate={(values) => {
+                    let errors = {};
 
-                    //Validacion Username
-                    if (!valores.username) {
-                        errores.username = "Please enter your username";
-                    } else if (
-                        !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.username)
-                    ) {
-                        errores.username =
-                            "You only need to enter letters and spaces";
+                    // Validación Username
+                    if (!values.mail) {
+                        errors.mail = "Please enter your email";
                     }
 
-                    //Validacion Password
-                    if (!valores.password) {
-                        errores.password = "Please enter your password";
+                    // Validación Password
+                    if (!values.password) {
+                        errors.password = "Please enter your password";
                     }
 
-                    return errores;
+                    return errors;
                 }}
-                onSubmit={(valores, { resetForm }) => {
+                onSubmit={(values, { resetForm }) => {
                     resetForm();
                     console.log("comprobar usuario");
-                    console.log(valores);
+                    console.log(values);
 
                     const foundUser = users.find(
                         (user) =>
-                            user.username === valores.username &&
-                            user.password === valores.password
+                            user.mail === values.mail &&
+                            user.password === values.password
                     );
                     if (foundUser) {
+                        window.localStorage.setItem(
+                            "loggedInUser",
+                            JSON.stringify(foundUser)
+                        );
                         history.push("/menu");
                     } else {
-                        setError("The user entered does not exist");
+                        setError("username or password does not exist");
+                        alert("Invalid username or password");
                     }
                 }}
             >
@@ -92,70 +157,123 @@ const Login = () => {
                     handleBlur,
                     errors,
                     touched,
-                }) => (
-                    <form onSubmit={handleSubmit} className={style.form}>
-                        <section className={style.content}>
-                            <h1>Sign in:</h1>
-                            <div>
-                                <TextField
-                                    InputLabelProps={{ shrink: true }}
-                                    fullWidth
-                                    type="text"
-                                    id="username"
-                                    name="username"
-                                    label="Username"
-                                    value={values.username}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={
-                                        touched.username && !!errors.username
-                                    }
-                                    helperText={
-                                        touched.username && errors.username
-                                    }
-                                    color="success"
-                                />
-                            </div>
-                            <div>
-                                <TextField
-                                    InputLabelProps={{ shrink: true }}
-                                    fullWidth
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    label="Password"
-                                    value={values.password}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={
-                                        touched.password && !!errors.password
-                                    }
-                                    helperText={
-                                        touched.password && errors.password
-                                    }
-                                    color="success"
-                                />
-                            </div>
-                            <div>
-                                <Button
-                                    fullWidth
-                                    variant="contained"
-                                    type="submit"
-                                    color="success"
+                }) => {
+                    return (
+                        <form onSubmit={handleSubmit} className={style.form}>
+                            <section className={style.content}>
+                                <Box
+                                    sx={{marginTop:'10%'}}
                                 >
-                                    Login
-                                </Button>
-                            </div>
-                            <Link to="/register" className={style.link}>
-                                Don't have an account?
-                            </Link>
-                        </section>
-                    </form>
-                )}
+                                    <h1>Welcome to our cafeteria!</h1>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        height:'15%',
+                                        display:'flex',
+                                        marginTop:'10%'
+                                    }}
+                                >
+                                    <TextField
+                                        InputLabelProps={{ shrink: true }}
+                                        fullWidth
+                                        sx={{marginTop:'10px'}}
+                                        type="text"
+                                        id="mail"
+                                        name="mail"
+                                        label="Mail"
+                                        value={values.mail}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={touched.mail && !!errors.mail}
+                                        helperText={touched.mail && errors.mail}
+                                        color="success"
+                                    />
+                                </Box>
+                                <Box
+                                    sx={{
+                                        height:'15%',
+                                        display:'flex',
+                                        
+                                    }}
+                                >
+                                    <TextField
+                                        InputLabelProps={{ shrink: true }}
+                                        fullWidth
+                                        sx={{marginTop:'10px'}}
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        label="Password"
+                                        value={values.password}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={
+                                            touched.password &&
+                                            !!errors.password
+                                        }
+                                        helperText={
+                                            touched.password && errors.password
+                                        }
+                                        color="success"
+                                    />
+                                </Box>
+                                <Box
+                                    sx={{
+                                        height:'25%',
+                                        display:'flex',
+                                        flexDirection:'column',
+                                        alignItems:'center'
+                                    }}
+                                >
+                                    <Button
+                                        fullWidth
+                                        variant="contained"
+                                        type="submit"
+                                        color="success"
+                                        sx={{
+                                            height:'25%',
+                                            width:'70%',
+                                            marginBottom:'5%'
+                                        }}
+                                    >
+                                        Sign In
+                                    </Button>
+                                    <Button
+                                        fullWidth
+                                        variant="contained"
+                                        type="submit"
+                                        color="success"
+                                        onClick={handleGoogleLogin}
+                                        sx={{
+                                            height:'25%',
+                                            width:'70%'
+                                        }}
+                                    >
+                                        Sign in with Google
+                                    </Button>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        height:'10%',
+                                        display:'flex',
+                                        justifyContent:'center',
+                                        alignItems:'center',
+                                        marginTop:'30%',
+                                    }}
+                                >
+                                    <Link to="/register" className={style.link} >
+                                        Don't have an account? Register here
+                                    </Link>
+                                </Box>
+                            </section>
+                        </form>
+                    );
+                }}
             </Formik>
-            {error && <p>{error}</p>}
-        </div>
+            {error && <Box sx={{height:'3%', marginTop:'0.7%', border:'1px solid red', color:'red', width:'360px', borderRadius:'10px'}} >{error}</Box>}
+        </Box>
     );
 };
 
 export default Login;
+    

@@ -1,40 +1,42 @@
-import React from "react";
-//import Box from "@mui/material/Box";
-//import TextField from "@mui/material/TextField";
-//import Stack from "@mui/material/Stack";
-//import Button from "@mui/material/Button";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getByName } from "../../redux/actions/actionsProducts";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-//import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-//import DirectionsIcon from "@mui/icons-material/Directions";
-//import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { getByName } from "../../redux/actions/actionsProducts";
 import style from "./searchBar.module.css";
+import { Alert, AlertTitle, Stack } from "@mui/material";
 
 const SearchBar = () => {
     const dispatch = useDispatch();
-    const [name, setName] = useState("");
-    const [input, setInput] = useState(name);
+    const [input, setInput] = useState("");
+    const [productFound, setProductFound] = useState(true);
 
     function handleInputChange(event) {
-        setInput(setName(event.target.value));
+        setInput(event.target.value);
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
-        dispatch(getByName(name));
-        setInput("");
+        try {
+            const result = await dispatch(getByName(input));
+            if (result.payload.length === 0) {
+                setProductFound(false);
+            } else {
+                setProductFound(true);
+            }
+            setInput(""); // Restablecer el estado del input
+        } catch (error) {
+            console.log("Error:", error);
+            setProductFound(false);
+        }
     }
 
-    function handleKeyDown(event) {
-        event.preventDefault();
-
+    function handleKeyPress(event) {
         if (event.key === "Enter") {
+            event.preventDefault();
             handleSubmit(event);
         }
     }
@@ -59,37 +61,21 @@ const SearchBar = () => {
                     color="primary"
                     inputProps={{ "aria-label": "search a product" }}
                     onChange={handleInputChange}
+                    value={input}
                 />
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
                 <IconButton
-                    type="button"
+                    component="button"
+                    type="submit"
                     sx={{ p: "10px" }}
                     aria-label="search"
                     onClick={handleSubmit}
-                    onKeyDown={handleKeyDown}
+                    onKeyPress={handleKeyPress}
                 >
                     <SearchIcon />
                 </IconButton>
             </Paper>
-            {/* <div className={style.searchBar}>
-                <TextField
-                    id="outlined-basic"
-                    label="Search a product: "
-                    // variant="outlined"
-                    variant="standard"
-                    value={input}
-                    onChange={handleInputChange}
-                    className={style.input}
-                />
-                <Button
-                    // size="lg"
-                    variant="plain"
-                    onClick={handleSubmit}
-                    size="large"
-                >
-                    <svg data-testid="SearchIcon"></svg>
-                </Button>
-            </div> */}
+            {!productFound && <p className={style.alert}>No products found</p>}
         </div>
     );
 };

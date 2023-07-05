@@ -5,18 +5,44 @@ import {
     CREATE_PRODUCT,
     FILTER_CATEGORY,
     FILTER_TYPE,
-    RESET_FILTERS,
+    CLEAR_CART_FILTERS,
     GET_BY_NAME,
     FILTER_CATEGORY_AND_TYPE,
     GET_BY_ID,
     CLEAR_STATE,
+    ADD_FAVORITE,
+    REMOVE_FAVORITE,
+    SET_FAVORITE,
 } from "./actionsType/productsAT";
+
+import {
+    POST_USERS,
+    GET_USERS,
+    UPDATE_USER,
+    SET_USER,
+    USER_BY_NAME,
+    USER_ORDER_ALPHABETIC,
+} from "./actionsType/usersAT";
+
+import {
+    ADD_TO_CART,
+    REMOVE_FROM_CART,
+    CLEAR_CART,
+    GET_CART_BY_ID,
+} from "./actionsType/cartAT";
+
+import { GET_ALL_CATEGORIES } from "./actionsType/categoryAT";
 
 const initialState = {
     allProducts: [],
     product: [],
     productDetail: {},
     newProduct: {},
+    newUser: {},
+    user: [],
+    category: [],
+    favoriteProduct: [],
+    shoppingCart: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -54,18 +80,23 @@ const rootReducer = (state = initialState, action) => {
 
         case ORDER_ALPHABETIC:
             let copyThree = [...state.product];
-            let sortedName =
-                action.payload === "asc"
-                    ? copyThree.sort((a, b) =>
-                        a.name
-                            .toLowerCase()
-                            .localeCompare(b.name.toLowerCase())
-                    )
-                    : copyThree.sort((a, b) =>
-                        b.name
-                            .toLowerCase()
-                            .localeCompare(a.name.toLowerCase())
-                    );
+            let sortedName;
+
+            if (action.payload === "asc") {
+                sortedName = copyThree.sort((a, b) =>
+                    a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+                );
+            } else if (action.payload === "desc") {
+                sortedName = copyThree.sort((a, b) =>
+                    b.name.toLowerCase().localeCompare(a.name.toLowerCase())
+                );
+            } else {
+                return {
+                    ...state,
+                    product: [...state.product],
+                };
+            }
+
             return {
                 ...state,
                 product: sortedName,
@@ -83,40 +114,46 @@ const rootReducer = (state = initialState, action) => {
             };
 
         case FILTER_CATEGORY:
-            const products3 = state.allProducts;
-            const productFind3 = [];
-            let newproduct3 = [];
-            products3.forEach((product) => {
+            const allProducts = state.allProducts;
+            const productsFilt = [];
+            let filter = [];
+
+            allProducts.forEach((product) => {
                 if (product.category === action.payload)
-                    productFind3.push(product);
+                    productsFilt.push(product);
             });
 
             action.payload === "ALL"
-                ? (newproduct3 = products3)
-                : (newproduct3 = productFind3);
+                ? (filter = allProducts)
+                : (filter = productsFilt);
+
             return {
                 ...state,
-                product: newproduct3,
+                product: filter,
             };
 
         case FILTER_TYPE:
             const products2 = state.allProducts;
-            const productFind = [];
             let newproduct = [];
-            products2.forEach((product) => {
-                if (product.type.includes(action.payload))
-                    productFind.push(product);
-            });
-
-            action.payload === "ALL"
-                ? (newproduct = products2)
-                : (newproduct = productFind);
+            if (action.pawload === "ALL") {
+                newproduct = products2;
+            } else {
+                products2.forEach((product) => {
+                    if (
+                        product.categories.some(
+                            (category) => category === action.payload
+                        )
+                    ) {
+                        newproduct.push(product);
+                    }
+                });
+            }
             return {
                 ...state,
                 product: newproduct,
             };
 
-        case RESET_FILTERS:
+        case CLEAR_CART_FILTERS:
             return {
                 ...state,
                 product: state.allProducts,
@@ -138,10 +175,135 @@ const rootReducer = (state = initialState, action) => {
                 );
             }
 
+        case POST_USERS:
+            return {
+                ...state,
+                newUser: action.payload,
+            };
+
+        case GET_USERS:
+            return {
+                ...state,
+                user: action.payload,
+            };
+
+        case USER_BY_NAME:
+            return {
+                ...state,
+                user: action.payload,
+            };
+
+        case UPDATE_USER:
+            const updatedUser = {
+                ...state.newUser,
+                mail: action.payload.mail,
+                password: action.payload.password,
+                userName: action.payload.username,
+            };
+            return {
+                ...state,
+                newUser: updatedUser,
+            };
+
+        case USER_ORDER_ALPHABETIC:
+            let copyState = [...state.user];
+            let sortName;
+
+            if (action.payload === "asc") {
+                sortName = copyState.sort((a, b) =>
+                    a.fullName
+                        .toLowerCase()
+                        .localeCompare(b.fullName.toLowerCase())
+                );
+            } else if (action.payload === "desc") {
+                sortName = copyState.sort((a, b) =>
+                    b.fullName
+                        .toLowerCase()
+                        .localeCompare(a.fullName.toLowerCase())
+                );
+            } else {
+                return {
+                    ...state,
+                    user: [...state.user],
+                };
+            }
+
+            return {
+                ...state,
+                user: sortName,
+            };
+
+        case GET_ALL_CATEGORIES:
+            return {
+                ...state,
+                category: action.payload,
+            };
+
+        case SET_FAVORITE:
+            return {
+                ...state,
+                favoriteProduct: action.payload,
+            };
+        case ADD_FAVORITE:
+            const updatedFavoritesAdd = [
+                ...(state.favoriteProduct || []),
+                action.payload.productId,
+            ];
+            localStorage.setItem(
+                "favoriteProduct",
+                JSON.stringify(updatedFavoritesAdd)
+            );
+            return {
+                ...state,
+                favoriteProduct: updatedFavoritesAdd,
+            };
+        case REMOVE_FAVORITE:
+            const updatedFavoritesRemove = state.favoriteProduct.filter(
+                (id) => id !== action.payload.productId
+            );
+            localStorage.setItem(
+                "favoriteProduct",
+                JSON.stringify(updatedFavoritesRemove)
+            );
+            return {
+                ...state,
+                favoriteProduct: updatedFavoritesRemove,
+            };
+        case SET_USER:
+            return {
+                ...state,
+                user: action.payload,
+            };
+
+        case ADD_TO_CART:
+            return {
+                ...state,
+                // shoppingCart: [...state.shoppingCart],
+            };
+
+        case REMOVE_FROM_CART:
+            return {
+                ...state,
+                // shoppingCart: action.payload,
+            };
+
+        case GET_CART_BY_ID:
+            return {
+                ...state,
+                shoppingCart: action.payload,
+            };
+
+        case CLEAR_CART:
+            return {
+                ...state,
+                shoppingCart: [],
+            };
+
         default:
             return {
                 ...state,
-            }
+            };
     }
 };
+
 export default rootReducer;

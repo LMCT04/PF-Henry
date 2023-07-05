@@ -1,13 +1,3 @@
-.home {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: column;
-    padding-top: 2%;
-    height: 100vmin;
-    background-color: #FFF0C9;
-}
-
-.slidersContainer{
-    margin-top: 5%;
+.container {
+    background-color: #fefee3;
 }

@@ -4,25 +4,31 @@ const {
   getProducts,
   getProductById,
   putProduct,
+  addFavorites,
+  getFavorite,
 } = require("./middleware/productFunct");
+
 const productRoute = Router();
 
 productRoute.post("/createProduct", async (req, res) => {
-  const { name, image, description, price, type, category, userId } = req.body;
+  const { name, image, description, price, type, userId, categoryId } =
+    req.body;
+
   const newProduct = {
     name,
     image,
     description,
     price,
     type,
-    category,
     userId,
+    categoryId,
   };
+
   try {
     const product = await postCreateProduct(newProduct);
     res.status(200).send(product);
   } catch (error) {
-    res.status(400).send("Error al crear receta");
+    res.status(400).send("Error al crear nuevo producto");
   }
 });
 
@@ -43,19 +49,20 @@ productRoute.get("/:id", async (req, res) => {
     const productById = await getProductById(id);
     res.status(200).send(productById);
   } catch (error) {
-    res.status(400).send(`Error al buscar usuario con id: ${id}`);
+    res.status(400).send(`Error al buscar producto con id: ${id}`);
   }
 });
 productRoute.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { status, name, image, description, price, type, category } = req.body;
+  const { status, name, image, description, price, type, categoryId } =
+    req.body;
   const upProduct = {
     name,
     image,
     description,
     price,
     type,
-    category,
+    categoryId,
   };
 
   try {
@@ -64,6 +71,28 @@ productRoute.put("/:id", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(400).json({ error: "Error al actualizar el producto" });
+  }
+});
+
+productRoute.post("/profile", async (req, res) => {
+  const { productId, userId } = req.body;
+
+  try {
+    const addFav = await addFavorites(productId, userId);
+    res.status(200).send(`El producto se agrego correctamente ${addFav}`);
+  } catch (error) {
+    res.status(400).send(`Error al agregar el producto`);
+  }
+});
+
+productRoute.get("/profile/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const favorites = await getFavorite(userId);
+    res.status(200).send(favorites);
+  } catch (error) {
+    res.status(500).send("No hay datos");
   }
 });
 
