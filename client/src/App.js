@@ -49,13 +49,13 @@ function App() {
                     roleUser.role === "superAdmin") && (
                     <Route exact path="/dashboard" component={DashBoard} />
                 )}
-                <Route component={NotFound} />
 
                 <Route
                     exact
                     path="/cart/:userId"
                     render={({ match }) => <Cart id={match.params.userId} />}
                 />
+                <Route component={NotFound} />
             </Switch>
         </div>
     );

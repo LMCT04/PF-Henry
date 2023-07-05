@@ -16,7 +16,7 @@ const NavBar = () => {
     const roleUser = JSON.parse(window.localStorage.getItem("loggedInUser"));
     const history = useHistory();
     const dispatch = useDispatch();
-    const quantity = useSelector((state) => state.shoppingCart.cart.quantity);
+    const quantity = useSelector((state) => state?.shoppingCart?.cart?.quantity);
     const userId = useSelector((state) => state.user.id);
 
     const [anchorEl, setAnchorEl] = useState(null);

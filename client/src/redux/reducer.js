@@ -138,11 +138,6 @@ const rootReducer = (state = initialState, action) => {
             user: sortName,
         };
 
-      return {
-        ...state,
-        product: sortedName,
-      };
-
     case ORDER_PRICE:
       let priceOrder = [...state.product];
       let price =
@@ -282,13 +277,13 @@ const rootReducer = (state = initialState, action) => {
     case ADD_TO_CART:
             return {
                 ...state,
-                // shoppingCart: [...state.shoppingCart],
+                shoppingCart: [...state.shoppingCart],
             };
 
         case REMOVE_FROM_CART:
             return {
                 ...state,
-                // shoppingCart: action.payload,
+                shoppingCart: action.payload,
             };
 
       case GET_CART_BY_ID:
