@@ -124,7 +124,7 @@ const NavBar = () => {
                     alignItems: "center",
                 }}
             >
-                {!roleUser.role && (
+                {!roleUser?.role && (
                     <Button
                         sx={{
                             backgroundColor: "#2c6e49",
@@ -146,7 +146,7 @@ const NavBar = () => {
                         LOGIN IN
                     </Button>
                 )}
-                {!roleUser.role && (
+                {!roleUser?.role && (
                     <Button
                         sx={{
                             backgroundColor: "#fefee3",
@@ -170,9 +170,9 @@ const NavBar = () => {
                     </Button>
                 )}
 
-                {(roleUser.role === "admin" ||
-                    roleUser.role === "superAdmin" ||
-                    roleUser.role == "user") && (
+                {(roleUser?.role === "admin" ||
+                    roleUser?.role === "superAdmin" ||
+                    roleUser?.role == "user") && (
                     <Button
                         sx={{
                             color: " #fefee3",
@@ -210,16 +210,16 @@ const NavBar = () => {
                     }}
                 >
 
-                    {(roleUser.role === "admin" ||
-                        roleUser.role === "superAdmin" ||
-                        roleUser.role == "user") && (
+                    {(roleUser?.role === "admin" ||
+                        roleUser?.role === "superAdmin" ||
+                        roleUser?.role == "user") && (
                         <MenuItem onClick={handleProfileClick}>
                             MY ACCOUNT
                         </MenuItem>
                     )}
 
-                    {(roleUser.role === "admin" ||
-                        roleUser.role === "superAdmin") && (
+                    {(roleUser?.role === "admin" ||
+                        roleUser?.role === "superAdmin") && (
                         <MenuItem onClick={handleDashboardClick}>
                             DASHBOARD
                         </MenuItem>
@@ -227,9 +227,9 @@ const NavBar = () => {
 
                     <MenuItem onClick={handlePageClick}>WEB PAGE</MenuItem>
 
-                    {(roleUser.role === "admin" ||
-                        roleUser.role === "superAdmin" ||
-                        roleUser.role == "user") && (
+                    {(roleUser?.role === "admin" ||
+                        roleUser?.role === "superAdmin" ||
+                        roleUser?.role == "user") && (
                         <MenuItem onClick={handleLogOut}>LOG OUT</MenuItem>
                     )}
 
