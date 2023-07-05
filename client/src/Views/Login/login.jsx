@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { Formik } from "formik";
-import { TextField, Button } from "@mui/material";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import style from "./login.module.css";
-import { createUsers, getAllUsers } from "../../redux/actions/actionsUsers";
-import { auth } from "../../firebase/config";
+import { Link, useHistory } from "react-router-dom";
 import { getAuth, signInWithPopup } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
+import { createUsers, getAllUsers } from "../../redux/actions/actionsUsers";
+import { TextField, Button, Box } from "@mui/material";
+import { Formik } from "formik";
+import style from "./login.module.css";
+import { auth } from "../../firebase/config";
 
 const Login = () => {
     const history = useHistory();
@@ -100,7 +99,15 @@ const Login = () => {
     };
 
     return (
-        <div className={style.loginContainer}>
+        <Box
+            sx={{
+                backgroundColor:'#fefee3',
+                height:'92vh',
+                display:'flex',
+                alignItems:'center',
+                flexDirection:'column',
+            }}
+        >
             <Formik
                 initialValues={{
                     mail: "",
@@ -111,7 +118,7 @@ const Login = () => {
 
                     // Validación Username
                     if (!values.mail) {
-                        errors.username = "Please enter your email";
+                        errors.mail = "Please enter your email";
                     }
 
                     // Validación Password
@@ -138,7 +145,7 @@ const Login = () => {
                         );
                         history.push("/menu");
                     } else {
-                        setError("Invalid username or password");
+                        setError("username or password does not exist");
                         alert("Invalid username or password");
                     }
                 }}
@@ -154,15 +161,26 @@ const Login = () => {
                     return (
                         <form onSubmit={handleSubmit} className={style.form}>
                             <section className={style.content}>
-                                <h1>Sign in:</h1>
-                                <div>
+                                <Box
+                                    sx={{marginTop:'10%'}}
+                                >
+                                    <h1>Welcome to our cafeteria!</h1>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        height:'15%',
+                                        display:'flex',
+                                        marginTop:'10%'
+                                    }}
+                                >
                                     <TextField
                                         InputLabelProps={{ shrink: true }}
                                         fullWidth
+                                        sx={{marginTop:'10px'}}
                                         type="text"
                                         id="mail"
                                         name="mail"
-                                        label="mail"
+                                        label="Mail"
                                         value={values.mail}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
@@ -170,11 +188,18 @@ const Login = () => {
                                         helperText={touched.mail && errors.mail}
                                         color="success"
                                     />
-                                </div>
-                                <div>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        height:'15%',
+                                        display:'flex',
+                                        
+                                    }}
+                                >
                                     <TextField
                                         InputLabelProps={{ shrink: true }}
                                         fullWidth
+                                        sx={{marginTop:'10px'}}
                                         type="password"
                                         id="password"
                                         name="password"
@@ -191,14 +216,25 @@ const Login = () => {
                                         }
                                         color="success"
                                     />
-                                </div>
-                                <div className={style.actions}>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        height:'25%',
+                                        display:'flex',
+                                        flexDirection:'column',
+                                        alignItems:'center'
+                                    }}
+                                >
                                     <Button
                                         fullWidth
                                         variant="contained"
                                         type="submit"
                                         color="success"
-                                        className={style.button}
+                                        sx={{
+                                            height:'25%',
+                                            width:'70%',
+                                            marginBottom:'5%'
+                                        }}
                                     >
                                         Sign In
                                     </Button>
@@ -208,24 +244,36 @@ const Login = () => {
                                         type="submit"
                                         color="success"
                                         onClick={handleGoogleLogin}
-                                        className={style.button}
+                                        sx={{
+                                            height:'25%',
+                                            width:'70%'
+                                        }}
                                     >
                                         Sign in with Google
                                     </Button>
-                                </div>
-                                <div className={style.registerLink}>
-                                    <Link to="/register">
+                                </Box>
+                                <Box
+                                    sx={{
+                                        height:'10%',
+                                        display:'flex',
+                                        justifyContent:'center',
+                                        alignItems:'center',
+                                        marginTop:'30%',
+                                    }}
+                                >
+                                    <Link to="/register" className={style.link} >
                                         Don't have an account? Register here
                                     </Link>
-                                </div>
+                                </Box>
                             </section>
                         </form>
                     );
                 }}
             </Formik>
-            {error && <div className={style.error}>{error}</div>}
-        </div>
+            {error && <Box sx={{height:'3%', marginTop:'0.7%', border:'1px solid red', color:'red', width:'360px', borderRadius:'10px'}} >{error}</Box>}
+        </Box>
     );
 };
 
 export default Login;
+    

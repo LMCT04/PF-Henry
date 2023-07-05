@@ -15,20 +15,23 @@ import {
   SET_FAVORITE,
   SET_RATING,
   GET_RATING,
+
 } from "./actionsType/productsAT";
 
 import {
-  POST_USERS,
-  GET_USERS,
-  UPDATE_USER,
-  SET_USER,
+    POST_USERS,
+    GET_USERS,
+    UPDATE_USER,
+    SET_USER,
+    USER_BY_NAME,
+    USER_ORDER_ALPHABETIC,
 } from "./actionsType/usersAT";
 
 import {
-  ADD_TO_CART,
-  REMOVE_FROM_CART,
-  CLEAR_CART,
-  GET_CART_BY_ID,
+    ADD_TO_CART,
+    REMOVE_FROM_CART,
+    CLEAR_CART,
+    GET_CART_BY_ID,
 } from "./actionsType/cartAT";
 
 import { GET_ALL_CATEGORIES } from "./actionsType/categoryAT";
@@ -243,28 +246,28 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case ADD_TO_CART:
-      return {
-        ...state,
-        shoppingCart: action.payload,
-      };
+            return {
+                ...state,
+                // shoppingCart: [...state.shoppingCart],
+            };
 
-    case REMOVE_FROM_CART:
-      return {
-        ...state,
-        shoppingCart: action.payload,
-      };
+        case REMOVE_FROM_CART:
+            return {
+                ...state,
+                // shoppingCart: action.payload,
+            };
 
-    case GET_CART_BY_ID:
-      return {
-        ...state,
-        shoppingCart: action.payload,
-      };
+      case GET_CART_BY_ID:
+            return {
+                ...state,
+                shoppingCart: action.payload,
+            };
 
-    case CLEAR_CART:
-      return {
-        ...state,
-        shoppingCart: [],
-      };
+        case CLEAR_CART:
+            return {
+                ...state,
+                shoppingCart: [],
+            };
     case SET_RATING:
       const { productId, ratings } = action.payload;
       console.log(productId, ratings);
@@ -281,6 +284,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
   }
+
 };
 
 export default rootReducer;

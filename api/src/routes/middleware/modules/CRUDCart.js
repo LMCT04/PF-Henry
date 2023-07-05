@@ -13,7 +13,7 @@ const moduleaPostaddTocart = async (userId, productId, quantity) => {
 
     let cart = await user.getShoppingCart();
     if (!cart) {
-      cart = await ShoppingCart.create({ userId, quantity: 0 ,totalPrice: 0 });
+      cart = await ShoppingCart.create({ userId, quantity: 0, totalPrice: 0 });
     }
 
     // Busca si el producto ya está en el carrito
@@ -42,7 +42,7 @@ const moduleaPostaddTocart = async (userId, productId, quantity) => {
     await cart.save();
     // Actualiza el total del carrito
     await cart.save();
-    return { message: "Product agregado correctamente" };
+    // return { message: "Product agregado correctamente" };
   } catch (error) {
     console.error(error);
     throw new Error("Error al agregar el producto al carrito");
@@ -83,7 +83,7 @@ const moduleRemoveOneProductFromCart = async (userId, productId) => {
       cart.totalPrice = totalPrice;
       await cart.save();
 
-      return { message: "Producto removido correctamente", totalPrice };
+      // return { message: "Producto removido correctamente", totalPrice };
     } else {
       throw new Error("Producto no encontrado en el carrito");
     }
@@ -98,11 +98,19 @@ const moduleGetCartContent = async (userId) => {
   try {
     const cart = await ShoppingCart.findOne({
       where: { userId },
-      include: {
-        model: Product,
-      },
+      include: [
+        {
+          model: Product,
+          as: "products",
+          attributes: ["id", "name", "price", "image"],
+          through: {
+            model: CartProduct,
+            as: "cartProducts", // Cambia el alias a 'cartProducts'
+            attributes: ["quantity"],
+          },
+        },
+      ],
     });
-
     if (!cart) {
       throw new Error("Carrito no encontrado");
     }
@@ -134,14 +142,21 @@ const moduleUpdateCartItemQuantity = async (userId, productId, quantity) => {
 
 const modluleRemoveAllProductsFromCart = async (userId) => {
   try {
-    const cart = await ShoppingCart.findOne({ where: { userId } });
-    if (!cart) throw new Error("Carrito no encontrado");
-    await cart.setProducts([]);
-    await cart.update({ totalPrice: 0 });
-    return { message: "Todos los productos del carrito han sido borrados" };
+    const user = await User.findByPk(userId);
+    if (!user) throw new Error("usuario no encontrado");
+    const cart = await user.getShoppingCart();
+    if (!cart) throw new Error("carrito de compras no encontrado");
+
+    await CartProduct.destroy({ where: { shoppingCartId: cart.id } });
+
+    cart.quantity = 0;
+    cart.totalPrice = 0;
+    await cart.save();
+
+    return { message: "Carrito vaciado correctamente" };
   } catch (error) {
     console.error(error);
-    throw new Error(`Error al eliminar todos los productos del carrito`);
+    throw new Error(`Error al vaciar el carrito`);
   }
 };
 const calculateCartTotalPrice = async (cart) => {
