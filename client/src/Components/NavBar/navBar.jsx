@@ -8,14 +8,15 @@ import { Box, Button, Menu, MenuItem } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import Badge from "@mui/material/Badge";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCartById } from "../../redux/actions/actionsCart";
 
 const NavBar = () => {
+
     const roleUser = JSON.parse(window.localStorage.getItem("loggedInUser"));
     const history = useHistory();
     const dispatch = useDispatch();
-    //const quantity = useSelector((state) => state.shoppingCart.cart.quantity);
+    const quantity = useSelector((state) => state.shoppingCart.cart.quantity);
     const userId = useSelector((state) => state.user.id);
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -208,6 +209,7 @@ const NavBar = () => {
                         horizontal: "right",
                     }}
                 >
+
                     {(roleUser.role === "admin" ||
                         roleUser.role === "superAdmin" ||
                         roleUser.role == "user") && (
@@ -230,6 +232,7 @@ const NavBar = () => {
                         roleUser.role == "user") && (
                         <MenuItem onClick={handleLogOut}>LOG OUT</MenuItem>
                     )}
+
                 </Menu>
 
                 <Button
@@ -240,19 +243,21 @@ const NavBar = () => {
                     }}
                     onClick={handleCartClick}
                 >
-                    {/*<Badge badgeContent={quantity} color="primary">
-            <ShoppingCartIcon
-                sx={{
-                color: "#fefee3",
-                fontSize: "40px",
-                "&:hover": {
-                    color: " #fefee3af",
-                },
-                marginRight: "5%",
-                fontFamily: "Roboto Mono, monospace",
-                }}
-            />
-            </Badge>*/}
+
+                    <Badge badgeContent={quantity} color="primary">
+                        <ShoppingCartIcon
+                            sx={{
+                                color: "#fefee3",
+                                fontSize: "40px",
+                                "&:hover": {
+                                    color: " #fefee3af",
+                                },
+                                marginRight: "5%",
+                                fontFamily: "Roboto Mono, monospace",
+                            }}
+                        />
+                    </Badge>
+
                 </Button>
             </Box>
         </Box>
