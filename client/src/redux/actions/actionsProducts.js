@@ -14,6 +14,8 @@ import {
   ADD_FAVORITE,
   REMOVE_FAVORITE,
   SET_FAVORITE,
+  SET_RATING,
+  GET_RATING,
 } from "../actionsType/productsAT";
 
 export const orderAlphabetic = (value) => {
@@ -155,5 +157,52 @@ export const removeFavorite = (productId) => {
   return {
     type: REMOVE_FAVORITE,
     payload: productId,
+  };
+};
+
+export const addRating = (productId, userId, ratingValue) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put("http://localhost:3001/product/rating", {
+        productId: productId,
+        userId: userId,
+        ratingValue: ratingValue,
+      });
+      console.log(response.data);
+      // dispatch(getRating(productId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+export const getRating = (productId) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/product/rating/all`
+      );
+      const ratings = response.data;
+      console.log(ratings);
+
+      ratings.forEach((rating) => {
+        const { value, productId: ratingProductId } = rating;
+        console.log(value, ratingProductId);
+        if (ratingProductId === productId) {
+          dispatch(setRating(productId, value));
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const setRating = (productId, ratings) => {
+  return {
+    type: SET_RATING,
+    payload: {
+      productId,
+      ratings,
+    },
   };
 };

@@ -13,7 +13,8 @@ import {
   ADD_FAVORITE,
   REMOVE_FAVORITE,
   SET_FAVORITE,
-
+  SET_RATING,
+  GET_RATING,
 } from "./actionsType/productsAT";
 
 import {
@@ -42,6 +43,10 @@ const initialState = {
   category: [],
   favoriteProduct: [],
   shoppingCart: [],
+  ratings: {
+    productId: 0,
+    value: 0,
+  },
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -237,7 +242,6 @@ const rootReducer = (state = initialState, action) => {
         user: action.payload,
       };
 
-
     case ADD_TO_CART:
       return {
         ...state,
@@ -260,6 +264,16 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         shoppingCart: [],
+      };
+    case SET_RATING:
+      const { productId, ratings } = action.payload;
+      console.log(productId, ratings);
+      return {
+        ...state,
+        ratings: {
+          productId: productId,
+          value: ratings,
+        },
       };
 
     default:

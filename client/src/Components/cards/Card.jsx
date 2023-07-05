@@ -14,6 +14,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
+import { addRating, getRating } from "../../redux/actions/actionsProducts";
 
 import {
   removeFavorite,
@@ -23,8 +24,10 @@ import {
 const Cards = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  // const favorites = useSelector((state) => state.favoriteProduct || []);
-  // console.log(favorites);
+  const currentRating = useSelector((state) => state.ratings);
+  // const [rating, setRating] = useState(0);
+  console.log(currentRating);
+
   const id = props.element.id;
   const userId = user.id;
 
@@ -35,7 +38,9 @@ const Cards = (props) => {
       const favorites = JSON.parse(storedFavorites);
       setIsFavorite(favorites.includes(id));
     }
-  }, [id]);
+
+    dispatch(getRating(id));
+  }, [dispatch, id]);
 
   const handleFavoriteToggle = async () => {
     const storedFavorites = localStorage.getItem("favorites");
@@ -63,6 +68,9 @@ const Cards = (props) => {
     } catch (error) {
       console.error(error);
     }
+  };
+  const handleRatingChange = (event, ratingValue) => {
+    dispatch(addRating(id, userId, ratingValue));
   };
 
   return (
@@ -139,10 +147,14 @@ const Cards = (props) => {
           <CardContent sx={{ height: 40 }}>
             <Rating
               name="size-small"
-              defaultValue={0}
+              // value={productRating}
+              onChange={handleRatingChange}
               size="small"
+              defaultValue={0}
               sx={{ display: "flex" }}
+              max={5}
             />
+
             <Typography
               variant="body1"
               component="div"
