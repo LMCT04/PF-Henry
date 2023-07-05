@@ -1,5 +1,13 @@
-const { User, Product, Category, Favorite } = require("../../../database.js"),
-    { Op } = require("sequelize");
+
+const {
+    User,
+    Product,
+    Category,
+    Favorite,
+    Rating,
+  } = require("../../../database.js"),
+  { Op } = require("sequelize");
+
 //definir las funciones que hacen toda la logica para traer todos los usuarios, por nombre o por id.
 //En CRUDProduct se definen todas las peticiones Create (Crear), Read (Leer), Update (Actualizar) y Delete (Borrar)
 
@@ -155,51 +163,47 @@ const modulePutStatusProduct = async (id, status) => {
 };
 
 const modulePutUpdateProduct = async (id, upProduct) => {
-    try {
-        console.log(id);
-        console.log(upProduct);
-        const product = await Product.findByPk(id, { include: Category });
-        if (!product) {
-            throw new Error("Producto no encontrado");
-        }
-
-        product.name = upProduct.name;
-        product.image = [upProduct.image];
-        product.description = upProduct.description;
-        product.price = upProduct.price;
-        product.type = upProduct.type;
-
-        await product.save();
-
-        // Obtener las categorías asociadas al producto
-        const existingCategories = product.categories.map(
-            (category) => category.id
-        );
-
-        // Obtener las categorías nuevas del array categoryId
-        const newCategories = await Category.findAll({
-            where: {
-                id: upProduct.categoryId.map((categoryId) =>
-                    parseInt(categoryId)
-                ),
-            },
-        });
-
-        // Eliminar las categorías existentes que no están seleccionadas en la solicitud
-        await product.removeCategories(
-            existingCategories.filter(
-                (categoryId) => !upProduct.categoryId.includes(categoryId)
-            )
-        );
-
-        // Agregar las nuevas categorías al producto
-        await product.addCategories(newCategories);
-
-        return product;
-    } catch (error) {
-        console.error("Error al modificar el producto", error);
-        throw new Error(`Error al modificar el producto `);
+  try {
+    const product = await Product.findByPk(id, { include: Category });
+    if (!product) {
+      throw new Error("Producto no encontrado");
     }
+
+    product.name = upProduct.name;
+    product.image = [upProduct.image];
+    product.description = upProduct.description;
+    product.price = upProduct.price;
+    product.type = upProduct.type;
+
+    await product.save();
+
+    // Obtener las categorías asociadas al producto
+    const existingCategories = product.categories.map(
+      (category) => category.id
+    );
+
+    // Obtener las categorías nuevas del array categoryId
+    const newCategories = await Category.findAll({
+      where: {
+        id: upProduct.categoryId.map((categoryId) => parseInt(categoryId)),
+      },
+    });
+
+    // Eliminar las categorías existentes que no están seleccionadas en la solicitud
+    await product.removeCategories(
+      existingCategories.filter(
+        (categoryId) => !upProduct.categoryId.includes(categoryId)
+      )
+    );
+
+    // Agregar las nuevas categorías al producto
+    await product.addCategories(newCategories);
+
+    return product;
+  } catch (error) {
+    console.error("Error al modificar el producto", error);
+    throw new Error(`Error al modificar el producto `);
+  }
 };
 
 const moduleGetFavorite = async (userId) => {
@@ -241,14 +245,122 @@ const modulePostAddFavorite = async (productId, userId) => {
     }
 };
 
+const modulePostAddRating = async (productId, userId, ratingValue) => {
+  try {
+    const product = await Product.findByPk(productId);
+    if (!product) {
+      return "El producto no existe";
+    }
+
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return "El usuario no existe";
+    }
+
+    // const existingRatings = await Rating.findAll({
+    //   where: {
+    //     productId: product.id,
+    //   },
+    // });
+
+    // const totalRatings = existingRatings.length;
+    // const sumRatings = existingRatings.reduce(
+    //   (sum, rating) => sum + rating.value,
+    //   0
+    // );
+
+    // const newTotalRatings = totalRatings + 1;
+    // const newSumRatings = sumRatings + ratingValue;
+    // const averageRating = newSumRatings / newTotalRatings;
+
+    // // Actualizamos el valor del producto con el nuevo promedio de puntuación antes de crear el nuevo rating
+    // product.value = averageRating;
+    // await product.save();
+
+    const rating = await Rating.create({
+      productId: product.id,
+      userId: user.id,
+      value: ratingValue,
+    });
+
+    return rating;
+  } catch (error) {
+    console.error(error);
+    return "Ocurrió un error al agregar la puntuación";
+  }
+};
+
+const moduleGetRating = async () => {
+  try {
+    const ratings = await Rating.findAll();
+    console.log(ratings);
+    if (ratings.length === 0) {
+      throw new Error("No se encontraron productos con rating");
+    }
+
+    const ratingValues = ratings.map((r) => ({
+      value: r.value,
+      productId: r.productId,
+    }));
+
+    return ratingValues;
+  } catch (error) {
+    throw new Error("Error al obtener la puntuación de los productos");
+  }
+};
+// {
+//   id: 34,
+//   value: 3,
+//   createdAt: '2023-07-04T20:03:23.019Z',
+//   updatedAt: '2023-07-04T21:33:14.933Z',
+//   productId: 14,
+//   userId: '49bac1ff-eb06-4c14-baaa-af89bc844f4b'
+// }
+
+const modulePutRating = async (productId, userId, ratingValue) => {
+  try {
+    const product = await Product.findByPk(productId);
+    if (!product) {
+      throw new Error("Producto no encontrado");
+    }
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return "El usuario no existe";
+    }
+
+    const existingRating = await Rating.findOne({
+      where: { productId, userId },
+    });
+
+    if (existingRating) {
+      existingRating.value = ratingValue;
+      await existingRating.save();
+      return existingRating;
+    } else {
+      const newRating = await Rating.create({
+        productId: product.id,
+        userId: user.id,
+        value: ratingValue,
+      });
+      return newRating;
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error al modificar la puntuación");
+  }
+};
+
 module.exports = {
-    //exportar cada funcion
-    modulePostProduct,
-    moduleGetProductFromDatabaseByName,
-    moduleGetAllProductFromDatabase,
-    moduleGetProductById,
-    modulePutStatusProduct,
-    modulePutUpdateProduct,
-    modulePostAddFavorite,
-    moduleGetFavorite,
+  //exportar cada funcion
+  modulePostProduct,
+  moduleGetProductFromDatabaseByName,
+  moduleGetAllProductFromDatabase,
+  moduleGetProductById,
+  modulePutStatusProduct,
+  modulePutUpdateProduct,
+  modulePostAddFavorite,
+  moduleGetFavorite,
+  modulePostAddRating,
+  moduleGetRating,
+  modulePutRating,
 };

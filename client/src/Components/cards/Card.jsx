@@ -14,7 +14,11 @@ import Checkbox from "@mui/material/Checkbox";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
+
+import { addRating, getRating } from "../../redux/actions/actionsProducts";
+=======
 import RemoveIcon from "@mui/icons-material/Remove";
+
 
 import {
     removeFavorite,
@@ -24,16 +28,28 @@ import {
 import { addToCart, removeFromCart } from "../../redux/actions/actionsCart";
 
 const Cards = (props) => {
-    const dispatch = useDispatch();
-    const user = useSelector((state) => state.user);
-    const shoppingCart = useSelector((state) => state.shoppingCart);
-    // const favorites = useSelector((state) => state.favoriteProduct || []);
-    // console.log(favorites);
-    const id = props.element.id;
-    const userId = user.id;
-    const [quantity, setQuantity] = useState(0);
-    const [count, setCount] = useState(0);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const currentRating = useSelector((state) => state.ratings);
+  const shoppingCart = useSelector((state) => state.shoppingCart);
+  const [quantity, setQuantity] = useState(0);
+  const [count, setCount] = useState(0);
+  const id = props.element.id;
+  const userId = user.id;
+  const [isFavorite, setIsFavorite] = useState(false);
+   const [isFavorite, setIsFavorite] = useState(false);
+  
+  
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem("favorites");
+    if (storedFavorites) {
+      const favorites = JSON.parse(storedFavorites);
+      setIsFavorite(favorites.includes(id));
+    }
 
+    dispatch(getRating(id));
+  }, [dispatch, id]);
+  
     const handleAddToCart = () => {
         setCount(count + 1);
         const newQuantity = quantity + 1;
@@ -48,6 +64,7 @@ const Cards = (props) => {
         // alert("Added to Cart");
     };
 
+
     const handleRemoveFromCart = () => {
         setCount(count + 1);
 
@@ -58,43 +75,38 @@ const Cards = (props) => {
         dispatch(removeFromCart(payload));
     };
 
-    const [isFavorite, setIsFavorite] = useState(false);
-    useEffect(() => {
-        const storedFavorites = localStorage.getItem("favorites");
-        if (storedFavorites) {
-            const favorites = JSON.parse(storedFavorites);
-            setIsFavorite(favorites.includes(id));
-        }
-    }, [id]);
 
-    const handleFavoriteToggle = async () => {
-        const storedFavorites = localStorage.getItem("favorites");
-        let favorites = [];
-        if (storedFavorites) {
-            favorites = JSON.parse(storedFavorites);
-        }
+ const handleFavoriteToggle = async () => {
+    const storedFavorites = localStorage.getItem("favorites");
+    let favorites = [];
+    if (storedFavorites) {
+      favorites = JSON.parse(storedFavorites);
+    }
 
-        if (isFavorite) {
-            favorites = favorites.filter((favoriteId) => favoriteId !== id);
-            dispatch(removeFavorite(id));
-        } else {
-            favorites.push(id);
-            dispatch(addFavorite(id));
-        }
+    if (isFavorite) {
+      favorites = favorites.filter((favoriteId) => favoriteId !== id);
+      dispatch(removeFavorite(id));
+    } else {
+      favorites.push(id);
+      dispatch(addFavorite(id));
+    }
 
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        setIsFavorite(!isFavorite);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    setIsFavorite(!isFavorite);
 
-        try {
-            await axios.post("http://localhost:3001/product/profile", {
-                userId: userId,
-                productId: id,
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
+    try {
+      await axios.post("http://localhost:3001/product/profile", {
+        userId: userId,
+        productId: id,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleRatingChange = (event, ratingValue) => {
+    dispatch(addRating(id, userId, ratingValue));
+  };
+  
     return (
         <section>
             <Card
@@ -104,6 +116,28 @@ const Cards = (props) => {
                     backgroundColor: "#eddcb9",
                     boxShadow: "1px 1px 3px 1px black",
                 }}
+
+              >
+                {props.element.name}
+              </Typography>
+            </CardContent>
+          </Link>
+          <CardContent sx={{ height: 40 }}>
+            <Rating
+              name="size-small"
+              // value={productRating}
+              onChange={handleRatingChange}
+              size="small"
+              defaultValue={0}
+              sx={{ display: "flex" }}
+              max={5}
+            />
+
+            <Typography
+              variant="body1"
+              component="div"
+              sx={{ fontSize: 35, display: "flex", alignItems: "center" }}
+
             >
                 <CardActionArea disableRipple>
                     <CardMedia
