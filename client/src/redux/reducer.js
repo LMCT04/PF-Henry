@@ -67,6 +67,12 @@ const rootReducer = (state = initialState, action) => {
         product: action.payload,
       };
 
+      case USER_BY_NAME:
+        return {
+            ...state,
+            user: action.payload,
+        };
+
     case GET_BY_ID:
       return {
         ...state,
@@ -103,6 +109,34 @@ const rootReducer = (state = initialState, action) => {
           product: [...state.product],
         };
       }
+
+      case USER_ORDER_ALPHABETIC:
+        let copyState = [...state.user];
+        let sortName;
+
+        if (action.payload === "asc") {
+            sortName = copyState.sort((a, b) =>
+                a.fullName
+                    .toLowerCase()
+                    .localeCompare(b.fullName.toLowerCase())
+            );
+        } else if (action.payload === "desc") {
+            sortName = copyState.sort((a, b) =>
+                b.fullName
+                    .toLowerCase()
+                    .localeCompare(a.fullName.toLowerCase())
+            );
+        } else {
+            return {
+                ...state,
+                user: [...state.user],
+            };
+        }
+
+        return {
+            ...state,
+            user: sortName,
+        };
 
       return {
         ...state,

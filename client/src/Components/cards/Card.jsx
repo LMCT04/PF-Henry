@@ -16,7 +16,6 @@ import Favorite from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
 
 import { addRating, getRating } from "../../redux/actions/actionsProducts";
-=======
 import RemoveIcon from "@mui/icons-material/Remove";
 
 
@@ -37,7 +36,6 @@ const Cards = (props) => {
   const id = props.element.id;
   const userId = user.id;
   const [isFavorite, setIsFavorite] = useState(false);
-   const [isFavorite, setIsFavorite] = useState(false);
   
   
   useEffect(() => {
@@ -116,27 +114,6 @@ const Cards = (props) => {
                     backgroundColor: "#eddcb9",
                     boxShadow: "1px 1px 3px 1px black",
                 }}
-
-              >
-                {props.element.name}
-              </Typography>
-            </CardContent>
-          </Link>
-          <CardContent sx={{ height: 40 }}>
-            <Rating
-              name="size-small"
-              // value={productRating}
-              onChange={handleRatingChange}
-              size="small"
-              defaultValue={0}
-              sx={{ display: "flex" }}
-              max={5}
-            />
-
-            <Typography
-              variant="body1"
-              component="div"
-              sx={{ fontSize: 35, display: "flex", alignItems: "center" }}
 
             >
                 <CardActionArea disableRipple>
