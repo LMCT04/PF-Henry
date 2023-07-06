@@ -71,19 +71,7 @@ const NavBarDashboard = () => {
                     horizontal: 'right',
                 }}
             >
-                {(roleUser?.role === "admin" ||
-                        roleUser?.role === "superAdmin" ||
-                        roleUser?.role == "user") && (
-                    <MenuItem
-                        sx={{
-                            backgroundColor: "#EDF6F9",
-                            borderBottom: "2px solid #FFDDD2",
-                        }}
-                        onClick={handleProfileClick}
-                    >
-                        My Account
-                    </MenuItem>
-                        )}
+                
 
                 <MenuItem
                     sx={{

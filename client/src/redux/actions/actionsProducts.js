@@ -179,7 +179,7 @@ export const addRatingAndReview = (productId, userId, ratingValue, review) => {
       console.error(error);
     }
   };
- 
+};
 export const switchProduct = (productId, status) => {
     return async (dispatch) => {
         try{
@@ -196,7 +196,7 @@ export const switchProduct = (productId, status) => {
     }
 }
 
-};
+
 export const getRating = (productId) => {
   return async (dispatch) => {
     try {
