@@ -16,6 +16,9 @@ module.exports = (sequelize) => {
           max: 5,
         },
       },
+      review: {
+        type: DataTypes.TEXT,
+      },
     },
     {
       timestamps: true,

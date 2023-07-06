@@ -244,7 +244,7 @@ const NavBar = () => {
                     onClick={handleCartClick}
                 >
 
-                    <Badge badgeContent={quantity} color="primary">
+                         {(roleUser?.role == "user") && ( <Badge badgeContent={quantity} color="primary">
                         <ShoppingCartIcon
                             sx={{
                                 color: "#fefee3",
@@ -256,7 +256,7 @@ const NavBar = () => {
                                 fontFamily: "Roboto Mono, monospace",
                             }}
                         />
-                    </Badge>
+                    </Badge>)}
 
                 </Button>
             </Box>

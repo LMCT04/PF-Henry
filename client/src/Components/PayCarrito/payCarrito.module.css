@@ -22,4 +22,5 @@
   
   .button:active {
     background-color: #ffc9b9;
+    color: rgb(114, 8, 8);
   }
