@@ -41,7 +41,9 @@ const Cards = (props) => {
 
   const ratingValue = currentRating?.filter((r) => id === r.productId)[0];
 
+
   const roleUser = JSON.parse(window?.localStorage?.getItem("loggedInUser"));
+
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");
@@ -118,7 +120,8 @@ const Cards = (props) => {
           <CardMedia
             component="img"
             height="210"
-            image={props.element.image}
+
+            image={props.element.image[0]}
             alt="imagen"
             sx={{ backgroundColor: "#e4cfa5" }}
           />

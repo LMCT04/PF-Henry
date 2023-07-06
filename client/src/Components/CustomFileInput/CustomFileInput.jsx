@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Button } from "@mui/material";
-import { uploadFile } from "../../firebase/config";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const CustomFileInput = ({ field, form }) => {
   const fileInputRef = useRef(null);
@@ -10,10 +10,15 @@ const CustomFileInput = ({ field, form }) => {
     form.setFieldValue(field.name, file);
 
     // Sube la imagen a Firebase Storage
-    const imageUrl = await uploadFile(file);
+    const storage = getStorage();
+    const storageRef = ref(storage, "images/" + file.name);
+    await uploadBytes(storageRef, file);
 
+    // Obtén la URL de descarga de la imagen
+    const downloadURL = await getDownloadURL(storageRef);
+    const downloadURLArray = [downloadURL];
     // Actualiza el valor de la imagen en el formulario
-    form.setFieldValue("image", imageUrl);
+    form.setFieldValue("image", downloadURLArray);
   };
 
   const handleClick = () => {

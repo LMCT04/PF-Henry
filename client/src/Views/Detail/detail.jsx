@@ -6,14 +6,14 @@ import veganImg from "../../imgAssets/vegan.png";
 import dairyFreeImg from "../../imgAssets/dairy-free.png";
 import glutenFreeImg from "../../imgAssets/gluten-free.png";
 import {
-    Grid,
-    Box,
-    Typography,
-    Button,
-    Checkbox,
-    FormControlLabel,
-    CircularProgress,
-    IconButton,
+  Grid,
+  Box,
+  Typography,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  CircularProgress,
+  IconButton,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -37,6 +37,7 @@ import {
 
 
 const Detail = () => {
+
     const { id } = useParams();
     const user = useSelector((state) => state.user);
     
@@ -212,23 +213,37 @@ const Detail = () => {
                     justifyContent="center"
                     alignItems="center"
                     minHeight="50vh"
+
                 >
-                    <CircularProgress />
-                </Box>
-            )}
+                  Add to Cart
+                </Button>
+              </Box>
+            </Grid>
+          </Box>
+        </>
+      ) : (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="50vh"
+        >
+          <CircularProgress />
         </Box>
-    );
+      )}
+    </Box>
+  );
 };
 
 export default Detail;
 
 const getCategoryImage = (categoryName) => {
-    // Asignar la imagen correspondiente según el nombre de la categoría
-    if (categoryName === "Sin Tacc") {
-        return glutenFreeImg;
-    } else if (categoryName === "Sin Lactosa") {
-        return dairyFreeImg;
-    } else if (categoryName === "Vegano") {
-        return veganImg;
-    }
+  // Asignar la imagen correspondiente según el nombre de la categoría
+  if (categoryName === "Sin Tacc") {
+    return glutenFreeImg;
+  } else if (categoryName === "Sin Lactosa") {
+    return dairyFreeImg;
+  } else if (categoryName === "Vegano") {
+    return veganImg;
+  }
 };
