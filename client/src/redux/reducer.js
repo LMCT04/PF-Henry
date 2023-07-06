@@ -108,6 +108,11 @@ const rootReducer = (state = initialState, action) => {
         };
       }
 
+      return {
+        ...state,
+        product: sortedName,
+      };
+
     case USER_ORDER_ALPHABETIC:
       let copyState = [...state.user];
       let sortName;
