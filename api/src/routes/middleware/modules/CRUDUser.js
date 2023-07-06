@@ -120,6 +120,31 @@ const modelupdatePasswordInDatabase = async (mail, newPassword) => {
     }
 };
 
+const modelUpdateRole = async (mail, rol) => {
+    try{
+        const user = await User.findOne({where: {mail:mail}})
+
+        user.role = rol
+        await user.save()
+
+        return {
+            id: user.id,
+            image: user.image,
+            fullName: user.fullName,
+            userName: user.userName,
+            mail: user.mail,
+            age: user.age,
+            address: user.address,
+            favorite: user.favorite,
+            shoppingHistory: user.shoppingHistory,
+            role: user.role,
+        }
+    } catch (error) {
+        console.error(error);
+        throw new Error("Error al actualizar el rol de usuario");
+    }
+}
+
 const modelupdateUsernameInDatabase = async (mail, newUsername) => {
     try {
         const user = await User.findOne({ where: { mail: mail } });
@@ -156,4 +181,5 @@ module.exports = {
     modelupdatePasswordInDatabase,
     modelupdateUsernameInDatabase,
     modelgetAllUserFromDatabasebyName,
+    modelUpdateRole
 };

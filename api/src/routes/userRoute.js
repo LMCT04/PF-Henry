@@ -56,9 +56,9 @@ userRoute.post("/", async (req, res) => {
 });
 
 userRoute.put("/", async (req, res) => {
-    const { mail, password, userName } = req.body;
+    const { mail, password, userName, rol } = req.body;
     try {
-        await updateUserInDatabase(mail, password, userName);
+        await updateUserInDatabase(mail, password, userName, rol);
         res.status(200).send({ message: "Usuario actualizado con éxito" });
     } catch (error) {
         console.error(error);
