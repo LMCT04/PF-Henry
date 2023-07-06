@@ -41,7 +41,7 @@ const Landing = () => {
                 <Box
                     sx={{
                         width: "70%",
-                        height: "50%",
+                        height: "55%",
                         display: "flex",
                         flexDirection:'column',
                         justifyContent:'center',

@@ -99,7 +99,7 @@ const RegisterGmail = (props) => {
                   variant="contained"
                   type="submit"
                   color="success"
-                  className={style.button}
+                  sx={{width:'200px'}}
                 >
                   Update User
                 </Button>
