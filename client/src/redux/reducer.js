@@ -15,23 +15,23 @@ import {
   SET_FAVORITE,
   SET_RATING,
   GET_RATING,
-
 } from "./actionsType/productsAT";
 
 import {
-    POST_USERS,
-    GET_USERS,
-    UPDATE_USER,
-    SET_USER,
-    USER_BY_NAME,
-    USER_ORDER_ALPHABETIC,
+  POST_USERS,
+  GET_USERS,
+  UPDATE_USER,
+  SET_USER,
+  USER_BY_NAME,
+  USER_ORDER_ALPHABETIC,
 } from "./actionsType/usersAT";
 
 import {
-    ADD_TO_CART,
-    REMOVE_FROM_CART,
-    CLEAR_CART,
-    GET_CART_BY_ID,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  CLEAR_CART,
+  GET_CART_BY_ID,
+  UPDATE_CART_QUANTITY,
 } from "./actionsType/cartAT";
 
 import { GET_ALL_CATEGORIES } from "./actionsType/categoryAT";
@@ -67,11 +67,11 @@ const rootReducer = (state = initialState, action) => {
         product: action.payload,
       };
 
-      case USER_BY_NAME:
-        return {
-            ...state,
-            user: action.payload,
-        };
+    case USER_BY_NAME:
+      return {
+        ...state,
+        user: action.payload,
+      };
 
     case GET_BY_ID:
       return {
@@ -110,33 +110,29 @@ const rootReducer = (state = initialState, action) => {
         };
       }
 
-      case USER_ORDER_ALPHABETIC:
-        let copyState = [...state.user];
-        let sortName;
+    case USER_ORDER_ALPHABETIC:
+      let copyState = [...state.user];
+      let sortName;
 
-        if (action.payload === "asc") {
-            sortName = copyState.sort((a, b) =>
-                a.fullName
-                    .toLowerCase()
-                    .localeCompare(b.fullName.toLowerCase())
-            );
-        } else if (action.payload === "desc") {
-            sortName = copyState.sort((a, b) =>
-                b.fullName
-                    .toLowerCase()
-                    .localeCompare(a.fullName.toLowerCase())
-            );
-        } else {
-            return {
-                ...state,
-                user: [...state.user],
-            };
-        }
-
+      if (action.payload === "asc") {
+        sortName = copyState.sort((a, b) =>
+          a.fullName.toLowerCase().localeCompare(b.fullName.toLowerCase())
+        );
+      } else if (action.payload === "desc") {
+        sortName = copyState.sort((a, b) =>
+          b.fullName.toLowerCase().localeCompare(a.fullName.toLowerCase())
+        );
+      } else {
         return {
-            ...state,
-            user: sortName,
+          ...state,
+          user: [...state.user],
         };
+      }
+
+      return {
+        ...state,
+        user: sortName,
+      };
 
     case ORDER_PRICE:
       let priceOrder = [...state.product];
@@ -275,28 +271,28 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case ADD_TO_CART:
-            return {
-                ...state,
-                shoppingCart: [...state.shoppingCart],
-            };
+      return {
+        ...state,
+        shoppingCart: action.payload,
+      };
 
-        case REMOVE_FROM_CART:
-            return {
-                ...state,
-                shoppingCart: action.payload,
-            };
+    case REMOVE_FROM_CART:
+      return {
+        ...state,
+        shoppingCart: action.payload,
+      };
 
-      case GET_CART_BY_ID:
-            return {
-                ...state,
-                shoppingCart: action.payload,
-            };
+    case GET_CART_BY_ID:
+      return {
+        ...state,
+        shoppingCart: action.payload,
+      };
 
-        case CLEAR_CART:
-            return {
-                ...state,
-                shoppingCart: [],
-            };
+    case CLEAR_CART:
+      return {
+        ...state,
+        shoppingCart: [],
+      };
     case SET_RATING:
       const { productId, ratings } = action.payload;
       console.log(productId, ratings);
@@ -307,13 +303,17 @@ const rootReducer = (state = initialState, action) => {
           value: ratings,
         },
       };
+    case UPDATE_CART_QUANTITY:
+      return {
+        ...state,
+        quantity: action.payload,
+      };
 
     default:
       return {
         ...state,
       };
   }
-
 };
 
 export default rootReducer;

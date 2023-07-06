@@ -41,7 +41,8 @@ const moduleaPostaddTocart = async (userId, productId, quantity) => {
     cart.totalPrice = totalPrice;
     await cart.save();
     // Actualiza el total del carrito
-    await cart.save();
+    // await cart.save();
+    return moduleGetCartContent(userId);
     // return { message: "Product agregado correctamente" };
   } catch (error) {
     console.error(error);
@@ -69,20 +70,25 @@ const moduleRemoveOneProductFromCart = async (userId, productId) => {
         // Si la cantidad del producto es mayor que 1, reduce la cantidad en 1
         cartProduct.quantity -= 1;
         await cartProduct.save();
+        // Actualiza la cantidad total del carrito
+        cart.quantity -= 1;
+        await cart.save();
       } else {
         // Si la cantidad del producto es 1, elimina el registro del carrito
         await cartProduct.destroy();
+        // Actualiza la cantidad total del carrito
+        const cartProductsCount = await CartProduct.count({
+          where: { shoppingCartId: cart.id },
+        });
+        cart.quantity = cartProductsCount;
+        await cart.save();
       }
-
-      // Actualiza la cantidad total del carrito
-      cart.quantity -= 1;
-      await cart.save();
 
       // Actualiza el total del carrito
       const totalPrice = await calculateCartTotalPrice(cart);
       cart.totalPrice = totalPrice;
       await cart.save();
-
+      return moduleGetCartContent(userId);
       // return { message: "Producto removido correctamente", totalPrice };
     } else {
       throw new Error("Producto no encontrado en el carrito");

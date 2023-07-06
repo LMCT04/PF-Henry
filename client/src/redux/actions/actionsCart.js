@@ -3,6 +3,7 @@ import {
   REMOVE_FROM_CART,
   CLEAR_CART,
   GET_CART_BY_ID,
+  UPDATE_CART_QUANTITY
 } from "../actionsType/cartAT";
 import  axios  from "axios";
 
@@ -58,7 +59,7 @@ export const getCartById = (userId) => {
       });
     } catch (error) {
       console.log("Error: getCartById", error);
-      alert("No se encontró ningún carrito con ese ID.");
+      // alert("No se encontró ningún carrito con ese ID.");
     }
   };
 };
@@ -82,3 +83,8 @@ export const clearCart = (userId) => {
     }
   };
 };
+
+export const updateCartQuantity = (quantity) => ({
+  type: UPDATE_CART_QUANTITY,
+  payload: quantity,
+});
