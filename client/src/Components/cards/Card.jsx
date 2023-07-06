@@ -27,8 +27,7 @@ import {
 import {
   addToCart,
   removeFromCart,
-  getCartById,
-} from "../../redux/actions/actionsCart";
+ } from "../../redux/actions/actionsCart";
 
 const Cards = (props) => {
   
@@ -128,7 +127,7 @@ const Cards = (props) => {
           <CardMedia
             component="img"
             height="210"
-            image={props.element.image[0][0].substring(1, props.element.image[0][0].length - 1)} //{props.element.image} antes era asi
+            image={props.element.image} 
             alt="imagen"
             sx={{ backgroundColor: "#e4cfa5" }}
           />
@@ -192,9 +191,7 @@ const Cards = (props) => {
               ${props.element.price}
             </Typography>
           </CardContent>
-          {(roleUser?.role === "admin" ||
-            roleUser?.role === "superAdmin" ||
-            roleUser?.role == "user") && (
+          {( roleUser?.role == "user") && (
             <CardContent
               sx={{
                 height: 35,
@@ -223,9 +220,7 @@ const Cards = (props) => {
               </Fab>
             </CardContent>
           )}
-          {(roleUser?.role === "admin" ||
-            roleUser?.role === "superAdmin" ||
-            roleUser?.role == "user") && (
+          {( roleUser?.role == "user") && (
             <Pay name={props.element.name} price={props.element.price}></Pay>
           )}
         </CardActionArea>
