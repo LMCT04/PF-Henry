@@ -225,8 +225,6 @@ const NavBar = () => {
                         </MenuItem>
                     )}
 
-                    <MenuItem onClick={handlePageClick}>WEB PAGE</MenuItem>
-
                     {(roleUser?.role === "admin" ||
                         roleUser?.role === "superAdmin" ||
                         roleUser?.role == "user") && (

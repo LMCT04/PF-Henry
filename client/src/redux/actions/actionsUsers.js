@@ -7,7 +7,8 @@ import {
     UPDATE_USER,
     SET_USER,
     USER_BY_NAME,
-    USER_ORDER_ALPHABETIC
+    USER_ORDER_ALPHABETIC,
+    ROLE_UPDATE
 } from "../actionsType/usersAT";
 
 export const createUsers = (payload) => {
@@ -80,6 +81,23 @@ export const updateUser = (updatedUser) => {
         }
     };
 };
+
+export const roleUpdate = (mail, rol) => {
+    return async function (dispatch) {
+        try{
+            const response = await axios.put("http://localhost:3001/user", {
+                mail: mail,
+                rol: rol,
+            })
+            dispatch({
+                type: ROLE_UPDATE,
+                payload: response.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
 
 export const setUser = (user) => {
     return {

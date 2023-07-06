@@ -31,6 +31,7 @@ import {
 } from "../../redux/actions/actionsCart";
 
 const Cards = (props) => {
+  
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const currentRating = useSelector((state) => state.ratings);
@@ -59,10 +60,8 @@ const Cards = (props) => {
       userId: userId,
       productId: props.element.id,
       quantity: newQuantity,
-    };
-    setQuantity(0);
-    dispatch(addToCart(payload));
-  };
+
+
 
   const handleRemoveFromCart = () => {
     const payload = {
@@ -102,6 +101,8 @@ const Cards = (props) => {
   const handleRatingChange = (event, ratingValue) => {
     dispatch(addRating(id, userId, ratingValue));
   };
+    
+    const opacity = props.element.isActive ? 1 : 0.5;
 
   return (
     <section>
@@ -111,6 +112,7 @@ const Cards = (props) => {
           height: 460,
           backgroundColor: "#eddcb9",
           boxShadow: "1px 1px 3px 1px black",
+          opacity: opacity,
         }}
       >
         <CardActionArea disableRipple>
@@ -222,5 +224,6 @@ const Cards = (props) => {
       </Card>
     </section>
   );
+
 };
 export default Cards;

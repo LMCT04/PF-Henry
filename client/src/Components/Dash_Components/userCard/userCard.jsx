@@ -8,12 +8,20 @@ import {
     InputLabel,
     MenuItem,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import { roleUpdate } from "../../../redux/actions/actionsUsers";
+import { useDispatch } from "react-redux";
+
 
 const UserCard = ({ element }) => {
+    const [selectedRole, setSelectedRole] = useState(element.role);
+    const dispatch = useDispatch();
+
     const handleRoleChange = (e) => {
         const value = e.target.value;
-    };
+        setSelectedRole(value);
+        dispatch(roleUpdate(element.mail, value));
+      };
 
     return (
         <div>
@@ -42,50 +50,70 @@ const UserCard = ({ element }) => {
                         sx={{ borderRadius: "100px" }}
                     />
                 </Box>
-                <CardContent sx={{ height: "100%", width: "82.5%",
-                            display:'flex', flexDirection:'column'
-                            }}>
-                    <Box sx={{height:'50%', display:'flex'}} >
-                        <Box sx={{width:'50%', display:'flex', alignItems:'center'}}>
-                            <Box sx={{width:'30%', fontWeight:'bold'}}>
+                <CardContent
+                    sx={{
+                        height: "100%",
+                        width: "82.5%",
+                        display: "flex",
+                        flexDirection: "column",
+                    }}
+                >
+                    <Box sx={{ height: "50%", display: "flex" }}>
+                        <Box
+                            sx={{
+                                width: "50%",
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            <Box sx={{ width: "30%", fontWeight: "bold" }}>
                                 {element.fullName}
                             </Box>
-                            <Box sx={{width:'35%'}} >
-                                <FormControl fullWidth  >
+                            <Box sx={{ width: "35%" }}>
+                                <FormControl fullWidth>
                                     <InputLabel id="role">ROLE:</InputLabel>
-                                        <Select
-                                            labelId="role"
-                                            id="role"
-                                            value={element.role}
-                                            label="Role:"
-                                            onChange={handleRoleChange}
-                                        >
-                                            <MenuItem value={"user"}>
-                                                User
-                                            </MenuItem>
-                                            <MenuItem value={"admin"}>
-                                                Admin
-                                            </MenuItem>
-                                            <MenuItem value={"superAdmin"}>
-                                                Super Admin
-                                            </MenuItem>
-                                        </Select>
+                                    <Select
+                                        labelId="role"
+                                        id="role"
+                                        value={selectedRole}
+                                        label="Role:"
+                                        onChange={handleRoleChange}
+                                    >
+                                        <MenuItem value={"user"}>User</MenuItem>
+                                        <MenuItem value={"admin"}>
+                                            Admin
+                                        </MenuItem>
+                                        <MenuItem value={"superAdmin"}>
+                                            Super Admin
+                                        </MenuItem>
+                                    </Select>
                                 </FormControl>
                             </Box>
                         </Box>
-                        <Box sx={{
-                                width:'40%', display:'flex',
-                                alignItems:'center', justifyContent:'flex-end',
-                                marginLeft:'8%', fontWeight:'bold'
+                        <Box
+                            sx={{
+                                width: "40%",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "flex-end",
+                                marginLeft: "8%",
+                                fontWeight: "bold",
                             }}
                         >
                             ID: {element.id}
                         </Box>
                     </Box>
-                    <Box sx={{height:'50%', display:'flex', alignItems:'center'}}>
-                        <Box sx={{marginLeft:'5%'}} >USERNAME:{element.userName}</Box>
-                        <Box sx={{marginLeft:'5%'}} >MAIL:{element.mail}</Box>
-                        {/*<Box sx={{marginLeft:'5%'}} >ADRESS:{element.adress}</Box>*/}
+                    <Box
+                        sx={{
+                            height: "50%",
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Box sx={{ marginLeft: "5%" }}>
+                            USERNAME:{element.userName}
+                        </Box>
+                        <Box sx={{ marginLeft: "5%" }}>MAIL:{element.mail}</Box>
                     </Box>
                 </CardContent>
             </Card>
