@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import style from "./payCarrito.module.css";
+import { Button, Box, CardContent, Typography } from "@mui/material";
+
 
 export default function PayCarrito(props) {
   const { params } = props;
@@ -18,9 +20,18 @@ export default function PayCarrito(props) {
   };
   return (
     <div>
-      <button className={style.button} onClick={handleOnclickcarrito}>
+      <Button
+        
+        variant="contained"
+        color="success"
+        fullWidth
+        sx={{
+          minWidth: "100%",
+        }}
+        onClick={handleOnclickcarrito}
+      >
         Pay Now
-      </button>
+      </Button>
     </div>
   );
 }

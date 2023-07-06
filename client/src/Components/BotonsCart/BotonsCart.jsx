@@ -16,17 +16,16 @@ import {
 } from "../../redux/actions/actionsCart";
 
 const BotonsCart = (props) => {
+  const roleUser = JSON.parse(window?.localStorage.getItem("loggedInUser"));
+
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const shoppingCart = useSelector((state) => state.shoppingCart);
   const id = props.element.id;
   const userId = user.id;
   const [quantity, setQuantity] = useState(0);
   const [count, setCount] = useState(0);
 
   const handleAddToCart = () => {
-    dispatch(getCartById(userId));
-    // setCount(count + 1);
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
     const payload = {
@@ -36,12 +35,9 @@ const BotonsCart = (props) => {
     };
     setQuantity(0);
     dispatch(addToCart(payload));
-    // alert("Added to Cart");
   };
 
   const handleRemoveFromCart = () => {
-    setCount(count + 1);
-
     const payload = {
       userId: userId,
       productId: props.element.id,
@@ -51,23 +47,37 @@ const BotonsCart = (props) => {
 
   return (
     <div>
-      <Fab
-        style={{ backgroundColor: "#A5CAA8" }}
-        size="medium"
-        color="default"
-        aria-label="add"
-        onClick={handleRemoveFromCart}
-      >
-        <RemoveIcon />
-      </Fab>
-      <Fab
-        size="medium"
-        color="success"
-        aria-label="add"
-        onClick={handleAddToCart}
-      >
-        <AddIcon />
-      </Fab>
+      {(roleUser?.role === "admin" ||
+        roleUser?.role === "superAdmin" ||
+        roleUser?.role == "user") && (
+        <CardContent
+          sx={{
+            height: 35,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "20px",
+          }}
+        >
+          <Fab
+            style={{ backgroundColor: "#A5CAA8" }}
+            size="small"
+            color="default"
+            aria-label="add"
+            onClick={handleRemoveFromCart}
+          >
+            <RemoveIcon />
+          </Fab>
+          <Fab
+            size="small"
+            color="success"
+            aria-label="add"
+            onClick={handleAddToCart}
+          >
+            <AddIcon />
+          </Fab>
+        </CardContent>
+      )}
     </div>
   );
 };

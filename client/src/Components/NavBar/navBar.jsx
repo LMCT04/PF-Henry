@@ -225,8 +225,6 @@ const NavBar = () => {
                         </MenuItem>
                     )}
 
-                    <MenuItem onClick={handlePageClick}>WEB PAGE</MenuItem>
-
                     {(roleUser?.role === "admin" ||
                         roleUser?.role === "superAdmin" ||
                         roleUser?.role == "user") && (
@@ -244,7 +242,7 @@ const NavBar = () => {
                     onClick={handleCartClick}
                 >
 
-                    <Badge badgeContent={quantity} color="primary">
+                            {(roleUser?.role == "user") && ( <Badge badgeContent={quantity} color="primary">
                         <ShoppingCartIcon
                             sx={{
                                 color: "#fefee3",
@@ -256,7 +254,7 @@ const NavBar = () => {
                                 fontFamily: "Roboto Mono, monospace",
                             }}
                         />
-                    </Badge>
+                    </Badge>)}
 
                 </Button>
             </Box>

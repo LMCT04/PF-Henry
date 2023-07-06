@@ -31,6 +31,8 @@ import {
   REMOVE_FROM_CART,
   CLEAR_CART,
   GET_CART_BY_ID,
+  UPDATE_CART_QUANTITY,
+
 } from "./actionsType/cartAT";
 
 import { GET_ALL_CATEGORIES } from "./actionsType/categoryAT";
@@ -269,7 +271,7 @@ const rootReducer = (state = initialState, action) => {
     case ADD_TO_CART:
       return {
         ...state,
-        shoppingCart: [...state.shoppingCart],
+        shoppingCart: action.payload,
       };
 
     case REMOVE_FROM_CART:
@@ -293,6 +295,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         ratings: action.payload,
+      };
+    case UPDATE_CART_QUANTITY:
+      return {
+        ...state,
+        quantity: action.payload,
       };
 
     default:

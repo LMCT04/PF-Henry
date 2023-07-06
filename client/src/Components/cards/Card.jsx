@@ -24,19 +24,30 @@ import {
   addFavorite,
 } from "../../redux/actions/actionsProducts";
 
-import { addToCart, removeFromCart } from "../../redux/actions/actionsCart";
+import {
+  addToCart,
+  removeFromCart,
+  getCartById,
+} from "../../redux/actions/actionsCart";
 
 const Cards = (props) => {
+  
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const currentRating = useSelector((state) => state.ratings);
-  // const shoppingCart = useSelector((state) => state.shoppingCart);
+
+  const shoppingCart = useSelector((state) => state?.shoppingCart);
+
   const [quantity, setQuantity] = useState(0);
   const [count, setCount] = useState(0);
   const id = props.element.id;
   const userId = user.id;
   const [isFavorite, setIsFavorite] = useState(false);
+
   const ratingValue = currentRating.filter((r) => id === r.productId)[0];
+
+  const roleUser = JSON.parse(window.localStorage.getItem("loggedInUser"));
+
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");
@@ -49,22 +60,21 @@ const Cards = (props) => {
   }, [dispatch, id]);
 
   const handleAddToCart = () => {
-    setCount(count + 1);
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
     const payload = {
       userId: userId,
       productId: props.element.id,
       quantity: newQuantity,
-    };
-    setQuantity(0);
-    dispatch(addToCart(payload));
-    // alert("Added to Cart");
-  };
+
+    }
+    setQuantity(0)
+    dispatch(addToCart(payload))
+  }
+
+
 
   const handleRemoveFromCart = () => {
-    setCount(count + 1);
-
     const payload = {
       userId: userId,
       productId: props.element.id,
@@ -100,6 +110,9 @@ const Cards = (props) => {
     }
   };
 
+    const opacity = props.element.isActive ? 1 : 0.5;
+
+
   return (
     <section>
       <Card
@@ -108,16 +121,14 @@ const Cards = (props) => {
           height: 460,
           backgroundColor: "#eddcb9",
           boxShadow: "1px 1px 3px 1px black",
+          opacity: opacity,
         }}
       >
         <CardActionArea disableRipple>
           <CardMedia
             component="img"
             height="210"
-            image={props.element.image[0][0].substring(
-              1,
-              props.element.image[0][0].length - 1
-            )}
+            image={props.element.image[0][0].substring(1, props.element.image[0][0].length - 1)} //{props.element.image} antes era asi
             alt="imagen"
             sx={{ backgroundColor: "#e4cfa5" }}
           />
@@ -181,34 +192,42 @@ const Cards = (props) => {
               ${props.element.price}
             </Typography>
           </CardContent>
-          <CardContent
-            sx={{
-              height: 35,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "20px",
-            }}
-          >
-            <Fab
-              style={{ backgroundColor: "#A5CAA8" }}
-              size="medium"
-              color="default"
-              aria-label="add"
-              onClick={handleRemoveFromCart}
+          {(roleUser?.role === "admin" ||
+            roleUser?.role === "superAdmin" ||
+            roleUser?.role == "user") && (
+            <CardContent
+              sx={{
+                height: 35,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "20px",
+              }}
             >
-              <RemoveIcon />
-            </Fab>
-            <Fab
-              size="medium"
-              color="success"
-              aria-label="add"
-              onClick={handleAddToCart}
-            >
-              <AddIcon />
-            </Fab>
-          </CardContent>
-          <Pay name={props.element.name} price={props.element.price}></Pay>
+              <Fab
+                style={{ backgroundColor: "#A5CAA8" }}
+                size="medium"
+                color="default"
+                aria-label="add"
+                onClick={handleRemoveFromCart}
+              >
+                <RemoveIcon />
+              </Fab>
+              <Fab
+                size="medium"
+                color="success"
+                aria-label="add"
+                onClick={handleAddToCart}
+              >
+                <AddIcon />
+              </Fab>
+            </CardContent>
+          )}
+          {(roleUser?.role === "admin" ||
+            roleUser?.role === "superAdmin" ||
+            roleUser?.role == "user") && (
+            <Pay name={props.element.name} price={props.element.price}></Pay>
+          )}
         </CardActionArea>
       </Card>
     </section>

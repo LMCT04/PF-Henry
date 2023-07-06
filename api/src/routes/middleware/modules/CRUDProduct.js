@@ -52,6 +52,7 @@ const modulePostProduct = async (newProduct) => {
 };
 
 const moduleGetAllProductFromDatabase = async () => {
+
   try {
     const products = await Product.findAll({
       include: [
@@ -78,6 +79,7 @@ const moduleGetAllProductFromDatabase = async () => {
       type: product.type,
       categories: categories[index],
       ratings: product.ratings,
+      isActive:product.isActive,
     }));
 
     return formatedProducts;
@@ -119,6 +121,7 @@ const moduleGetProductFromDatabaseByName = async (name) => {
       type: product.type,
       categories: categories[index],
       ratings: product.ratings,
+      isActive:product.isActive,
     }));
 
     return formatedProducts;
