@@ -33,18 +33,18 @@ const Menu = () => {
             },
           });
           const userId = response.data.id;
+          const userName = response.data.userName;
 
           const userData = {
             id: userId,
             fullName: displayName,
-            userName: "",
+            userName: userName,
             mail: email,
             image: photoURL,
           };
 
           dispatch(setUser(userData));
         }
-        ///DEJAR SOLO EL PEDIDO DE ID
       } catch (error) {
         console.error(error);
       }

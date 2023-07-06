@@ -32,6 +32,7 @@ import {
   CLEAR_CART,
   GET_CART_BY_ID,
   UPDATE_CART_QUANTITY,
+
 } from "./actionsType/cartAT";
 
 import { GET_ALL_CATEGORIES } from "./actionsType/categoryAT";
@@ -46,10 +47,7 @@ const initialState = {
   category: [],
   favoriteProduct: [],
   shoppingCart: [],
-  ratings: {
-    productId: 0,
-    value: 0,
-  },
+  ratings: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -294,14 +292,9 @@ const rootReducer = (state = initialState, action) => {
         shoppingCart: [],
       };
     case SET_RATING:
-      const { productId, ratings } = action.payload;
-      console.log(productId, ratings);
       return {
         ...state,
-        ratings: {
-          productId: productId,
-          value: ratings,
-        },
+        ratings: action.payload,
       };
     case UPDATE_CART_QUANTITY:
       return {

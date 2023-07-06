@@ -242,7 +242,7 @@ const NavBar = () => {
                     onClick={handleCartClick}
                 >
 
-                         {(roleUser?.role == "user") && ( <Badge badgeContent={quantity} color="primary">
+                            {(roleUser?.role == "user") && ( <Badge badgeContent={quantity} color="primary">
                         <ShoppingCartIcon
                             sx={{
                                 color: "#fefee3",

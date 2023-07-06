@@ -85,9 +85,6 @@ const UserCard = ({ element }) => {
                                         <MenuItem value={"admin"}>
                                             Admin
                                         </MenuItem>
-                                        <MenuItem value={"superAdmin"}>
-                                            Super Admin
-                                        </MenuItem>
                                     </Select>
                                 </FormControl>)}
                                 {(roleUser?.role == "admin")&&

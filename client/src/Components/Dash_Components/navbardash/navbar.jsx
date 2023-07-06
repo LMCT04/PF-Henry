@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom"
 
 const NavBarDashboard = () => {
     const history = useHistory();
+    const roleUser = JSON.parse(window.localStorage.getItem("loggedInUser"));
 
     const [anchorEl, setAnchorEl] = useState(null)
 
@@ -70,15 +71,7 @@ const NavBarDashboard = () => {
                     horizontal: 'right',
                 }}
             >
-                <MenuItem
-                    sx={{
-                        backgroundColor: "#EDF6F9",
-                        borderBottom: "2px solid #FFDDD2",
-                    }}
-                    onClick={handleProfileClick}
-                >
-                    My Account
-                </MenuItem>
+                
 
                 <MenuItem
                     sx={{

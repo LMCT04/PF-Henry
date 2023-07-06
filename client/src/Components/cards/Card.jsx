@@ -34,13 +34,19 @@ const Cards = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const currentRating = useSelector((state) => state.ratings);
+
   const shoppingCart = useSelector((state) => state?.shoppingCart);
+
   const [quantity, setQuantity] = useState(0);
   const [count, setCount] = useState(0);
   const id = props.element.id;
   const userId = user.id;
   const [isFavorite, setIsFavorite] = useState(false);
+
+  const ratingValue = currentRating.filter((r) => id === r.productId)[0];
+
   const roleUser = JSON.parse(window.localStorage.getItem("loggedInUser"));
+
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");
@@ -59,6 +65,7 @@ const Cards = (props) => {
       userId: userId,
       productId: props.element.id,
       quantity: newQuantity,
+
     }
     setQuantity(0)
     dispatch(addToCart(payload))
@@ -102,11 +109,8 @@ const Cards = (props) => {
     }
   };
 
-  const handleRatingChange = (event, ratingValue) => {
-    dispatch(addRating(id, userId, ratingValue));
-  };
-    
     const opacity = props.element.isActive ? 1 : 0.5;
+
 
   return (
     <section>
@@ -123,7 +127,7 @@ const Cards = (props) => {
           <CardMedia
             component="img"
             height="210"
-            image={props.element.image[0][0].substring(1, props.element.image[0][0].length - 1)} 
+            image={props.element.image} 
             alt="imagen"
             sx={{ backgroundColor: "#e4cfa5" }}
           />
@@ -168,8 +172,11 @@ const Cards = (props) => {
           <CardContent sx={{ height: 40 }}>
             <Rating
               name="size-small"
-              defaultValue={0}
+              value={ratingValue ? ratingValue.value : 0}
               size="small"
+              readOnly
+              defaultValue={0}
+              max={5}
               sx={{ display: "flex" }}
             />
             <Typography
@@ -220,6 +227,5 @@ const Cards = (props) => {
       </Card>
     </section>
   );
-
 };
 export default Cards;
