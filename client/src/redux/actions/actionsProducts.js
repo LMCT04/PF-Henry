@@ -16,6 +16,7 @@ import {
     SET_FAVORITE,
     SET_RATING,
     GET_RATING,
+    SWITCH_PRODUCT,
 } from "../actionsType/productsAT";
 
 export const orderAlphabetic = (value) => {
@@ -161,6 +162,22 @@ export const removeFavorite = (productId) => {
         payload: productId,
     };
 };
+
+export const switchProduct = (productId, status) => {
+    return async (dispatch) => {
+        try{
+            const response = await axios.put(`http://localhost:3001/product/${productId}`, {
+                status: status
+            })
+            dispatch({
+                type: SWITCH_PRODUCT,
+                payload: response.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
 
 export const addRating = (productId, userId, ratingValue) => {
     return async (dispatch) => {

@@ -17,7 +17,7 @@ import Rating from "@mui/material/Rating";
 
 import { addRating, getRating } from "../../redux/actions/actionsProducts";
 import RemoveIcon from "@mui/icons-material/Remove";
-import Pay from "../Pay/Pay"
+import Pay from "../Pay/Pay";
 
 import {
     removeFavorite,
@@ -27,27 +27,26 @@ import {
 import { addToCart, removeFromCart } from "../../redux/actions/actionsCart";
 
 const Cards = (props) => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const currentRating = useSelector((state) => state.ratings);
-  const shoppingCart = useSelector((state) => state.shoppingCart);
-  const [quantity, setQuantity] = useState(0);
-  const [count, setCount] = useState(0);
-  const id = props.element.id;
-  const userId = user.id;
-  const [isFavorite, setIsFavorite] = useState(false);
-  
-  
-  useEffect(() => {
-    const storedFavorites = localStorage.getItem("favorites");
-    if (storedFavorites) {
-      const favorites = JSON.parse(storedFavorites);
-      setIsFavorite(favorites.includes(id));
-    }
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user);
+    const currentRating = useSelector((state) => state.ratings);
+    const shoppingCart = useSelector((state) => state.shoppingCart);
+    const [quantity, setQuantity] = useState(0);
+    const [count, setCount] = useState(0);
+    const id = props.element.id;
+    const userId = user.id;
+    const [isFavorite, setIsFavorite] = useState(false);
 
-    dispatch(getRating(id));
-  }, [dispatch, id]);
-  
+    useEffect(() => {
+        const storedFavorites = localStorage.getItem("favorites");
+        if (storedFavorites) {
+            const favorites = JSON.parse(storedFavorites);
+            setIsFavorite(favorites.includes(id));
+        }
+
+        dispatch(getRating(id));
+    }, [dispatch, id]);
+
     const handleAddToCart = () => {
         setCount(count + 1);
         const newQuantity = quantity + 1;
@@ -62,7 +61,6 @@ const Cards = (props) => {
         // alert("Added to Cart");
     };
 
-
     const handleRemoveFromCart = () => {
         setCount(count + 1);
 
@@ -73,38 +71,39 @@ const Cards = (props) => {
         dispatch(removeFromCart(payload));
     };
 
+    const handleFavoriteToggle = async () => {
+        const storedFavorites = localStorage.getItem("favorites");
+        let favorites = [];
+        if (storedFavorites) {
+            favorites = JSON.parse(storedFavorites);
+        }
 
- const handleFavoriteToggle = async () => {
-    const storedFavorites = localStorage.getItem("favorites");
-    let favorites = [];
-    if (storedFavorites) {
-      favorites = JSON.parse(storedFavorites);
-    }
+        if (isFavorite) {
+            favorites = favorites.filter((favoriteId) => favoriteId !== id);
+            dispatch(removeFavorite(id));
+        } else {
+            favorites.push(id);
+            dispatch(addFavorite(id));
+        }
 
-    if (isFavorite) {
-      favorites = favorites.filter((favoriteId) => favoriteId !== id);
-      dispatch(removeFavorite(id));
-    } else {
-      favorites.push(id);
-      dispatch(addFavorite(id));
-    }
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        setIsFavorite(!isFavorite);
 
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-    setIsFavorite(!isFavorite);
+        try {
+            await axios.post("http://localhost:3001/product/profile", {
+                userId: userId,
+                productId: id,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    const handleRatingChange = (event, ratingValue) => {
+        dispatch(addRating(id, userId, ratingValue));
+    };
 
-    try {
-      await axios.post("http://localhost:3001/product/profile", {
-        userId: userId,
-        productId: id,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const handleRatingChange = (event, ratingValue) => {
-    dispatch(addRating(id, userId, ratingValue));
-  };
-  
+    const opacity = props.element.isActive ? 1 : 0.5;
+
     return (
         <section>
             <Card
@@ -113,8 +112,8 @@ const Cards = (props) => {
                     height: 460,
                     backgroundColor: "#eddcb9",
                     boxShadow: "1px 1px 3px 1px black",
+                    opacity: opacity,
                 }}
-
             >
                 <CardActionArea disableRipple>
                     <CardMedia
@@ -216,7 +215,10 @@ const Cards = (props) => {
                             <AddIcon />
                         </Fab>
                     </CardContent>
-                    <Pay name={props.element.name} price={props.element.price}></Pay>
+                    <Pay
+                        name={props.element.name}
+                        price={props.element.price}
+                    ></Pay>
                 </CardActionArea>
             </Card>
         </section>
