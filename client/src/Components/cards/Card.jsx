@@ -32,20 +32,20 @@ import {
 const Cards = (props) => {
   
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const currentRating = useSelector((state) => state.ratings);
+  const user = useSelector((state) => state?.user);
+  const currentRating = useSelector((state) => state?.ratings);
 
   const shoppingCart = useSelector((state) => state?.shoppingCart);
 
   const [quantity, setQuantity] = useState(0);
   const [count, setCount] = useState(0);
-  const id = props.element.id;
-  const userId = user.id;
+  const id = props?.element?.id;
+  const userId = user?.id;
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const ratingValue = currentRating.filter((r) => id === r.productId)[0];
+  const ratingValue = currentRating?.filter((r) => id === r.productId)[0];
 
-  const roleUser = JSON.parse(window.localStorage.getItem("loggedInUser"));
+  const roleUser = JSON.parse(window?.localStorage?.getItem("loggedInUser"));
 
 
   useEffect(() => {
