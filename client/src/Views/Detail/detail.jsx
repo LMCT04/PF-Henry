@@ -213,37 +213,23 @@ const Detail = () => {
                     justifyContent="center"
                     alignItems="center"
                     minHeight="50vh"
-
                 >
-                  Add to Cart
-                </Button>
-              </Box>
-            </Grid>
-          </Box>
-        </>
-      ) : (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          minHeight="50vh"
-        >
-          <CircularProgress />
+                    <CircularProgress />
+                </Box>
+            )}
         </Box>
-      )}
-    </Box>
-  );
+    );
 };
 
 export default Detail;
 
 const getCategoryImage = (categoryName) => {
-  // Asignar la imagen correspondiente según el nombre de la categoría
-  if (categoryName === "Sin Tacc") {
-    return glutenFreeImg;
-  } else if (categoryName === "Sin Lactosa") {
-    return dairyFreeImg;
-  } else if (categoryName === "Vegano") {
-    return veganImg;
-  }
+    // Asignar la imagen correspondiente según el nombre de la categoría
+    if (categoryName === "Sin Tacc") {
+        return glutenFreeImg;
+    } else if (categoryName === "Sin Lactosa") {
+        return dairyFreeImg;
+    } else if (categoryName === "Vegano") {
+        return veganImg;
+    }
 };
