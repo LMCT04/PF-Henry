@@ -60,6 +60,10 @@ const Cards = (props) => {
       userId: userId,
       productId: props.element.id,
       quantity: newQuantity,
+    }
+    setQuantity(0)
+    dispatch(addToCart(payload))
+  }
 
 
 
@@ -98,6 +102,7 @@ const Cards = (props) => {
       console.error(error);
     }
   };
+
   const handleRatingChange = (event, ratingValue) => {
     dispatch(addRating(id, userId, ratingValue));
   };
