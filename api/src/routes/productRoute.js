@@ -13,14 +13,14 @@ const { modulePutRating } = require("./middleware/modules/CRUDProduct");
 const productRoute = Router();
 
 const Stripe = require("stripe");
-require("dotenv").config()
-const { KEY } = process.env
+require("dotenv").config();
+const { KEY } = process.env;
 
 productRoute.post("/pay", async (req, res) => {
   console.log("entre");
   const stripe = new Stripe(KEY);
   const session = await stripe.checkout.sessions.create({
-    line_items: [ 
+    line_items: [
       {
         price_data: {
           product_data: {
@@ -28,21 +28,18 @@ productRoute.post("/pay", async (req, res) => {
           },
           currency: "usd",
           unit_amount: parseInt(req.body.price * 100), // Convertir a centavos
-
         },
         quantity: 1,
       },
     ],
     mode: "payment",
-    success_url: "http://localhost:3000/menu",
+    success_url: "http://localhost:3000/checkout",
     cancel_url: "http://localhost:3000/menu",
   });
 
-
   console.log(session);
   return res.json({ url: session.url });
-
-})
+});
 
 productRoute.post("/payCarrito", async (req, res) => {
   const stripe = new Stripe(KEY);
@@ -63,7 +60,7 @@ productRoute.post("/payCarrito", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     line_items: lineItems,
     mode: "payment",
-    success_url: "http://localhost:3000/menu",
+    success_url: "http://localhost:3000/checkout",
     cancel_url: "http://localhost:3000/menu",
   });
 
@@ -113,10 +110,15 @@ productRoute.get("/:id", async (req, res) => {
   }
 });
 productRoute.put("/rating", async (req, res) => {
-  const { productId, userId, ratingValue } = req.body;
+  const { productId, userId, ratingValue, review } = req.body;
   console.log(productId, userId, ratingValue);
   try {
-    const rating = await modulePutRating(productId, userId, ratingValue);
+    const rating = await modulePutRating(
+      productId,
+      userId,
+      ratingValue,
+      review
+    );
     res.status(200).send(rating);
   } catch (error) {
     res.status(500).send("Error al establecer rating");

@@ -13,7 +13,7 @@ import FavoritesContent from "./FavoritesContent/FavoritesContent";
 const UserProfile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  console.log(user.id);
+  console.log(user);
 
   const [editMode, setEditMode] = useState(false);
   const [showFavorites, setShowFavorites] = useState(false);

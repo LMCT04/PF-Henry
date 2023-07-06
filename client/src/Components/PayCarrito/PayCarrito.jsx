@@ -3,14 +3,20 @@ import axios from "axios";
 import style from "./payCarrito.module.css";
 import { Button, Box, CardContent, Typography } from "@mui/material";
 
+
 export default function PayCarrito(props) {
+  const { params } = props;
+  // const history = useHistory();
+
   const handleOnclickcarrito = async () => {
-    console.log(props.params);
+    const productIds = params.map((product) => product.id);
+
     const url = await axios.post(
       "http://localhost:3001/product/payCarrito",
       props.params
     );
     window.location.href = url.data.url;
+    localStorage.setItem("productIds", JSON.stringify(productIds));
   };
   return (
     <div>
