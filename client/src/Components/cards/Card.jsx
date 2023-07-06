@@ -24,28 +24,26 @@ import {
   addFavorite,
 } from "../../redux/actions/actionsProducts";
 
-import {
-  addToCart,
-  removeFromCart,
-  getCartById,
-} from "../../redux/actions/actionsCart";
+import { addToCart, removeFromCart } from "../../redux/actions/actionsCart";
 
 const Cards = (props) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const currentRating = useSelector((state) => state.ratings);
+  const user = useSelector((state) => state?.user);
+  const currentRating = useSelector((state) => state?.ratings);
 
   const shoppingCart = useSelector((state) => state?.shoppingCart);
 
   const [quantity, setQuantity] = useState(0);
   const [count, setCount] = useState(0);
-  const id = props.element.id;
-  const userId = user.id;
+  const id = props?.element?.id;
+  const userId = user?.id;
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const ratingValue = currentRating.filter((r) => id === r.productId)[0];
+  const ratingValue = currentRating?.filter((r) => id === r.productId)[0];
 
-  const roleUser = JSON.parse(window.localStorage.getItem("loggedInUser"));
+
+  const roleUser = JSON.parse(window?.localStorage?.getItem("loggedInUser"));
+
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");
@@ -122,6 +120,7 @@ const Cards = (props) => {
           <CardMedia
             component="img"
             height="210"
+
             image={props.element.image[0]}
             alt="imagen"
             sx={{ backgroundColor: "#e4cfa5" }}
@@ -186,9 +185,7 @@ const Cards = (props) => {
               ${props.element.price}
             </Typography>
           </CardContent>
-          {(roleUser?.role === "admin" ||
-            roleUser?.role === "superAdmin" ||
-            roleUser?.role == "user") && (
+          {roleUser?.role == "user" && opacity === 1 && (
             <CardContent
               sx={{
                 height: 35,
@@ -217,9 +214,7 @@ const Cards = (props) => {
               </Fab>
             </CardContent>
           )}
-          {(roleUser?.role === "admin" ||
-            roleUser?.role === "superAdmin" ||
-            roleUser?.role == "user") && (
+          {roleUser?.role == "user" && opacity === 1 && (
             <Pay name={props.element.name} price={props.element.price}></Pay>
           )}
         </CardActionArea>

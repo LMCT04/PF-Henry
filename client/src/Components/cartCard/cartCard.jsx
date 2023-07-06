@@ -21,11 +21,7 @@ const CartCard = ({ element }) => {
         >
           <CardMedia
             component="img"
-            image={
-              element.image && element.image.length > 0
-                ? element.image[0].toString()
-                : ""
-            }
+            image={element.image}
             alt="imagen"
             sx={{
               backgroundColor: "#e4cfa5",

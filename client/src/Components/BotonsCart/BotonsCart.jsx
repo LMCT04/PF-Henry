@@ -11,7 +11,6 @@ import RemoveIcon from "@mui/icons-material/Remove";
 
 import {
   addToCart,
-  getCartById,
   removeFromCart,
 } from "../../redux/actions/actionsCart";
 
