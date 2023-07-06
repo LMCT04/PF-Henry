@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 
 
 const UserCard = ({ element }) => {
+    const roleUser = JSON.parse(window.localStorage.getItem("loggedInUser"));
     const [selectedRole, setSelectedRole] = useState(element.role);
     const dispatch = useDispatch();
 
@@ -21,7 +22,7 @@ const UserCard = ({ element }) => {
         const value = e.target.value;
         setSelectedRole(value);
         dispatch(roleUpdate(element.mail, value));
-      };
+    };
 
     return (
         <div>
@@ -69,8 +70,8 @@ const UserCard = ({ element }) => {
                             <Box sx={{ width: "30%", fontWeight: "bold" }}>
                                 {element.fullName}
                             </Box>
-                            <Box sx={{ width: "35%" }}>
-                                <FormControl fullWidth>
+                            <Box sx={{ width: "35%", height:'70px', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                                {(roleUser?.role == "superAdmin")&&(<FormControl sx={{width:'60%'}} >
                                     <InputLabel id="role">ROLE:</InputLabel>
                                     <Select
                                         labelId="role"
@@ -78,6 +79,7 @@ const UserCard = ({ element }) => {
                                         value={selectedRole}
                                         label="Role:"
                                         onChange={handleRoleChange}
+                                        sx={{height:'40px'}}
                                     >
                                         <MenuItem value={"user"}>User</MenuItem>
                                         <MenuItem value={"admin"}>
@@ -87,7 +89,12 @@ const UserCard = ({ element }) => {
                                             Super Admin
                                         </MenuItem>
                                     </Select>
-                                </FormControl>
+                                </FormControl>)}
+                                {(roleUser?.role == "admin")&&
+                                (<Box sx={{border:'1px solid grey', width:'60%', height:'40px', 
+                                            borderRadius:'0.5rem', display:'flex', alignItems:'center', justifyContent:'center'}} >
+                                        {element.role}
+                                </Box>)}
                             </Box>
                         </Box>
                         <Box

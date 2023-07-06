@@ -47,7 +47,7 @@ const DashboardCard = (props) => {
             <CardMedia
                 component="img"
                 height="90%"
-                image={props.element.image}
+                image={props.element.image[0][0].substring(1, props.element.image[0][0].length - 1)} //{props.element.image} antes era asi
                 sx={{ width: "8.5%", backgroundColor: "red" }}
             />
             <CardContent sx={{ height: "100%", width: "82.5%" }}>

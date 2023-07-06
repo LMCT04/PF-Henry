@@ -99,14 +99,6 @@ const NavBarDashboard = () => {
                 >
                     Web Page
                 </MenuItem>
-
-                <MenuItem
-                    sx={{
-                        backgroundColor: "#EDF6F9",
-                    }}
-                >
-                    Logout
-                </MenuItem>
             </Menu>
         </Box>
     )
