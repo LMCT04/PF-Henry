@@ -31,7 +31,6 @@ import {
 } from "../../redux/actions/actionsCart";
 
 const Cards = (props) => {
-  
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const currentRating = useSelector((state) => state.ratings);
@@ -47,7 +46,6 @@ const Cards = (props) => {
   const ratingValue = currentRating.filter((r) => id === r.productId)[0];
 
   const roleUser = JSON.parse(window.localStorage.getItem("loggedInUser"));
-
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");
@@ -66,13 +64,10 @@ const Cards = (props) => {
       userId: userId,
       productId: props.element.id,
       quantity: newQuantity,
-
-    }
-    setQuantity(0)
-    dispatch(addToCart(payload))
-  }
-
-
+    };
+    setQuantity(0);
+    dispatch(addToCart(payload));
+  };
 
   const handleRemoveFromCart = () => {
     const payload = {
@@ -110,8 +105,7 @@ const Cards = (props) => {
     }
   };
 
-    const opacity = props.element.isActive ? 1 : 0.5;
-
+  const opacity = props.element.isActive ? 1 : 0.5;
 
   return (
     <section>
@@ -128,7 +122,7 @@ const Cards = (props) => {
           <CardMedia
             component="img"
             height="210"
-            image={props.element.image[0][0].substring(1, props.element.image[0][0].length - 1)} //{props.element.image} antes era asi
+            image={props.element.image[0]}
             alt="imagen"
             sx={{ backgroundColor: "#e4cfa5" }}
           />
