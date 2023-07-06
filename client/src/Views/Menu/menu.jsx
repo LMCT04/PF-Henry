@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import style from "./menu.module.css";
 import { getAllProducts } from "../../redux/actions/actionsProducts";
 import { getAllCategories } from "../../redux/actions/actionsCategories";
@@ -8,9 +8,16 @@ import CardsContainer from "../../Components/cardContainer/cardContainer";
 import Footer from "../../Components/Footer/Footer";
 import { setUser } from "../../redux/actions/actionsUsers";
 import { auth } from "../../firebase/config";
+import { getCartById } from "../../redux/actions/actionsCart";
 
 const Menu = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const userId = user.id;
+
+  useEffect(() => {
+    dispatch(getCartById(userId));
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {

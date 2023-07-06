@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import swal from "sweetalert";
 import { useParams, useHistory } from "react-router-dom";
 import { getCartById, clearCart } from "../../redux/actions/actionsCart";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +22,26 @@ const Cart = () => {
   const handleDiscoverClick = () => {
     history.push("/menu");
   };
+
+  const showAlert = () => {
+    swal({
+      title: "Are you sure?",
+      text: "Are you sure you want to delete the items from your cart!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        // Vaciar el carrito aquí
+        handleClearClick();
+        swal("Success!", "Your cart has been emptied.", "success");
+      } else {
+        swal("Cancelled", "Your cart is safe.", "info");
+      }
+    });
+  };
+
+
   const handleClearClick = () => {
     dispatch(clearCart(userId));
   };
@@ -213,7 +234,7 @@ const Cart = () => {
         >
           <PayCarrito params={shoppingCart?.cart?.products}></PayCarrito>
           <Button
-            onClick={handleClearClick}
+            onClick={showAlert}
             variant="outlined"
             sx={{
               borderColor: "rgb(114, 8, 8)",
