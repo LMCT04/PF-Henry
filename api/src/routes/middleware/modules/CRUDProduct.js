@@ -78,6 +78,7 @@ const moduleGetAllProductFromDatabase = async () => {
             price: product.price,
             type: product.type,
             categories: categories[index],
+            isActive:product.isActive,
         }));
 
         return formatedProducts;
@@ -110,6 +111,7 @@ const moduleGetProductFromDatabaseByName = async (name) => {
             price: product.price,
             type: product.type,
             categories: categories[index],
+            isActive:product.isActive,
         }));
 
         return formatedProducts;

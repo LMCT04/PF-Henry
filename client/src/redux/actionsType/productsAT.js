@@ -15,6 +15,7 @@ const SET_FAVORITE = "SET_FAVORITE";
 const ADD_RATING = "ADD_RATING";
 const SET_RATING = "SET_RATING";
 const GET_RATING = "GET_RATING";
+const SWITCH_PRODUCT = "SWITCH_PRODUCT";
 
 module.exports = {
   ORDER_ALPHABETIC,
@@ -34,4 +35,5 @@ module.exports = {
   ADD_RATING,
   SET_RATING,
   GET_RATING,
+  SWITCH_PRODUCT,
 };
