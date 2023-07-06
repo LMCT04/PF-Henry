@@ -124,11 +124,7 @@ const Cards = (props) => {
           <CardMedia
             component="img"
             height="210"
-            image={
-              props.element.image && props.element.image.length > 0
-                ? props.element.image[0].toString()
-                : ""
-            }
+            image={props.element.image[0][0].substring(1, props.element.image[0][0].length - 1)} //{props.element.image} antes era asi
             alt="imagen"
             sx={{ backgroundColor: "#e4cfa5" }}
           />

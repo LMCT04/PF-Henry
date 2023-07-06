@@ -52,7 +52,7 @@ const Detail = () => {
                 <>
                     <Box className="img-container">
                         <img
-                            src={product.image}
+                            src={product.image[0][0].substring(1, product.image[0][0].length - 1)} //{props.element.image} antes era asi}
                             alt={product.name}
                             className="img"
                         />
