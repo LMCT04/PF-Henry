@@ -7,11 +7,13 @@ import {
 } from "../actionsType/cartAT";
 import  axios  from "axios";
 
+const urlBackend = 'http://localhost:3001'
+
 export const addToCart = (payload) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/cart/add",
+        `${urlBackend}/cart/add`,
         payload
       );
       const addedProduct = response.data;
@@ -31,7 +33,7 @@ export const removeFromCart = (payload) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/cart/remove",
+        `${urlBackend}/cart/remove`,
         payload
       );
       const removedProduct = response.data;
@@ -50,7 +52,7 @@ export const removeFromCart = (payload) => {
 export const getCartById = (userId) => {  
   return async (dispatch) => {
     try {
-      const apiData = await axios.get(`http://localhost:3001/cart/${userId}`);
+      const apiData = await axios.get(`${urlBackend}/cart/${userId}`);
       const cart = apiData.data;
 
       dispatch({
@@ -68,7 +70,7 @@ export const clearCart = (userId) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/cart/clear",
+        `${urlBackend}/cart/clear`,
         {userId}
       );
       const clearedCart = response.data;

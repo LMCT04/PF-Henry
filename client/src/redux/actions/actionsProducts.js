@@ -21,6 +21,8 @@ import {
 
 } from "../actionsType/productsAT";
 
+const urlBackend = 'http://localhost:3001'
+
 export const orderAlphabetic = (value) => {
   if (value === "asc") {
     return { type: ORDER_ALPHABETIC, payload: "asc" };
@@ -61,7 +63,7 @@ export const resetFilters = () => {
 export const getAllProducts = () => {
   return async function (dispatch) {
     try {
-      const apiData = await axios.get("http://localhost:3001/product");
+      const apiData = await axios.get(`${urlBackend}/product`);
       const products = apiData.data;
       dispatch({
         type: GET_ALL_PRODUCTS,
@@ -78,7 +80,7 @@ export const getByName = (name) => {
   return async (dispatch) => {
     try {
       const apiData = await axios.get(
-        `http://localhost:3001/product?name=${name}`
+        `${urlBackend}/product?name=${name}`
       );
       const product = apiData.data;
 
@@ -97,7 +99,7 @@ export const getByName = (name) => {
 export const getById = (id) => {
   return async (dispatch) => {
     try {
-      const apiData = await axios.get(`http://localhost:3001/product/${id}`);
+      const apiData = await axios.get(`${urlBackend}/product/${id}`);
       const product = apiData.data;
 
       dispatch({
@@ -115,7 +117,7 @@ export const createProduct = (payload) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/product/createProduct",
+        `${urlBackend}/product/createProduct`,
         payload
       );
       const createdProduct = response.data;
@@ -167,7 +169,7 @@ export const removeFavorite = (productId) => {
 export const addRatingAndReview = (productId, userId, ratingValue, review) => {
   return async (dispatch) => {
     try {
-      const response = await axios.put("http://localhost:3001/product/rating", {
+      const response = await axios.put(`${urlBackend}/product/rating`, {
         productId: productId,
         userId: userId,
         ratingValue: ratingValue,
@@ -183,7 +185,7 @@ export const addRatingAndReview = (productId, userId, ratingValue, review) => {
 export const switchProduct = (productId, status) => {
     return async (dispatch) => {
         try{
-            const response = await axios.put(`http://localhost:3001/product/${productId}`, {
+            const response = await axios.put(`${urlBackend}/product/${productId}`, {
                 status: status
             })
             dispatch({
@@ -201,7 +203,7 @@ export const getRating = (productId) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/product/rating/all`
+        `${urlBackend}/product/rating/all`
       );
       const ratings = response.data;
 
