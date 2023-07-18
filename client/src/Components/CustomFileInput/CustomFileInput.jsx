@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const CustomFileInput = ({ field, form }) => {
@@ -26,7 +26,7 @@ const CustomFileInput = ({ field, form }) => {
   };
 
   return (
-    <div>
+    <Box sx={{width:'24%', display:'flex', alignItems:'center', justifyContent:'center', height:'61%'}} >
       <input
         type="file"
         ref={fileInputRef}
@@ -36,12 +36,13 @@ const CustomFileInput = ({ field, form }) => {
       <Button
         variant="contained"
         component="label"
-        color="success"
+        color="primary"
         onClick={handleClick}
+        sx={{width:'90%', fontSize:'10px'}}
       >
         Choose File
       </Button>
-    </div>
+    </Box>
   );
 };
 
