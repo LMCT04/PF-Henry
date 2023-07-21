@@ -37,7 +37,7 @@ productRoute.post("/pay", async (req, res) => {
     cancel_url: "http://localhost:3000/menu",
   });
 
-  console.log(session);
+  // console.log(session);
   return res.json({ url: session.url });
 });
 
@@ -64,7 +64,7 @@ productRoute.post("/payCarrito", async (req, res) => {
     cancel_url: "http://localhost:3000/menu",
   });
 
-  console.log(session);
+  // console.log(session);
   return res.json({ url: session.url });
 });
 productRoute.post("/createProduct", async (req, res) => {
