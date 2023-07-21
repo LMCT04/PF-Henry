@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Card,
   CardMedia,
@@ -10,8 +10,15 @@ import {
   Grid,
 } from "@mui/material";
 import RatingAndReview from "../RatingAndReview/RatingAndReview";
+import { clearCart } from "../../redux/actions/actionsCart";
+
 
 const Checkout = () => {
+  const stateString = localStorage.getItem('state')
+  const state = JSON.parse(stateString)
+  const userId = state.user.id
+  const history = useHistory()
+  const dispatch = useDispatch()
   const allProducts = useSelector((state) => state.allProducts);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState(null);
@@ -35,6 +42,10 @@ const Checkout = () => {
   const handleClose = () => {
     setShowRatingReview(false);
   };
+  const handlerDelete = () => {
+     history.push("/menu")
+    dispatch(clearCart(userId))
+  }
 
   return (
     <div>
@@ -64,10 +75,14 @@ const Checkout = () => {
             </Card>
           </Grid>
         ))}
-      </Grid>
+      </Grid>     
+      <Button variant="contained"  onClick={handlerDelete}>
+         Discober Products
+      </Button>
       {showRatingReview && (
         <RatingAndReview productId={selectedProductId} onClose={handleClose} />
       )}
+ 
     </div>
   );
 };

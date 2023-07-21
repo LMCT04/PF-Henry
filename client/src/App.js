@@ -6,7 +6,6 @@ import {
   Register,
   Menu,
   Login,
-  Form,
   About,
   Detail,
   DashBoard,
