@@ -128,7 +128,7 @@ const Cart = () => {
                 color="success"
                 onClick={handleDiscoverClick}
               >
-                Discober Products
+                Discover Products
               </Button>
             </Box>
           </div>

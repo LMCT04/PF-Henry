@@ -77,7 +77,7 @@ const Checkout = () => {
         ))}
       </Grid>     
       <Button variant="contained"  onClick={handlerDelete}>
-         Discober Products
+         Discover Products
       </Button>
       {showRatingReview && (
         <RatingAndReview productId={selectedProductId} onClose={handleClose} />
