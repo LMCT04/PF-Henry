@@ -16,27 +16,29 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       image: {
-        type: DataTypes.TEXT,
+        type: DataTypes.ARRAY(DataTypes.TEXT),
         allowNull: false,
         validate: {
           isUrl: {
-            msg: "La imagen debe de ser una URL valida",
+            args: true,
+            msg: "La imagen debe ser una URL válida",
           },
         },
       },
+
       description: {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+
       price: {
         type: DataTypes.FLOAT,
         allowNull: false,
+        validate: {
+          min: 0,
+        },
       },
       type: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      category: {
         type: DataTypes.STRING,
         allowNull: false,
       },

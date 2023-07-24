@@ -1,0 +1,95 @@
+.navBar {
+    background-color: #2c6e49;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+
+.logoContainer {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.logoBtn{
+    border: none;
+    width: 9.5%;
+    background: transparent;
+    margin-left: 20%;
+}
+
+.logo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-position: center center;
+    border: none;
+    cursor: pointer;
+}
+
+.buttonsCont{
+    display: flex;
+    height: 100%;
+    width: 50%;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.buttons{
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: #2c6e49;
+    color:  #FFF0C9;
+    border:  #FFF0C9 2px solid;
+    width: 100%;
+    height: 100%;
+}
+
+.buttons1{
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: #FFF0C9;
+    color:  #2c6e49;
+    border:  #2c6e49 2px solid;
+    width: 100%;
+    height: 100%;
+    transition: color 0.5s ease;
+    transition: transform 0.3s ease;
+}
+
+.buttons:hover {
+    background-color: #FFF0C9;
+    color: #2c6e49;
+    box-shadow: 2px 2px 2px #0d2015;
+    font-weight: bold;
+}
+
+.buttons:active {
+    background-color: #FFF0C9;
+    border: none;
+    transform: scale(0.95);
+}
+
+.buttons1:hover {
+    background-color: #FFF0C9;
+    color: #2c6e49;
+    box-shadow: 2px 2px 2px #0d2015;
+    font-weight: bold;
+}
+
+.buttons1:active {
+    background-color: #FFF0C9;
+    border: none;
+    transform: scale(0.95);
+}
+
+.btn{
+    width: 18%;
+    height: 50%;
+    margin-right: 10%;
+}
+

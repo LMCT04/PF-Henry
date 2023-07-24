@@ -1,141 +1,274 @@
-import style from './cardContainer.module.css'
-import Card from '../cards/Card'
-import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
-import Pagination from "@mui/material/Pagination";
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Loading from '../../Views/Loading/Loading';
-import { orderAlphabetic, orderPrice, filterCategory, filterType, resetFilters } from '../../redux/actions/actionsProducts'
-import React from "react";
+/* IMPORTS */
+import React, { useRef } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
+import style from "./cardContainer.module.css";
+
+import {
+    Button,
+    Box,
+    Pagination,
+    MenuItem,
+    InputLabel,
+    Select,
+    FormControl,
+} from "@mui/material";
+
+import Cards from "../cards/Card";
+import Loading from "../../Views/Loading/Loading";
+import SearchBar from "../searchBar/searchBar";
+
+import {
+    orderAlphabetic,
+    orderPrice,
+    filterCategoryAndType,
+} from "../../redux/actions/actionsProducts";
+
+/* COMPONENT */
 const CardsContainer = () => {
-
     const dispatch = useDispatch();
+    const allProducts = useSelector((state) => state.product);
+    const categories = useSelector((state) => state.category);
 
-    const allProducts = useSelector((state) => state.product)
+    //-------------------------FILTROS--------------------------
+    const [resetFilters, setResetFilters] = useState(false);
+    const [categoryFilter, setCategoryFilter] = useState("ALL");
+    const [typeFilter, setTypeFilter] = useState("ALL");
 
-    const types = allProducts.map(product => product.type);
-    const typesSet = new Set(types);
-
+    //-------------------------PAGINADO--------------------------
     const [pageProducts, setPageProducts] = useState([]);
     const [page, setPage] = useState({
         current: 1,
-        total: Math.ceil(allProducts.length / 12)
+        total: Math.ceil(allProducts.length / 8),
     });
 
-    const handleChange = (event, value) => {
-        let productsPag = [...allProducts];
-        setPage(prevPage => ({ ...prevPage, current: value }));
-        const startIndex = (value - 1) * 12;
-        const endIndex = startIndex + 12;
+    const pageCurrentRef = useRef(page.current);
 
-        setPageProducts(productsPag.slice(startIndex, endIndex));
+    /* USE EFFECT */
+    useEffect(() => {
+        let filteredProducts = [...allProducts];
+        // Filtrar por categoría
+        if (categoryFilter !== "ALL") {
+            filteredProducts = filteredProducts.filter((product) =>
+                product.categories.includes(categoryFilter)
+            );
+        }
+        // Filtrar por tipo
+        if (typeFilter !== "ALL") {
+            filteredProducts = filteredProducts.filter(
+                (product) => product.type === typeFilter
+            );
+        }
+        if (resetFilters) {
+            setCategoryFilter("ALL");
+            setTypeFilter("ALL");
+            setResetFilters(false);
+        }
+        const startIndex = (pageCurrentRef.current - 1) * 8;
+        const endIndex = startIndex + 8;
+        setPageProducts(filteredProducts.slice(startIndex, endIndex));
+        setPage((prevPage) => ({
+            ...prevPage,
+            total: Math.ceil(filteredProducts.length / 8),
+        }));
+    }, [allProducts, categoryFilter, typeFilter, pageCurrentRef, resetFilters]);
+
+    //-------------------------HANDLES--------------------------
+
+    const handleResetFilters = () => {
+        setResetFilters(true);
     };
 
-    React.useEffect(() => {
-        let productsPag = [...allProducts];
-        const startIndex = (page.current - 1) * 12;
-        const endIndex = startIndex + 12;
-        setPageProducts(productsPag.slice(startIndex, endIndex));
-        setPage(prevPage => ({ ...prevPage, total: Math.ceil(allProducts.length / 12) }));
-    }, [allProducts, page.current]);
+    const handleChange = (event, value) => {
+        const startIndex = (value - 1) * 8;
+        const endIndex = startIndex + 8;
+
+        // Filtrar por categoría y tipo
+        let filteredProducts = [...allProducts];
+        if (categoryFilter !== "ALL") {
+            filteredProducts = filteredProducts.filter((product) =>
+                product.categories.includes(categoryFilter)
+            );
+        }
+        if (typeFilter !== "ALL") {
+            filteredProducts = filteredProducts.filter(
+                (product) => product.type === typeFilter
+            );
+        }
+
+        setPage((prevPage) => ({ ...prevPage, current: value }));
+        setPageProducts(filteredProducts.slice(startIndex, endIndex));
+    };
 
     const handleAlphabeticOrder = (e) => {
         const value = e.target.value;
-        if (value === "") {
-            dispatch(resetFilters());
-        } else {
-            dispatch(orderAlphabetic(value));
-        }
+        dispatch(orderAlphabetic(value));
     };
 
     const handlePriceOrder = (e) => {
         const value = e.target.value;
-        if (value === "") {
-            dispatch(resetFilters());
-        } else {
-            dispatch(orderPrice(value));
-        }
+        dispatch(orderPrice(value));
     };
 
     const handleFilterCategory = (e) => {
         const value = e.target.value;
-        dispatch(filterCategory(value));
-        setPage(prevPage => ({ ...prevPage, current: 1 }));
+        setPage((prevPage) => ({ ...prevPage, current: 1 }));
+        setCategoryFilter(value);
+        dispatch(filterCategoryAndType(value, typeFilter));
     };
 
     const handleFilterType = (e) => {
         const value = e.target.value;
-        dispatch(filterType(value));
-        setPage(prevPage => ({ ...prevPage, current: 1 }));
+        setPage((prevPage) => ({ ...prevPage, current: 1 }));
+        setTypeFilter(value);
+        dispatch(filterCategoryAndType(categoryFilter, value));
     };
 
+    //-------------------------RENDERIZACION--------------------------
+
     return (
-        <div className={style.cardContainer} >
-            <div className={style.filtersContainer} >
+        <div className={style.cardContainer}>
+            <Box
+                sx={{
+                    height: "auto",
+                    marginTop: "1.5%",
+                    display: "flex",
+                    marginLeft: "10%",
+                }}
+            >
+                <SearchBar />
+            </Box>
+            <div className={style.filtersAndCards}>
+                <div className={style.filtersContainer}>
+                    <div className={style.alfContainer}>
+                        <FormControl fullWidth>
+                            <InputLabel id="alphabetic" color="success">
+                                A - Z
+                            </InputLabel>
 
-                <div className={style.alfContainer} >
-                    <label>Alphabetic order</label>
-                    <Select onChange={handleAlphabeticOrder} className={style.input} >
-                        <MenuItem value=""><em>None</em></MenuItem>
-                        <MenuItem value="asc">ASC</MenuItem>
-                        <MenuItem value="desc">DESC</MenuItem>
-                    </Select>
-                </div>
+                            <Select
+                                color="success"
+                                labelId="alphabetic"
+                                id="alphabetic"
+                                onChange={handleAlphabeticOrder}
+                                label="A - Z"
+                                className={style.input}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value="asc">A - Z</MenuItem>
+                                <MenuItem value="desc">Z - A</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
 
-                <div className={style.alfContainer} >
-                    <label>PRICE ORDER</label>
-                    <Select onChange={handlePriceOrder} className={style.input} >
-                        <MenuItem value=""><em>None</em></MenuItem>
-                        <MenuItem value="asc">ASC</MenuItem>
-                        <MenuItem value="desc">DESC</MenuItem>
-                    </Select>
-                </div>
+                    <div className={style.alfContainer}>
+                        <FormControl fullWidth>
+                            <InputLabel id="price" color="success">
+                                PRICE
+                            </InputLabel>
+                            <Select
+                                color="success"
+                                labelId="price"
+                                id="price"
+                                onChange={handlePriceOrder}
+                                label="PRICE"
+                                className={style.input}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value="asc">ASC</MenuItem>
+                                <MenuItem value="desc">DESC</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
 
-                <div className={style.alfContainer} >
-                    <label>FILTER CATEGORY</label>
-                    <Select onChange={handleFilterCategory} className={style.input} >
-                        <MenuItem value="ALL">ALL</MenuItem>
-                        <MenuItem value="solido">Solido</MenuItem>
-                        <MenuItem value="liquido">Liquido</MenuItem>
-                    </Select>
-                </div>
+                    <div className={style.alfContainer}>
+                        <FormControl fullWidth>
+                            <InputLabel id="type" color="success">
+                                TYPE
+                            </InputLabel>
 
-                <div className={style.alfContainer} >
-                    <label>FILTER TYPE</label>
-                    <Select onChange={handleFilterType} className={style.input} >
-                        <MenuItem value="ALL">ALL</MenuItem>
-                        {Array.from(typesSet).map((type) => (
-                            <MenuItem value={type} key={type}>
-                                {type}
-                            </MenuItem>
-                        ))}
-                    </Select>
+                            <Select
+                                color="success"
+                                labelId="type"
+                                id="type"
+                                label="TYPE"
+                                onChange={handleFilterType}
+                                className={style.input}
+                            >
+                                <MenuItem value="ALL">ALL</MenuItem>
+                                <MenuItem value="Comida">Comida</MenuItem>
+                                <MenuItem value="Bebida">Bebida</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+
+                    <div className={style.alfContainer}>
+                        <FormControl fullWidth>
+                            <InputLabel id="categories" color="success">
+                                CATEGORIES
+                            </InputLabel>
+
+                            <Select
+                                color="success"
+                                labelId="categories"
+                                id="categories"
+                                label="CATEGORIES"
+                                onChange={handleFilterCategory}
+                                className={style.input}
+                            >
+                                <MenuItem value="ALL">ALL</MenuItem>
+                                {categories.map((category) => (
+                                    <MenuItem
+                                        key={category.name}
+                                        value={category.name}
+                                    >
+                                        {category.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </div>
+                    <Button
+                        fullWidth
+                        color="success"
+                        variant="contained"
+                        onClick={handleResetFilters}
+                    >
+                        Reset Filters
+                    </Button>
                 </div>
+                <section className={style.cardsAndPag}>
+                    <div className={style.centradoDeCards}>
+                        <div className={style.container}>
+                            {pageProducts.length > 0 ? (
+                                pageProducts.map((e) => (
+                                    <Cards key={e.id} element={e} />
+                                ))
+                            ) : (
+                                <div className={style.loading}>
+                                    <Loading />
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <Pagination
+                        count={page.total}
+                        page={page.current}
+                        variant="outlined"
+                        showFirstButton
+                        showLastButton
+                        onChange={handleChange}
+                        className={style.pag}
+                    />
+                </section>
             </div>
-
-            <div className={style.container}>
-                {pageProducts.length > 0 ? (
-                    pageProducts.map((e) =>
-                        <Card
-                            key={e.id}
-                            element={e}
-                        />
-                    )
-                ) : (<Loading />)}
-            </div>
-
-            <Pagination
-                count={page.total}
-                page={page.current}
-                variant="outlined"
-                color="primary"
-                onChange={handleChange}
-                className={style.pag}
-            />
         </div>
-    )
-}
+    );
+};
 
 export default CardsContainer;

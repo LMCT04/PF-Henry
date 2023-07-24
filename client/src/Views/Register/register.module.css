@@ -1,0 +1,111 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 90%;
+    width: 30%;
+    background-color: #a5caa8;
+    border-radius: 1rem;
+    box-shadow: #0a3e0e  0.5px 0.5px 0.5px 1.5px;
+    margin-top: 2%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #32a4ca; */
+    height: 85%;
+    width: 60%;
+    padding-top: 20px;
+    border-radius: 1rem;
+}
+
+.content {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.input {
+    height: 90%;
+    width: 95%;
+    background-color: #fefee3;
+    color: #0d2015;
+    border-radius: 1.5rem;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    padding-left: 30px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.buttonContainer {
+    width: 90%;
+    height: 20%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+    font-weight: bold;
+}
+
+.button {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    height: 30%;
+    width: 30%;
+    border-radius: 1.5rem;
+    background-color:  #fefee3;
+    color: #0d2015;
+    border: none;
+    cursor: pointer;
+    transition: color 0.5s ease;
+    transition: transform 0.3s ease;
+}
+
+.button:hover {
+    transform: scale(1.1);
+    background-color: #0d2015;
+    color:  #fefee3;
+    box-shadow: 4px 4px 10px black;
+    font-weight: bold;
+}
+
+.p1 {
+    font-size: 2rem;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.imgContainer {
+    background-image: url("../../imgAssets/cafe.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 43%;
+    width: 100%;
+    margin-left: 2%;
+    margin-right: 2%;
+    border-bottom-left-radius: 2.5rem;
+    border-bottom-right-radius: 2.5rem;
+    /* border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem; */
+    box-shadow: rgba(0, 0, 0, 0.16)  0px 1px 4px;
+}
+
+.link {
+    color: #32a4ca;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.link:visited {
+    color: #32a4ca;
+}

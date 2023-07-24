@@ -1,0 +1,40 @@
+.container {
+  background-color: #fefee3;
+  padding: 5rem;
+  padding-left: 8rem;
+}
+.img-container {
+  margin-top: 17px;
+  background-color: #fefee3;
+  width: 40vw;
+  height: 650px;
+  border-radius: 25px;
+}
+.img {
+  max-width: 40vw;
+  height: 650px;
+  border-radius: 25px;
+}
+.detail-container {
+  margin-left: 3rem;
+  text-align: start;
+}
+.description {
+  text-align: justify;
+  text-indent: 20px;
+}
+
+.name,
+.price,
+.description,
+.type,
+.categories {
+  padding: 10px;
+  margin-left: 10px;
+}
+.button {
+  display: flex;
+}
+.name-favorite {
+  justify-content: space-between;
+}

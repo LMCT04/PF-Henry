@@ -1,0 +1,18 @@
+.not-found {
+  height: 130vh;
+  background-image: url("../../imgAssets/404-page.jpg");
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+
+.invisible-container {
+  position: absolute;
+  padding: 20rem;
+  margin-top: 25rem;
+  top: 20%;
+  left: 25%;
+  right: 25%;
+
+  cursor: pointer;
+}
