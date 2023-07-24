@@ -39,7 +39,7 @@ const DashBoard = () => {
                 sx={{
                     width: "100%",
                     height: "70vh",
-                    backgroundColor: "#B8DEDC",
+                    backgroundColor: "#dddddd",
                     display: "flex",
                     flexDirection: "column",
                 }}

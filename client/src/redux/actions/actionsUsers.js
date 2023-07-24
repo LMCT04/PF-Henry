@@ -7,14 +7,17 @@ import {
     UPDATE_USER,
     SET_USER,
     USER_BY_NAME,
-    USER_ORDER_ALPHABETIC
+    USER_ORDER_ALPHABETIC,
+    ROLE_UPDATE,
 } from "../actionsType/usersAT";
+
+const urlBackend = 'http://localhost:3001'
 
 export const createUsers = (payload) => {
     return async (dispatch) => {
         try {
             const response = await axios.post(
-                "http://localhost:3001/user",
+                `${urlBackend}/user`,
                 payload
             );
             const createdUsers = response.data;
@@ -33,14 +36,14 @@ export const getUserbyName = (fullName) => {
     return async (dispatch) => {
         try {
             const userData = await axios.get(
-                `http://localhost:3001/user?fullName=${fullName}`
-            )
-            const response = userData.data
+                `${urlBackend}/user?fullName=${fullName}`
+            );
+            const response = userData.data;
 
             return dispatch({
                 type: USER_BY_NAME,
                 payload: response,
-            })
+            });
         } catch (error) {
             console.log("Error: getUserbyName", error);
             alert("No se encontró ningún usuario con ese nombre.");
@@ -52,7 +55,7 @@ export const getUserbyName = (fullName) => {
 export const getAllUsers = () => {
     return async function (dispatch) {
         try {
-            const userData = await axios.get("http://localhost:3001/user");
+            const userData = await axios.get(`${urlBackend}/user`);
             const users = userData.data;
             dispatch({
                 type: GET_USERS,
@@ -68,7 +71,7 @@ export const getAllUsers = () => {
 export const updateUser = (updatedUser) => {
     return async function (dispatch) {
         try {
-            await axios.put("http://localhost:3001/user", updatedUser);
+            await axios.put(`${urlBackend}/user`, updatedUser);
             dispatch({
                 type: UPDATE_USER,
                 payload: updatedUser,
@@ -77,6 +80,23 @@ export const updateUser = (updatedUser) => {
         } catch (error) {
             console.log("Error: updateUser", error);
             alert("Hubo un error al actualizar el usuario");
+        }
+    };
+};
+
+export const roleUpdate = (mail, rol) => {
+    return async function (dispatch) {
+        try {
+            const response = await axios.put(`${urlBackend}/user`, {
+                mail: mail,
+                rol: rol,
+            });
+            dispatch({
+                type: ROLE_UPDATE,
+                payload: response.data,
+            });
+        } catch (error) {
+            console.log(error);
         }
     };
 };

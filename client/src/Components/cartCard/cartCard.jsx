@@ -2,6 +2,7 @@ import { CardContent, Typography, Card, CardMedia } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
 import style from "./cartCard.module.css";
+import BotonsCart from "../BotonsCart/BotonsCart";
 
 const CartCard = ({ element }) => {
   return (
@@ -20,11 +21,7 @@ const CartCard = ({ element }) => {
         >
           <CardMedia
             component="img"
-            image={
-              element.image && element.image.length > 0
-                ? element.image[0].toString()
-                : ""
-            }
+            image={element.image}
             alt="imagen"
             sx={{
               backgroundColor: "#e4cfa5",
@@ -65,12 +62,27 @@ const CartCard = ({ element }) => {
               </Typography>
             </CardContent>
           </Link>
+
           <CardContent sx={{ height: 40 }}>
             <Typography variant="body1" component="div" sx={{ fontSize: 25 }}>
               ${element.price}
             </Typography>
           </CardContent>
+         
         </Card>
+        <CardContent
+            sx={{
+              height: 10,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "-90px",
+              marginBottom: "50px"
+              
+            }}
+          >
+            <BotonsCart element={element} />
+          </CardContent>
       </section>
     </div>
   );

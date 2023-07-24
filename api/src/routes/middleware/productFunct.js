@@ -8,6 +8,9 @@ const {
   modulePutUpdateProduct,
   modulePostAddFavorite,
   moduleGetFavorite,
+  modulePostAddRating,
+  moduleGetRating,
+  modulePutRating,
 } = require("./modules/CRUDProduct");
 
 //definir funciones
@@ -69,6 +72,19 @@ const getFavorite = async (userId) => {
     console.error(error);
   }
 };
+
+const addRating = async (productId, userId, ratingValue) => {
+  try {
+    const rating = await modulePutRating(productId, userId, ratingValue);
+    return rating;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error al agregar rating");
+  }
+};
+const getRating = async () => {
+  return await moduleGetRating();
+};
 module.exports = {
   //exportar cada funcion
   getProducts,
@@ -77,4 +93,6 @@ module.exports = {
   putProduct,
   addFavorites,
   getFavorite,
+  addRating,
+  getRating,
 };

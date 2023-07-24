@@ -6,10 +6,67 @@ const {
   putProduct,
   addFavorites,
   getFavorite,
+  addRating,
+  getRating,
 } = require("./middleware/productFunct");
-
+const { modulePutRating } = require("./middleware/modules/CRUDProduct");
 const productRoute = Router();
 
+const Stripe = require("stripe");
+require("dotenv").config();
+const { KEY } = process.env;
+
+productRoute.post("/pay", async (req, res) => {
+  console.log("entre");
+  const stripe = new Stripe(KEY);
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        price_data: {
+          product_data: {
+            name: `${req.body.name}`,
+          },
+          currency: "usd",
+          unit_amount: parseInt(req.body.price * 100), // Convertir a centavos
+        },
+        quantity: 1,
+      },
+    ],
+    mode: "payment",
+    success_url: "http://localhost:3000/checkout",
+    cancel_url: "http://localhost:3000/menu",
+  });
+
+  // console.log(session);
+  return res.json({ url: session.url });
+});
+
+productRoute.post("/payCarrito", async (req, res) => {
+  const stripe = new Stripe(KEY);
+
+  const lineItems = req.body.map((product) => {
+    return {
+      price_data: {
+        product_data: {
+          name: product.name,
+        },
+        currency: "usd",
+        unit_amount: parseInt(product.price * 100), // Convertir a centavos
+      },
+      quantity: parseInt(product.cartProducts.quantity * 1),
+    };
+  });
+
+  const session = await stripe.checkout.sessions.create({
+    line_items: lineItems,
+    mode: "payment",
+    success_url: "http://localhost:3000/checkout",
+    cancel_url: "http://localhost:3000/menu",
+  });
+
+  // console.log(session);
+  return res.json({ url: session.url });
+});
 productRoute.post("/createProduct", async (req, res) => {
   const { name, image, description, price, type, userId, categoryId } =
     req.body;
@@ -50,6 +107,21 @@ productRoute.get("/:id", async (req, res) => {
     res.status(200).send(productById);
   } catch (error) {
     res.status(400).send(`Error al buscar producto con id: ${id}`);
+  }
+});
+productRoute.put("/rating", async (req, res) => {
+  const { productId, userId, ratingValue, review } = req.body;
+  console.log(productId, userId, ratingValue);
+  try {
+    const rating = await modulePutRating(
+      productId,
+      userId,
+      ratingValue,
+      review
+    );
+    res.status(200).send(rating);
+  } catch (error) {
+    res.status(500).send("Error al establecer rating");
   }
 });
 productRoute.put("/:id", async (req, res) => {
@@ -96,4 +168,21 @@ productRoute.get("/profile/:userId", async (req, res) => {
   }
 });
 
+// productRoute.get("/rating/:productId", async (req, res) => {
+//   const { productId } = req.params;
+//   try {
+//     const rating = await getRating(productId);
+//     res.status(200).send(rating);
+//   } catch (error) {
+//     res.status(500).send("No hay datos de rating");
+//   }
+// });
+productRoute.get("/rating/all", async (req, res) => {
+  try {
+    const rating = await getRating();
+    res.status(200).send(rating);
+  } catch (error) {
+    res.status(500).send("No hay datos de rating");
+  }
+});
 module.exports = productRoute;

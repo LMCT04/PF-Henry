@@ -5,9 +5,10 @@ const {
     modelupdatePasswordInDatabase,
     modelupdateUsernameInDatabase,
     modelgetAllUserFromDatabasebyName,
+    modelUpdateRole,
 } = require("./modules/CRUDUser");
 
-const updateUserInDatabase = async (mail, password, userName) => {
+const updateUserInDatabase = async (mail, password, userName, rol) => {
     try {
         const user = await modelgetUserFromDatabase(mail);
 
@@ -22,6 +23,10 @@ const updateUserInDatabase = async (mail, password, userName) => {
         if (userName) {
             await modelupdateUsernameInDatabase(mail, userName);
         }
+
+        if (rol) {
+            await modelUpdateRole(mail, rol);
+    }
 
         return user;
     } catch (error) {

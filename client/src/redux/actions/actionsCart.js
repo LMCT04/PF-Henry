@@ -3,14 +3,17 @@ import {
   REMOVE_FROM_CART,
   CLEAR_CART,
   GET_CART_BY_ID,
+  UPDATE_CART_QUANTITY
 } from "../actionsType/cartAT";
 import  axios  from "axios";
+
+const urlBackend = 'http://localhost:3001'
 
 export const addToCart = (payload) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/cart/add",
+        `${urlBackend}/cart/add`,
         payload
       );
       const addedProduct = response.data;
@@ -30,7 +33,7 @@ export const removeFromCart = (payload) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/cart/remove",
+        `${urlBackend}/cart/remove`,
         payload
       );
       const removedProduct = response.data;
@@ -49,7 +52,7 @@ export const removeFromCart = (payload) => {
 export const getCartById = (userId) => {  
   return async (dispatch) => {
     try {
-      const apiData = await axios.get(`http://localhost:3001/cart/${userId}`);
+      const apiData = await axios.get(`${urlBackend}/cart/${userId}`);
       const cart = apiData.data;
 
       dispatch({
@@ -58,7 +61,7 @@ export const getCartById = (userId) => {
       });
     } catch (error) {
       console.log("Error: getCartById", error);
-      alert("No se encontró ningún carrito con ese ID.");
+      // alert("No se encontró ningún carrito con ese ID.");
     }
   };
 };
@@ -67,7 +70,7 @@ export const clearCart = (userId) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/cart/clear",
+        `${urlBackend}/cart/clear`,
         {userId}
       );
       const clearedCart = response.data;
@@ -82,3 +85,8 @@ export const clearCart = (userId) => {
     }
   };
 };
+
+export const updateCartQuantity = (quantity) => ({
+  type: UPDATE_CART_QUANTITY,
+  payload: quantity,
+});

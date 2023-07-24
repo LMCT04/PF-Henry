@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Field, Formik } from "formik";
 import style from "./form.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,14 +11,15 @@ import {
     FormControl,
     InputLabel,
     MenuItem,
-    OutlinedInput,
+    
     Select,
     TextField,
 } from "@mui/material";
 
+
 const Form = () => {
     const lettersOrSpacesREGEX = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
-    // const imageURLREGEX = /\.(jpeg|jpg|gif|png)$/i;
+
     const imageURLREGEX = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
 
     const numberREGEX = /^([0-9]+(?:\.[0-9]*)?)$/;
@@ -46,15 +47,15 @@ const Form = () => {
     };
 
     return (
-        <div className={style}>
-            <div className={style.formBack}>
-                <h1 className={style.title}>Create New Product</h1>
+        <main className={style.BG}>
+            <div className={style.formCont} >
+                <h1 className={style.title}>Create New Product!</h1>
                 <Formik
                     initialValues={{
                         name: "",
                         image: "",
                         description: "",
-                        price: "",
+                        price: 0,
                         type: "",
                         category: [],
                     }}
@@ -131,7 +132,7 @@ const Form = () => {
                                 description,
                                 price,
                                 type,
-                                category,
+                                categoryId: category,
                             })
                         );
 
@@ -159,7 +160,7 @@ const Form = () => {
                                                 width: "25ch",
                                             },
                                         }}
-                                        color="success"
+                                        color="primary"
                                         id="name"
                                         name="name"
                                         label="Name:"
@@ -167,34 +168,40 @@ const Form = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         error={touched.name && !!errors.name}
-                                        helperText={touched.name && errors.name}
+                                        helpertext={touched.name && errors.name}
                                     />
                                 </div>
-                                <div className={style.content}>
-                                    <TextField
-                                        fullWidth
-                                        id="image"
-                                        color="success"
+                                <Box
+                                    sx={{
+                                        height:'12%', width:'75.5%', display:'flex'
+                                    }}
+                                >
+                                    <div className={style.content2}>
+                                        <TextField
+                                            fullWidth
+                                            id="image"
+                                            color="primary"
+                                            name="image"
+                                            label="Image:"
+                                            value={values.image}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={touched.image && !!errors.image}
+                                            helpertext={
+                                                touched.image && errors.image
+                                            }
+                                        />
+                                    </div>
+                                    <Field
                                         name="image"
-                                        label="Image:"
-                                        value={values.image}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        error={touched.image && !!errors.image}
-                                        helperText={
-                                            touched.image && errors.image
-                                        }
+                                        component={CustomFileInput}
                                     />
-                                </div>
-                                <Field
-                                    name="image"
-                                    component={CustomFileInput}
-                                />
+                                </Box>
                                 <div className={style.content}>
                                     <TextField
                                         fullWidth
                                         id="description"
-                                        color="success"
+                                        color="primary"
                                         name="description"
                                         label="Description:"
                                         value={values.description}
@@ -204,7 +211,7 @@ const Form = () => {
                                             touched.description &&
                                             !!errors.description
                                         }
-                                        helperText={
+                                        helpertext={
                                             touched.description &&
                                             errors.description
                                         }
@@ -213,7 +220,7 @@ const Form = () => {
                                 <div className={style.content}>
                                     <TextField
                                         fullWidth
-                                        color="success"
+                                        color="primary"
                                         id="price"
                                         name="price"
                                         label="Price:"
@@ -221,20 +228,20 @@ const Form = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         error={touched.price && !!errors.price}
-                                        helperText={
+                                        helpertext={
                                             touched.price && errors.price
                                         }
                                     />
                                 </div>
                                 <div className={style.content}>
                                     <FormControl fullWidth>
-                                        <InputLabel id="type" color="success">
+                                        <InputLabel id="type" color="primary">
                                             Type:
                                         </InputLabel>
 
                                         <Select
                                             fullWidth
-                                            color="success"
+                                            color="primary"
                                             labelId="type"
                                             id="type"
                                             name="type"
@@ -245,7 +252,7 @@ const Form = () => {
                                             error={
                                                 touched.type && !!errors.type
                                             }
-                                            helperText={
+                                            helpertext={
                                                 touched.type && errors.type
                                             }
                                         >
@@ -267,14 +274,14 @@ const Form = () => {
                                     <FormControl fullWidth>
                                         <InputLabel
                                             id="category"
-                                            color="success"
+                                            color="primary"
                                         >
                                             Category:
                                         </InputLabel>
 
                                         <Select
                                             multiple
-                                            color="success"
+                                            color="primary"
                                             labelId="category"
                                             id="category"
                                             name="category"
@@ -287,7 +294,7 @@ const Form = () => {
                                                 touched.category &&
                                                 !!errors.category
                                             }
-                                            helperText={
+                                            helpertext={
                                                 touched.category &&
                                                 errors.category
                                             }
@@ -299,22 +306,27 @@ const Form = () => {
                                                         gap: 0.5,
                                                     }}
                                                 >
-                                                    {selected.map((value) => (
-                                                        <div>
-                                                            <Chip
-                                                                key={value}
-                                                                label={value}
-                                                            />
-                                                        </div>
-                                                    ))}
+                                                    {selected.map(
+                                                        (value, index) => (
+                                                            <div key={index}>
+                                                                <Chip
+                                                                    label={
+                                                                        value
+                                                                    }
+                                                                />
+                                                            </div>
+                                                        )
+                                                    )}
                                                 </Box>
                                             )}
                                         >
                                             {Object.keys(categories).map(
-                                                (category) => (
+                                                (category, index) => (
                                                     <MenuItem
-                                                        value={category}
-                                                        key={category}
+                                                        key={index + 1}
+                                                        value={(
+                                                            index + 1
+                                                        ).toString()}
                                                     >
                                                         {category}
                                                     </MenuItem>
@@ -330,15 +342,12 @@ const Form = () => {
                                     </FormControl>
                                 </div>
 
-                                <div className={style.content}>
+                                <div className={style.btnCont}>
                                     <Button
-                                        sx={{
-                                            marginTop: "35%",
-                                        }}
-                                        fullWidth
                                         type="submit"
                                         variant="contained"
-                                        color="success"
+                                        color="primary"
+                                        sx={{width:'40%', height:'45%'}}
                                     >
                                         Create
                                     </Button>
@@ -348,7 +357,7 @@ const Form = () => {
                     )}
                 </Formik>
             </div>
-        </div>
+        </main>
     );
 };
 

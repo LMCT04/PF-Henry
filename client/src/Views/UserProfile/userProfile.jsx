@@ -13,7 +13,7 @@ import FavoritesContent from "./FavoritesContent/FavoritesContent";
 const UserProfile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  console.log(user.id);
+  console.log(user);
 
   const [editMode, setEditMode] = useState(false);
   const [showFavorites, setShowFavorites] = useState(false);
@@ -65,7 +65,7 @@ const UserProfile = () => {
   return (
     <Box display="flex" flexDirection="row" className="container">
       <Box className="setting">
-        <Button
+        {/*<Button
           variant="contained"
           color="primary"
           sx={{ backgroundColor: "#faebd7", color: "Black" }}
@@ -75,7 +75,7 @@ const UserProfile = () => {
           }}
         >
           EDIT PROFILE
-        </Button>
+        </Button>*/}
         <Button
           variant="contained"
           color="primary"
@@ -91,13 +91,13 @@ const UserProfile = () => {
         >
           Notification
         </Button>
-        <Button
+        {/*<Button
           variant="contained"
           color="primary"
           sx={{ backgroundColor: "#faebd7", color: "Black" }}
         >
           Security
-        </Button>
+      </Button>*/}
       </Box>
       <Box className="info-container" style={{ width: "70%" }}>
         {!showFavorites && (
