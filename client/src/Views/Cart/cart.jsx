@@ -3,7 +3,7 @@ import swal from "sweetalert";
 import { useParams, useHistory } from "react-router-dom";
 import { getCartById, clearCart } from "../../redux/actions/actionsCart";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../Loading/Loading";
+
 import { Button, Box, CardContent, Typography } from "@mui/material";
 import CartCard from "../../Components/cartCard/cartCard";
 import style from "./Cart.module.css";
@@ -17,7 +17,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(getCartById(userId));
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   const handleDiscoverClick = () => {
     history.push("/menu");
@@ -128,7 +128,7 @@ const Cart = () => {
                 color="success"
                 onClick={handleDiscoverClick}
               >
-                Discober Products
+                Discover Products
               </Button>
             </Box>
           </div>
@@ -237,7 +237,6 @@ const Cart = () => {
             onClick={showAlert}
             variant="outlined"
             sx={{
-              borderColor: "rgb(114, 8, 8)",
               color: "rgb(114, 8, 8)",
               borderColor: "rgb(114, 8, 8)",
               "&:hover": {

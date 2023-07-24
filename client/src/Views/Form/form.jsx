@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Field, Formik } from "formik";
 import style from "./form.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,11 +11,11 @@ import {
     FormControl,
     InputLabel,
     MenuItem,
-    OutlinedInput,
+    
     Select,
     TextField,
 } from "@mui/material";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 
 const Form = () => {
     const lettersOrSpacesREGEX = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
