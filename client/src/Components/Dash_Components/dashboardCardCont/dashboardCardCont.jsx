@@ -155,31 +155,25 @@ const DashboardCardCont = () => {
             sx={{
                 backgroundColor: "#dddddd",
                 height: "88.82vh",
+                display:'flex',
+                flexDirection:'column',
+                alignItems:'center',
             }}
         >
             <Box
                 sx={{
-                    height: "15%",
+                    height: "10%",
                     display: "flex",
-                    flexDirection: "column",
+                    width:'90%',
                 }}
             >
                 <Box
                     sx={{
-                        height: "60%",
+                        height: "66.5%",
                         display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                >
-                    <SearchBar />
-                </Box>
-                <Box
-                    sx={{
-                        height: "40%",
-                        display: "flex",
-                        width: "90%",
+                        width: "78%",
                         margin: "0 auto",
+                        alignItems:"center",
                     }}
                 >
                     <FormControl fullWidth size="small" sx={{ width: "150px" }}>
@@ -273,6 +267,17 @@ const DashboardCardCont = () => {
                     >
                         RESET FILTERS
                     </Button>
+                </Box>
+                <Box
+                    sx={{
+                        height: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width:"25%",
+                    }}
+                >
+                    <SearchBar />
                 </Box>
             </Box>
             <Box
