@@ -8,6 +8,12 @@ const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false,
   native: false,
   ssl:true,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // Ajusta esto en función de la configuración de tu base de datos
+    },
+  },
 });
 
 const basename = path.basename(__filename);
