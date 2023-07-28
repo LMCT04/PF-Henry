@@ -8,7 +8,7 @@ import {
 } from "../../../redux/actions/actionsProducts";
 import DashboardCard from "../dashboardCard/dashboardCard";
 import Loading from "../../../Views/Loading/Loading";
-import SearchBar from "../../searchBar/searchBar.jsx";
+import SearchBar from "../../searchBar/searchBar";
 import {
     Box,
     Pagination,
