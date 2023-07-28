@@ -7,7 +7,6 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import style from "./searchBar.module.css";
-import { Alert, AlertTitle, Stack } from "@mui/material";
 
 const SearchBar = () => {
     const dispatch = useDispatch();
