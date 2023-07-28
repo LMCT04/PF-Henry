@@ -7,7 +7,7 @@ import {
 } from "../actionsType/cartAT";
 import  axios  from "axios";
 
-const urlBackend = 'http://localhost:3001'
+const urlBackend = 'https://pf-backend-skye.onrender.com'
 
 export const addToCart = (payload) => {
   return async (dispatch) => {

@@ -21,7 +21,7 @@ import {
 
 } from "../actionsType/productsAT";
 
-const urlBackend = 'http://localhost:3001'
+const urlBackend = 'https://pf-backend-skye.onrender.com'
 
 export const orderAlphabetic = (value) => {
   if (value === "asc") {
