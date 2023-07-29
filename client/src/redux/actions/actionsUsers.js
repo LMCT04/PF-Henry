@@ -11,7 +11,7 @@ import {
     ROLE_UPDATE,
 } from "../actionsType/usersAT";
 
-const urlBackend = 'http://localhost:3001'
+const urlBackend = 'https://pf-backend-skye.onrender.com'
 
 export const createUsers = (payload) => {
     return async (dispatch) => {

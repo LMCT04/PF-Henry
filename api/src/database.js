@@ -2,12 +2,18 @@ require("dotenv").config();
 const { Sequelize, HasOne } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_DEPLOY } = process.env;
+const { DB_DEPLOY } = process.env;
 
 const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false,
   native: false,
   ssl:true,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // Ajusta esto en función de la configuración de tu base de datos
+    },
+  },
 });
 
 const basename = path.basename(__filename);
