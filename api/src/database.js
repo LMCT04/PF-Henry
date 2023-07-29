@@ -70,5 +70,5 @@ Rating.belongsTo(User); // Relación de muchos a uno: una puntuación pertenece 
 
 module.exports = {
   ...sequelize.models,
-  conn: sequelize,
+  conn: sequelize, 
 };
