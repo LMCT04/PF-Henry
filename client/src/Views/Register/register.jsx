@@ -103,6 +103,7 @@ const Register = () => {
                 height:'92vh',
                 display:'center',
                 justifyContent:'center',
+                flexDirection:'column'
             }}
         >
             <Formik
@@ -165,6 +166,7 @@ const Register = () => {
                                 sx={{
                                     height:'14%',
                                     display:'flex',
+                                    border:'1px solid lbue'
                                 }}
                             >
                                 <TextField
@@ -297,7 +299,7 @@ const Register = () => {
                     </form>
                 )}
             </Formik>
-            {error && <Box sx={{height:'3%', marginTop:'0.7%', border:'1px solid red', color:'red', width:'360px', borderRadius:'10px'}} >{error}</Box>}
+            {error && <Box sx={{height:'2%', marginTop:'0.7%', border:'1px solid red', color:'red', width:'360px', borderRadius:'10px'}} >{error}</Box>}
         </Box>
     );
 };
