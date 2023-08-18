@@ -33,8 +33,8 @@ productRoute.post("/pay", async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: "http://localhost:3000/checkout",
-    cancel_url: "http://localhost:3000/menu",
+    success_url: "https://pf-backend-skye.onrender.com/checkout",
+    cancel_url: "https://pf-backend-skye.onrender.com/menu",
   });
 
   // console.log(session);
@@ -60,8 +60,8 @@ productRoute.post("/payCarrito", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     line_items: lineItems,
     mode: "payment",
-    success_url: "http://localhost:3000/checkout",
-    cancel_url: "http://localhost:3000/menu",
+    success_url: "https://pf-backend-skye.onrender.com/checkout",
+    cancel_url: "https://pf-backend-skye.onrender.com/menu",
   });
 
   // console.log(session);
